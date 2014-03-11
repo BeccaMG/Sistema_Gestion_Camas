@@ -1,36 +1,23 @@
-*.py[cod]
+# Archivos de configuracion #
+#############################
+AM/settings.py
 
-# C extensions
-*.so
+# Compiled source #
+###################
+*.pyc
 
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-lib
-lib64
-__pycache__
+# Logs and databases #
+######################
+.sqlite*
 
-# Installer logs
-pip-log.txt
+# Archivos de los editores de texto #
+#####################################
+*~
+*.swp*
 
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
+# Archivos generados en compilacion de LaTeX #
+##############################################
+*.toc
+*.aux
+*.log
+*.out
