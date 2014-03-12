@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+  <div class="row">
+    <div class="cuadroGrande span12 centrar">
+      <div class="titulo">
+        Asignaci&oacute;n de Camas
+      </div>
+      <br/>
+      <p>Se muestran las habitaciones libres para asignar pacientes.</p>
+      <p>Arrastre el paciente de las listas de la izquierda hasta la habitaci&oacute;n que desea asignarle.</p>
+      {% if habs %}
+      <table class="table table-bordered table-striped">
+        <tr>
+        <th>N&uacute;mero de Habitaci&oacute;n</th>
+        <th>Paciente</th>
+        <th>M&eacute;dico</th>
+        <th>Fecha estimada de salida</th>
+      </tr>
+        {% for h in habs %}
+          <tr>
+            <td>
+              <span class="nombreLista">
+                {{h.numero}}
+              </span>
+            </td>
+            <td>
+              
+            </td>
+            <td>
+              
+            </td>
+            <td>
+              
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <h4>No hay habitaciones disponibles en este momento.</h4>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

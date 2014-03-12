@@ -7,8 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     ## APLICACIONES PROPIAS
     # Atencion
-  	# Atencion
     url(r'^', include('app_emergencia.urls')),
+    url(r'^', include('app_camas.urls')),
   
     # Usuario
     url('^$','app_usuario.views.sesion_iniciar'),
