@@ -1,13 +1,29 @@
 {% extends "base.html" %}
+{% block estilos %}
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+{% endblock %}
 {% block cuerpo %}
+
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion({
+      collapsible: true
+    });
+  });
+  </script>
+  
   <div class="row">
-    <div class="cuadroGrande span12 centrar">
+    <div class="cuadroGrande span8 centrar">
       <div class="titulo">
         Asignaci&oacute;n de Camas
       </div>
       <br/>
       <p>Se muestran las habitaciones libres para asignar pacientes.</p>
-      <p>Arrastre el paciente de las listas de la izquierda hasta la habitaci&oacute;n que desea asignarle.</p>
+      <p>Arrastre el paciente de las listas de la derecha hasta la habitaci&oacute;n que desea asignarle.</p>
       {% if habs %}
       <table class="table table-bordered table-striped">
         <tr>
@@ -38,6 +54,46 @@
       {% else %}
       <h4>No hay habitaciones disponibles en este momento.</h4>
       {% endif %}
+    </div>
+    
+    <!--  Lista de Pacientes    -->
+    <div class="cuadroGrande span4 centrar">
+      <h4>Solicitudes de camas</h4>
+      <div id="accordion">
+        <h3>Emergencia Adultos</h3>
+        <div>
+            <p>Paciente1</p>
+        </div>
+        <h3>Emergencia Pedi&aacute;trica</h3>
+        <div>
+            <p>Paciente2</p>
+        </div>
+        <h3>Quir&oacute;fano</h3>
+        <div>
+            <p>Paciente3</p>
+        </div>
+        <h3>Sala de Partos</h3>
+        <div>
+            <p>Paciente4</p>
+        </div>
+        <h3>UCI</h3>
+        <div>
+            <p>Paciente5</p>
+        </div>
+        <h3>Adicionales</h3>
+        <div>
+            <p>Paciente6</p>
+        </div>
+        <h3>Especiales</h3>
+        <div>
+            <p>Paciente7</p>
+        </div>
+        <h3>Otros</h3>
+        <div>
+            <p>Paciente8</p>
+        </div>
+  
+      </div>
     </div>
   </div>
 {% endblock %}

@@ -17,5 +17,7 @@ from models import *
 @login_required(login_url='/')
 def asignar_habitacion(request):
     habitaciones_libres = Habitacion.objects.filter(libre=True)
-    info = {'habs':habitaciones_libres}
+    titulo = "Asignacion de Habitaciones"
+    info = {'habs':habitaciones_libres,
+            'titulo':titulo}
     return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
