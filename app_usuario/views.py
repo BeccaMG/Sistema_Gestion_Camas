@@ -23,6 +23,10 @@ from django.core.mail import EmailMessage
 def sesion_iniciar(request):
     if request.user.is_authenticated():
         info = {}
+        if not request.user.is_staff:
+                    usuario = get_object_or_404(Usuario,cedula=request.user.username)
+                    info = {'usuario':usuario}
+                    print usuario.tipo
         return render_to_response('loged.html',info,context_instance=RequestContext(request))
     if request.method == 'POST':
         unombre = request.POST.get('unombre', 'userDefault')
@@ -42,6 +46,9 @@ def sesion_iniciar(request):
             if user.is_active:
                 login(request,user)
                 info = {}
+                if not user.is_staff:
+                    usuario = get_object_or_404(Usuario,cedula=request.user.username)
+                    info = {'usuario':usuario}
                 return render_to_response('loged.html',info,context_instance=RequestContext(request))
 
         msj_tipo = "error"

@@ -7,10 +7,11 @@ SEXO = (
 )
 
 USUARIO = (
-    ('1','Administracion'),
-    ('2','Responsable'),
-    ('3','Medico'),
-    ('4','Limpieza'),
+    ('A','Administracion'),
+    ('R','Responsable'),
+    ('M','Medico'),
+    ('L','Limpieza'),
+    ('S','Solicitante'),
 )
 
 # Create your models here.
@@ -31,11 +32,24 @@ class Usuario(User):
         return resp
 
     def tipoR(self):
-        resp = "Administrador"
-        if (self.tipo == '1'):
+        resp = "Administracion"
+        if (self.tipo == 'R'):
+            resp = "Responsable"
+        if (self.tipo == 'M'):
             resp = "Medico"
-        if (self.tipo == '2'):
-            resp = "Secretaria"
-        if (self.tipo == '3'):
-            resp = "Mujer"
+        if (self.tipo == 'L'):
+            resp = "Limpieza"
+        if (self.tipo == 'S'):
+            resp = "Solicitante"
         return resp
+    
+    def is_admin(self):
+        return (self.tipo == 'A')
+    def is_medico(self):
+        return (self.tipo == 'M')
+    def is_limpieza(self):
+        return (self.tipo == 'L')
+    def is_sol(self):
+        return (self.tipo == 'S')
+    def is_resp(self):
+        return (self.tipo == 'R')
