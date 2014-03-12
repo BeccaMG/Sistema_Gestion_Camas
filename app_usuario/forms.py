@@ -32,6 +32,7 @@ class SolicitarCuenta(forms.Form):
     cod_casa = forms.ChoiceField(choices = COD_TELEFONICOS, widget=forms.Select(attrs={'class':'span1'}))
     num_casa = forms.CharField(max_length = 7, widget=forms.TextInput(attrs={'class':'span4'}))
     email = forms.EmailField(max_length = 64)
+    email0 = forms.EmailField(max_length = 64)
     clave = forms.CharField(widget = forms.PasswordInput())
     clave0 = forms.CharField(widget = forms.PasswordInput())
     administrador = forms.BooleanField(required = False)
