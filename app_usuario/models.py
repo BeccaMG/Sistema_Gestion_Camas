@@ -7,9 +7,9 @@ SEXO = (
 )
 
 USUARIO = (
-    ('1','Medico'),
-    ('2','Enfermero/a'),
-    ('3','Secretario/a'),
+    ('1','Administracion'),
+    ('2','Responsable'),
+    ('3','Medico'),
     ('4','Limpieza'),
 )
 
