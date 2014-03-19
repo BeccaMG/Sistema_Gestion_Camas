@@ -10,7 +10,7 @@ PROVENIENCIA = (
     (5,'UCI'),
     (6,'Adicional'),
     (7,'Especial'),
-    (8,'Traslado'),
+    (8,'Translado'),
     (9,'Otros'),
 )
 

@@ -81,36 +81,92 @@ $("#notaccordion").togglepanels();
         <h3><a href="#">Emergencia Adultos</a></h3>
         <div>
 			{% for pac in pac_emergencia_adultos %}
-            <p>{{pac.num_historia}}</p>
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
 			{% endfor %}
         </div>
         <h3><a href="#">Emergencia Pedi&aacute;trica</a></h3>
         <div>
-            <p>Paciente2</p>
+            {% for pac in pac_emergencia_pediatra %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
         <h3>Quir&oacute;fano</h3>
         <div>
-            <p>Paciente3</p>
+            {% for pac in pac_quirofano %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
         <h3>Sala de Partos</h3>
         <div>
-            <p>Paciente4</p>
+            {% for pac in pac_parto %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
         <h3>UCI</h3>
         <div>
-            <p>Paciente5</p>
+            {% for pac in pac_uci %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
         <h3>Adicionales</h3>
         <div>
-            <p>Paciente6</p>
+            {% for pac in pac_adicional %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
         <h3>Especiales</h3>
         <div>
-            <p>Paciente7</p>
+            {% for pac in pac_especial %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
+        </div>
+		<h3>Translados</h3>
+        <div>
+            {% for pac in pac_translado %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
         <h3>Otros</h3>
         <div>
-            <p>Paciente8</p>
+            {% for pac in pac_otros %}
+			<div class="solicitud_item">
+				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<br>
+				{{pac.fecha}}
+			</div>
+			{% endfor %}
         </div>
   
       </div>
