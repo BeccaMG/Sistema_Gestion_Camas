@@ -62,7 +62,9 @@
       <div id="accordion">
         <h3>Emergencia Adultos</h3>
         <div>
-            <p>Paciente1</p>
+			{% for pac in pac_emergencia_adultos %}
+            <p>{{pac.num_historia}}</p>
+			{% endfor %}
         </div>
         <h3>Emergencia Pedi&aacute;trica</h3>
         <div>
