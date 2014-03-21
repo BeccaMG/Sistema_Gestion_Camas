@@ -15,10 +15,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from models import *
 
 # Create your views here.
-def usuario_crear(request):
+def solicitar_habitacion(request):
     mensaje = ""
     if request.method == 'POST':
-        form = SolicitarCuenta(request.POST)
+        form = SolicitarHabitacion(request.POST)
         if form.is_valid():
             pcd = form.cleaned_data
             u_cedula           = pcd['cedula']
@@ -58,6 +58,6 @@ def usuario_crear(request):
         msj_tipo = "error"
         info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
         return render_to_response('crearUsuario.html',info,context_instance=RequestContext(request))
-    form = SolicitarCuenta()
+    form = SolicitarHabitacion()
     info = {'form':form}
-    return render_to_response('crearUsuario.html',info,context_instance=RequestContext(request))
+    return render_to_response('solicitarHabitacion.html',info,context_instance=RequestContext(request))
