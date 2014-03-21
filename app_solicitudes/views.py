@@ -24,17 +24,8 @@ def solicitar_habitacion(request):
             u_cedula           = pcd['cedula']
             u_nombres          = pcd['nombres']
             u_apellidos        = pcd['apellidos']
-            u_tipo		       = pcd['tipo']
-            u_sexo             = pcd['sexo']
-            u_cel              = pcd['cod_cel'] + pcd['num_cel']
-            u_direccion        = pcd['direccion']
-            u_tlf_casa         = pcd['cod_casa'] + pcd['num_casa']
-            u_email            = pcd['email']
-            u_email0           = pcd['email0']
-            u_clave            = pcd['clave']
-            u_clave0           = pcd['clave0']
-            u_administrador    = pcd['administrador']
-            prueba = Usuario.objects.filter(cedula=u_cedula)
+            u_mun_historia     = pcd['num_historia']
+			prueba = Usuario.objects.filter(cedula=u_cedula)
             prueba2 = (u_clave==u_clave0)
             if not prueba:
                 if prueba2:

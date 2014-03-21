@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block scripts %}
+  <!--Datetime Picker -->
+  <script type="text/javascript"
+    src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet"
+    href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+{% endblock %} 
+  {% block cuerpo %}
+  {% if mensaje %}
+    {{ mensaje }}
+  {% endif %}
+  <div class="row">
+    <div class="cuadroGrande span12 centrar">
+      <h4>
+        Solicitar habitaci&oacute;n
+      </h4>
+      <form class= "tablaAgregar" method="post" action="/solicitudes/habitacion">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <td>C&eacute;dula</td>
+            <td>{{form.cedula}}</td>
+            <td><span class="msj-error"> {{form.cedula.errors}} </span></td>
+          </tr>
+          <tr>
+          <td>Nombres</td>
+            <td>{{form.nombres}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.nombres.errors}}
+              </span>
+            </td>
+          </tr>
+          
+          <tr>
+            <td>Apellidos</td>
+            <td>{{form.apellidos}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.apellidos.errors}}
+              </span>
+            </td>
+          </tr>
+          
+		  <tr>
+            <td>N&uacutemero de historia</td>
+            <td>{{form.num_historia}}</td>
+            <td><span class="msj-error"> {{form.num_historia.errors}} </span></td>
+          </tr>
+		  
+		<tr>
+                <td>Fecha y hora de ingreso</td>
+				<td>{{form.fecha}}</td>
+                <td>
+                  <div id="ingreso_picker" 
+                       class="input-append">
+                    <span id="ahora" 
+                          class="btn">Ahora
+                    </span> 
+                    <span  class="add-on">
+                      <i data-time-icon="icon-time"
+                         data-date-icon="icon-calendar"> 
+                       </i>
+                    </span>
+                  </div>
+                    <script type="text/javascript">
+                      $(function() {
+                        $('#ingreso_picker').datetimepicker({
+                          language: 'pt-BR'
+                        });
+						
+						// Se cierra el calendario al seleccionar fecha
+						$('#ingreso_picker').on('changeDate', function(e) {
+						  $('#ingreso_picker').datetimepicker('hide');
+						});
+                      });
+                    </script>
+                </td>
+		</tr>
+		  
+          <tr>
+           <td>Nombre del m&eacute;dico tratante</td>
+            <td>{{form.nombre_doctor}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.nombre_doctor.errors}}
+              </span>
+            </td>
+          </tr>
+          
+		  <tr>
+                <td>Fecha estimada de salida</td>
+				<td>{{form.fecha_salida}}</td>
+                <td>
+                    <script type="text/javascript">
+                      $(function() {
+                        $('#ingreso_picker').datetimepicker({
+                          language: 'pt-BR'
+                        });
+						
+						// Se cierra el calendario al seleccionar fecha
+						$('#ingreso_picker').on('changeDate', function(e) {
+						  $('#ingreso_picker').datetimepicker('hide');
+						});
+                      });
+                    </script>
+                </td>
+		</tr>
+		  
+		  <tr>
+            <td>Proveniencia</td>
+            <td>{{form.proveniencia}}</td>
+            <td>
+              <span class="msj-error">
+                {{form.proveniencia.errors}}} 
+              </span>
+            </td>
+          </tr>
+		  
+		  <tr>
+            <td>Observaciones</td>
+            <td>{{form.observacion}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.observacion.errors}}
+              </span>
+            </td>
+          </tr>   
+		  
+          <tr>
+            <td></td>
+            <td>
+              <input class="btn btn-primary" 
+                     type="submit" 
+                     value="Solicitar Habitaci&oacute;n" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+{% endblock %}

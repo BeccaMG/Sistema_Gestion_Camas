@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     # Atencion
     url(r'^', include('app_emergencia.urls')),
     url(r'^', include('app_camas.urls')),
-  
+	url(r'^', include('app_solicitudes.urls')),
+	
     # Usuario
     url('^$','app_usuario.views.sesion_iniciar'),
     url('^sesion/iniciar/$','app_usuario.views.sesion_iniciar'),
