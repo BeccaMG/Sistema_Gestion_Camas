@@ -16,5 +16,5 @@ class SolicitarHabitacion(forms.Form):
     fecha_salida = forms.DateTimeField(
                 label = "FECHA ESTIMADA DE SALIDA",
                 widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss'}))
-    proveniencia = forms.ChoiceField(label = "PROVENIENCIA", choices = PROVENIENCIA)
+    procedencia = forms.ChoiceField(label = "PROCEDENCIA", choices = PROCEDENCIA)
     observacion = forms.CharField(label = "OBSERVACION", max_length = 140, required = False)

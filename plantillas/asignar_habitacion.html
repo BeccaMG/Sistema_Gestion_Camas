@@ -82,9 +82,9 @@ $("#notaccordion").togglepanels();
         <div>
 			{% for pac in pac_emergencia_adultos %}
 			<div class="solicitud_item">
-				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
+				<b>{{pac.num_historia}}</b> - {{pac.cedula.nombres}} {{pac.cedula.apellidos}}
 				<br>
-				{{pac.fecha}}
+				{{pac.diagnostico}}
 			</div>
 			{% endfor %}
         </div>
@@ -150,7 +150,7 @@ $("#notaccordion").togglepanels();
         </div>
 		<h3>Translados</h3>
         <div>
-            {% for pac in pac_translado %}
+            {% for pac in pac_traslado %}
 			<div class="solicitud_item">
 				<b>{{pac.num_historia}}</b> - {{pac.diagnostico}}
 				<br>

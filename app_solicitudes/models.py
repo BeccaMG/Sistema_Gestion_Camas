@@ -2,7 +2,7 @@ from django.db import models
 from app_paciente.models import *
 from django.utils import timezone
 
-PROVENIENCIA = (
+PROCEDENCIA = (
     (1,'Quirofano'),
     (2,'Emergencia Pediatrica'),
     (3,'Emergencia Adultos'),
@@ -15,12 +15,12 @@ PROVENIENCIA = (
 )
 
 class Solicitud(models.Model):
-    cedula          = models.ForeignKey(Paciente)
+    paciente        = models.ForeignKey(Paciente)
     num_historia    = models.IntegerField()
     fecha           = models.DateTimeField(auto_now_add=True)
     diagnostico     = models.CharField(max_length=50)
     nombre_doctor   = models.CharField(max_length = 64)
     fecha_salida    = models.DateTimeField()
-    proveniencia    = models.IntegerField(choices=PROVENIENCIA)
+    procedencia     = models.IntegerField(choices=PROCEDENCIA)
     observacion     = models.CharField(max_length=140)
     

@@ -42,7 +42,7 @@ def solicitar_habitacion(request):
             s_diagnostico        = pcd['diagnostico']
             s_nombre_doctor      = pcd['nombre_doctor']
             s_fecha_salida       = pcd['fecha_salida']
-            s_proveniencia       = pcd['proveniencia']
+            s_procedencia       = pcd['procedencia']
             s_observacion        = pcd['observacion']
             
             prueba = Paciente.objects.filter(cedula = s_cedula)
@@ -54,7 +54,7 @@ def solicitar_habitacion(request):
                          diagnostico = s_diagnostico,
                          nombre_doctor = s_nombre_doctor,
                          fecha_salida = s_fecha_salida,
-                         proveniencia = s_proveniencia,
+                         procedencia = s_procedencia,
                          observacion = s_observacion)
                 s.save()
                 return redirect('/emergencia/listar/todas')

@@ -44,13 +44,13 @@
           </tr>
           
 		  <tr>
-            <td>N&uacutemero de historia</td>
+            <td>N&uacute;mero de historia</td>
             <td>{{form.num_historia}}</td>
             <td><span class="msj-error"> {{form.num_historia.errors}} </span></td>
           </tr>
 		  
           <tr>
-           <td>M&eacute;sdico tratante</td>
+           <td>M&eacute;dico tratante</td>
             <td>{{form.nombre_doctor}}</td>
             <td>
               <span class="msj-error"> 
@@ -60,7 +60,7 @@
           </tr>
 		  
 		  <tr>
-           <td>Diagn&oacute;tico</td>
+           <td>Diagn&oacute;stico</td>
             <td>{{form.diagnostico}}</td>
             <td>
               <span class="msj-error"> 
@@ -71,36 +71,7 @@
 		  
           {% for e in form %}
 		  <tr>
-				{% if e.label == "FECHA Y HORA DE SOLICITUD" %}
-                <td>Fecha y hora de ingreso</td>
-                <td>
-                  <div id="ingreso_picker" 
-                       class="input-append">
-                    {{e}}
-                    <span  class="add-on">
-                      <i data-time-icon="icon-time"
-                         data-date-icon="icon-calendar"> 
-                       </i>
-                    </span>
-                    <script type="text/javascript">
-                      $(function() {
-                        $('#ingreso_picker').datetimepicker({
-                          language: 'pt-BR'
-                        });
-						
-						// Se cierra el calendario al seleccionar fecha
-						$('#ingreso_picker').on('changeDate', function(e) {
-						  $('#ingreso_picker').datetimepicker('hide');
-						});
-						
-					});
-                    </script>
-                </td>
-				<td>
-                  {{e.errors}}
-                </td> 
-				
-              {% elif e.label == "FECHA ESTIMADA DE SALIDA" %}
+              {% if e.label == "FECHA ESTIMADA DE SALIDA" %}
 			  <td>Fecha estimada de salida</td>
                 <td>
                   <div id="egreso_picker" 
@@ -132,11 +103,11 @@
           {% endfor %}
 		  
 		  <tr>
-            <td>Proveniencia</td>
-            <td>{{form.proveniencia}}</td>
+            <td>Procedencia</td>
+            <td>{{form.procedencia}}</td>
             <td>
               <span class="msj-error">
-                {{form.proveniencia.errors}} 
+                {{form.procedencia.errors}} 
               </span>
             </td>
           </tr>
