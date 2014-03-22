@@ -19,7 +19,7 @@ class Solicitud(models.Model):
     num_historia    = models.IntegerField()
     fecha           = models.DateTimeField(auto_now_add=True)
     diagnostico     = models.CharField(max_length=50)
-    medico          = models.CharField(max_length = 64)
+    nombre_doctor   = models.CharField(max_length = 64)
     fecha_salida    = models.DateTimeField()
     proveniencia    = models.IntegerField(choices=PROVENIENCIA)
     observacion     = models.CharField(max_length=140)

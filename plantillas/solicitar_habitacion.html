@@ -49,38 +49,8 @@
             <td><span class="msj-error"> {{form.num_historia.errors}} </span></td>
           </tr>
 		  
-		<tr>
-                <td>Fecha y hora de ingreso</td>
-				<td>{{form.fecha}}</td>
-                <td>
-                  <div id="ingreso_picker" 
-                       class="input-append">
-                    <span id="ahora" 
-                          class="btn">Ahora
-                    </span> 
-                    <span  class="add-on">
-                      <i data-time-icon="icon-time"
-                         data-date-icon="icon-calendar"> 
-                       </i>
-                    </span>
-                  </div>
-                    <script type="text/javascript">
-                      $(function() {
-                        $('#ingreso_picker').datetimepicker({
-                          language: 'pt-BR'
-                        });
-						
-						// Se cierra el calendario al seleccionar fecha
-						$('#ingreso_picker').on('changeDate', function(e) {
-						  $('#ingreso_picker').datetimepicker('hide');
-						});
-                      });
-                    </script>
-                </td>
-		</tr>
-		  
           <tr>
-           <td>Nombre del m&eacute;dico tratante</td>
+           <td>M&eacute;sdico tratante</td>
             <td>{{form.nombre_doctor}}</td>
             <td>
               <span class="msj-error"> 
@@ -88,11 +58,30 @@
               </span>
             </td>
           </tr>
-          
+		  
 		  <tr>
-                <td>Fecha estimada de salida</td>
-				<td>{{form.fecha_salida}}</td>
+           <td>Diagn&oacute;tico</td>
+            <td>{{form.diagnostico}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.diagnostico.errors}}
+              </span>
+            </td>
+          </tr>
+		  
+          {% for e in form %}
+		  <tr>
+				{% if e.label == "FECHA Y HORA DE SOLICITUD" %}
+                <td>Fecha y hora de ingreso</td>
                 <td>
+                  <div id="ingreso_picker" 
+                       class="input-append">
+                    {{e}}
+                    <span  class="add-on">
+                      <i data-time-icon="icon-time"
+                         data-date-icon="icon-calendar"> 
+                       </i>
+                    </span>
                     <script type="text/javascript">
                       $(function() {
                         $('#ingreso_picker').datetimepicker({
@@ -103,17 +92,51 @@
 						$('#ingreso_picker').on('changeDate', function(e) {
 						  $('#ingreso_picker').datetimepicker('hide');
 						});
-                      });
+						
+					});
                     </script>
                 </td>
-		</tr>
+				<td>
+                  {{e.errors}}
+                </td> 
+				
+              {% elif e.label == "FECHA ESTIMADA DE SALIDA" %}
+			  <td>Fecha estimada de salida</td>
+                <td>
+                  <div id="egreso_picker" 
+                       class="input-append">
+                    {{e}}
+                    <span  class="add-on">
+                      <i data-time-icon="icon-time"
+                         data-date-icon="icon-calendar"> 
+                       </i>
+                    </span>
+					<script type="text/javascript">
+                      $(function() {
+                        $('#egreso_picker').datetimepicker({
+                          language: 'pt-BR'
+                        });
+						
+						// Se cierra el calendario al seleccionar fecha
+						$('#egreso_picker').on('changeDate', function(e) {
+						  $('#egreso_picker').datetimepicker('hide');
+						});
+                      });
+                    </script>
+                 </td>
+                <td>
+                  {{e.errors}}
+               </td> 
+              {% endif %}
+              </tr>
+          {% endfor %}
 		  
 		  <tr>
             <td>Proveniencia</td>
             <td>{{form.proveniencia}}</td>
             <td>
               <span class="msj-error">
-                {{form.proveniencia.errors}}} 
+                {{form.proveniencia.errors}} 
               </span>
             </td>
           </tr>
