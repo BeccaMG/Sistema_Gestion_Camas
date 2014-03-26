@@ -15,7 +15,7 @@ PROCEDENCIA = (
 )
 
 class Solicitud(models.Model):
-    paciente        = models.ForeignKey(Paciente)
+    paciente        = models.OneToOneField(Paciente)
     num_historia    = models.IntegerField()
     fecha           = models.DateTimeField(auto_now_add=True)
     diagnostico     = models.CharField(max_length=50)
