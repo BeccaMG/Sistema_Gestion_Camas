@@ -48,7 +48,6 @@ def solicitar_habitacion(request):
             
             
             prueba = Paciente.objects.get(cedula = s_cedula)
-            print "fffffffff"
             if prueba:
                 s = Solicitud(paciente = prueba,
                          num_historia = s_num_historia,
@@ -57,13 +56,11 @@ def solicitar_habitacion(request):
                          fecha_salida = s_fecha_salida,
                          procedencia = s_procedencia,
                          observacion = s_observacion)
-                print s
                 s.save()
                 return redirect('/emergencia/listar/todas')
             else:
                 msj_tipo = "error"
                 msj_info = "El paciente no se encuentra registrado en el sistema."
-        print "aaaah"
         info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
         return render_to_response('solicitar_habitacion.html',info,context_instance=RequestContext(request))
     form = SolicitarHabitacion()

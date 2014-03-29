@@ -43,12 +43,12 @@
             </td>
           </tr>
           
-		  <tr>
+          <tr>
             <td>N&uacute;mero de historia</td>
             <td>{{form.num_historia}}</td>
             <td><span class="msj-error"> {{form.num_historia.errors}} </span></td>
           </tr>
-		  
+          
           <tr>
            <td>M&eacute;dico tratante</td>
             <td>{{form.nombre_doctor}}</td>
@@ -58,8 +58,8 @@
               </span>
             </td>
           </tr>
-		  
-		  <tr>
+          
+          <tr>
            <td>Diagn&oacute;stico</td>
             <td>{{form.diagnostico}}</td>
             <td>
@@ -68,11 +68,11 @@
               </span>
             </td>
           </tr>
-		  
+          
           {% for e in form %}
-		  <tr>
+          <tr>
               {% if e.label == "FECHA ESTIMADA DE SALIDA" %}
-			  <td>Fecha estimada de salida</td>
+              <td>Fecha estimada de salida</td>
                 <td>
                   <div id="egreso_picker" 
                        class="input-append">
@@ -82,16 +82,16 @@
                          data-date-icon="icon-calendar"> 
                        </i>
                     </span>
-					<script type="text/javascript">
+                    <script type="text/javascript">
                       $(function() {
                         $('#egreso_picker').datetimepicker({
                           language: 'pt-BR'
                         });
-						
-						// Se cierra el calendario al seleccionar fecha
-						$('#egreso_picker').on('changeDate', function(e) {
-						  $('#egreso_picker').datetimepicker('hide');
-						});
+                        
+                        // Se cierra el calendario al seleccionar fecha
+                        $('#egreso_picker').on('changeDate', function(e) {
+                          $('#egreso_picker').datetimepicker('hide');
+                        });
                       });
                     </script>
                  </td>
@@ -101,8 +101,8 @@
               {% endif %}
               </tr>
           {% endfor %}
-		  
-		  <tr>
+          
+          <tr>
             <td>Procedencia</td>
             <td>{{form.procedencia}}</td>
             <td>
@@ -111,17 +111,19 @@
               </span>
             </td>
           </tr>
-		  
-		  <tr>
+          
+          <tr>
             <td>Observaciones</td>
-            <td>{{form.observacion}}</td>
+            <td> 
+				{{form.observacion}}
+            </td>
             <td>
               <span class="msj-error"> 
                 {{form.observacion.errors}}
               </span>
             </td>
           </tr>   
-		  
+          
           <tr>
             <td></td>
             <td>

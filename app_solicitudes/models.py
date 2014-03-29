@@ -22,5 +22,5 @@ class Solicitud(models.Model):
     nombre_doctor   = models.CharField(max_length = 64)
     fecha_salida    = models.DateTimeField()
     procedencia     = models.IntegerField(choices=PROCEDENCIA)
-    observacion     = models.CharField(max_length=140)
+    observacion     = models.CharField(max_length=140, null = True)
     
