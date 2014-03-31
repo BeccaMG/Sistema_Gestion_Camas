@@ -14,6 +14,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from models import *
 from app_solicitudes.models import *
 from app_paciente.models import *
+from datetime import date
 
 # Create your views here.
 @login_required(login_url='/')
@@ -44,3 +45,12 @@ def asignar_habitacion(request):
 	'pac_otros':pacientes_otros,
 	'titulo':titulo}
 	return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def censo(request):
+    pacientes = Ingreso.objects.all()
+    hoy = date.today
+    info = {
+        'pacientes':pacientes,
+        'hoy':hoy}
+    return render_to_response('censo.html',info,context_instance=RequestContext(request))

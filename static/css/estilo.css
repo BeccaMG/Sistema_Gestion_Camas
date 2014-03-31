@@ -81,3 +81,20 @@ td li {
 	border: solid 1px #ddd;
 	cursor: move;
 }
+
+.verde{
+    background-color: #00CC33;
+}
+
+.amarillo{
+    background-color: #FFFF00;
+}
+
+.rojo{
+    background-color: #FF0000;
+}
+
+.negro{
+    background-color: #000000;
+    color: white;
+}
