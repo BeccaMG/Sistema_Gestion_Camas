@@ -10,8 +10,10 @@ from django.forms.widgets import CheckboxSelectMultiple
 # General HTML
 from django.shortcuts import render_to_response,redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.forms.formsets import formset_factory
 
 from models import *
+from forms import *
 from app_solicitudes.models import *
 from app_paciente.models import *
 from datetime import date
@@ -20,35 +22,43 @@ from datetime import date
 @login_required(login_url='/')
 def asignar_habitacion(request):
 	
-	if request.method == 'POST':
-		print request.POST
-		return 'asd'
-	else:
-		habitaciones_libres = Habitacion.objects.filter(libre=True)
-		pacientes_quirofano = Solicitud.objects.filter(procedencia=1)
-		pacientes_emergencia_pediatra = Solicitud.objects.filter(procedencia=2)
-		pacientes_emergencia_adultos = Solicitud.objects.filter(procedencia=3)
-		pacientes_parto = Solicitud.objects.filter(procedencia=4)
-		pacientes_uci = Solicitud.objects.filter(procedencia=5)
-		pacientes_adicional = Solicitud.objects.filter(procedencia=6)
-		pacientes_especial = Solicitud.objects.filter(procedencia=7)
-		pacientes_traslado = Solicitud.objects.filter(procedencia=8)
-		pacientes_otros = Solicitud.objects.filter(procedencia=9)
-		
-		titulo = "Asignacion de Habitaciones"
-		info = {
-		'habs':habitaciones_libres,
-		'pac_quirofano':pacientes_quirofano,
-		'pac_emergencia_adultos':pacientes_emergencia_adultos,
-		'pac_emergencia_pediatra':pacientes_emergencia_pediatra,
-		'pac_parto':pacientes_parto,
-		'pac_uci':pacientes_uci,
-		'pac_adicional':pacientes_adicional,
-		'pac_especial':pacientes_especial,
-		'pac_traslado':pacientes_traslado,
-		'pac_otros':pacientes_otros,
-		'titulo':titulo}
-		return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
+	habitaciones_libres = Habitacion.objects.filter(libre=True)
+	HabitacionesFormSet = formset_factory(HabitacionForm,max_num = len(habitaciones_libres))
+	initials = []
+	
+	for libres in habitaciones_libres:
+		initials.append(
+		{
+		'numero_habitacion': str(libres.numero),'numero_historia': '',
+		'nombre': '','nombre_medico': '','fecha': '','procedencia': '',
+		})
+	
+	formset = HabitacionesFormSet(initial=initials )
+	
+	pacientes_quirofano = Solicitud.objects.filter(procedencia=1)
+	pacientes_emergencia_pediatra = Solicitud.objects.filter(procedencia=2)
+	pacientes_emergencia_adultos = Solicitud.objects.filter(procedencia=3)
+	pacientes_parto = Solicitud.objects.filter(procedencia=4)
+	pacientes_uci = Solicitud.objects.filter(procedencia=5)
+	pacientes_adicional = Solicitud.objects.filter(procedencia=6)
+	pacientes_especial = Solicitud.objects.filter(procedencia=7)
+	pacientes_traslado = Solicitud.objects.filter(procedencia=8)
+	pacientes_otros = Solicitud.objects.filter(procedencia=9)
+	
+	titulo = "Asignacion de Habitaciones"
+	info = {
+	'formset':formset,
+	'pac_quirofano':pacientes_quirofano,
+	'pac_emergencia_adultos':pacientes_emergencia_adultos,
+	'pac_emergencia_pediatra':pacientes_emergencia_pediatra,
+	'pac_parto':pacientes_parto,
+	'pac_uci':pacientes_uci,
+	'pac_adicional':pacientes_adicional,
+	'pac_especial':pacientes_especial,
+	'pac_traslado':pacientes_traslado,
+	'pac_otros':pacientes_otros,
+	'titulo':titulo}
+	return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def censo(request):
