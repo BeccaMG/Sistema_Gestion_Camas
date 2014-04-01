@@ -10,53 +10,46 @@
   <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   <script>
   $(function() {
-    $( "li.solicitud_item" ).draggable({ 
+    $( "li.solicitud_item" ).draggable({ // Hacer draggable todos los pacientes
         revert: "invalid",
         helper: "clone"
     });
     
-    $( "tr.habitacion" ).droppable({
+    $( "tr.habitacion" ).droppable({ // Hacer droppable la tabla
       drop: function( event, ui ) {
-        var $item = ui.draggable;
-		
-		//alert();
-		
-        $( this ).find('input[name=nombre]['+$(this).find('input[name=id_hab]').val()+']').val($item.find('input[name=nombres]').val());
-        $( this ).find('input[name=num_historia]').val($item.find('input[name=num_historia]').val());
-        $( this ).find('input[name=procedencia]').val($item.find('input[name=procedencia]').val());
-        $( this ).find('input[name=medico]').val($item.find('input[name=nombre_doctor]').val());
-        $( this ).find('input[name=fecha]').val($item.find('input[name=fecha]').val());
+        var $item = ui.draggable; // item es el paciente arrastrado
+                                  // this es la tabla
+        $( this ).find('input[name=nombre]').val($item.find('input[name=nombres]').val())
+        $( this ).find('input[name=num_historia]').val($item.find('input[name=num_historia]').val())
+        $( this ).find('input[name=procedencia]').val($item.find('input[name=procedencia]').val())
+        $( this ).find('input[name=fecha]').val($item.find('input[name=fecha]').val())
         ui.draggable.fadeOut();
       }
-    });
-    
-    
+    });    
   });
   
   
-  
-  $(function() {
+  $(function() { // Acordeon que no cierra automaticamente
     $.fn.togglepanels = function(){
-  return this.each(function(){
-    $(this).addClass("ui-accordion ui-accordion-icons ui-widget ui-helper-reset")
-  .find("h3")
-    .addClass("ui-accordion-header ui-helper-reset ui-state-default ui-corner-top ui-corner-bottom")
-    .hover(function() { $(this).toggleClass("ui-state-hover"); })
-    
-    .click(function() {
-      $(this)
-        .toggleClass("ui-accordion-header-active ui-state-active ui-state-default ui-corner-bottom")
-        .find("> .ui-icon").toggleClass("ui-icon-triangle-1-e ui-icon-triangle-1-s").end()
-        .next().slideToggle();
-      return false;
-    })
-    .next()
-      .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom")
-      .hide();
-  });
-};
+        return this.each(function(){
+            $(this).addClass("ui-accordion ui-accordion-icons ui-widget ui-helper-reset")
+                .find("h3")
+                .addClass("ui-accordion-header ui-helper-reset ui-state-default ui-corner-top ui-corner-bottom")
+                .hover(function() { $(this).toggleClass("ui-state-hover"); })
+                .click(function() {
+                    $(this)
+                        .toggleClass("ui-accordion-header-active ui-state-active ui-state-default ui-corner-bottom")
+                        .find("> .ui-icon").toggleClass("ui-icon-triangle-1-e ui-icon-triangle-1-s").end()
+                        .next().slideToggle();
+                        return false;
+                })
+                .next()
+                .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom")
+                .hide();
+        });
+    };
 
-$("#notaccordion").togglepanels();
+    $("#notaccordion").togglepanels();
   });
   </script>
   

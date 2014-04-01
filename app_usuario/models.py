@@ -53,3 +53,7 @@ class Usuario(User):
         return (self.tipo == 'S')
     def is_resp(self):
         return (self.tipo == 'R')
+    
+
+class Medico(Usuario):
+    especialidad = models.CharField(max_length=128)

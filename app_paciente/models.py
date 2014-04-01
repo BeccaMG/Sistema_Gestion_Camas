@@ -3,6 +3,8 @@
 from django.db import models
 from django.utils import timezone
 
+from app_usuario.models import *
+
 
 SEXO = (
     (1,'Masculino'),
@@ -41,6 +43,8 @@ class Paciente(models.Model):
     email = models.CharField(max_length = 64)
     direccion = models.CharField(max_length = 128)
     tlf_casa = models.CharField(max_length = 11)
+    
+    medico = models.ForeignKey(Medico)
 
     contacto_rel = models.IntegerField(choices = RELACION)
     contacto_nom = models.CharField(max_length = 64)
