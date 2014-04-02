@@ -67,6 +67,21 @@
           <h5>DAR ALTAS</h5>
         </a>
       </div>
+            {% else %}
+                {% if usuario.is_sol %}
+          <div class="span2 offset4">
+            <a href="/habitacion/solicitar" class="btn">  
+              <img src="/static/img/menus/asignar.png" />
+              <h5>SOLICITAR HABITACION</h5>
+            </a>
+          </div>
+          <div class="span2 color">
+            <a href="/censo" class="btn">
+              <img src="/static/img/menus/censo.png" />
+              <h5>CENSO DE PACIENTES</h5>
+            </a>
+          </div>
+                {% endif %}
             {% endif %}
         {% endif %}
     {% endif %}
