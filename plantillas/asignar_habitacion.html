@@ -19,9 +19,7 @@
       drop: function( event, ui ) {
         var $item = ui.draggable; // item es el paciente arrastrado
                                   // this es la tabla
-								  
-		var id = $( this ).find('input[name=id]').val();
-		
+        var id = $( this ).find('input[name=id]').val();
         $( this ).find('input[name=form-'+id+'-nombre]').val($item.find('input[name=nombres]').val())
         $( this ).find('input[name=form-'+id+'-numero_historia]').val($item.find('input[name=num_historia]').val())
         $( this ).find('input[name=form-'+id+'-procedencia]').val($item.find('input[name=procedencia]').val())
@@ -58,7 +56,7 @@
   </script>
   
   <div class="row">
-    <div class="cuadroGrande span8 centrar">
+    <div class="cuadroGrande span8 centrar" style="margin-left: 10px">
       <div class="titulo">
         Asignaci&oacute;n de Camas
       </div>
@@ -66,7 +64,7 @@
       <p>Se muestran las habitaciones libres para asignar pacientes.</p>
       <p>Arrastre el paciente de las listas de la derecha hasta la habitaci&oacute;n que desea asignarle.</p>
       {% if formset.total_form_count > 0 %}
-      <table class="table table-bordered">
+      <table class="table table-bordered" style="border-right: 0">
         <tr>
             <th>N&uacute;mero de Habitaci&oacute;n</th>
             <th>N&uacute;mero de Historia</th>
@@ -82,10 +80,11 @@
 			<tr class="habitacion">
 				<input type="hidden" name="id" value="{{ forloop.counter0 }}" />
 				<td>
-					{{form.numero_habitacion}}
+                    {{form.numero_habitacion.as_hidden }}
+					<center>{{form.numero_habitacion.value }}</center>
 				</td>
 				<td>
-					{{form.numero_historia}}
+					<center>{{form.numero_historia}}</center>
 				</td>
 				<td>
 					{{form.nombre}}
@@ -99,6 +98,7 @@
 				<td>
 					{{form.procedencia}}
 				</td>
+                <td>hola</td>
 			</tr>
 			{% endfor %}
 		</form>
@@ -110,11 +110,11 @@
     </div>
     
     <!--  Lista de Pacientes    -->
-    <div class="cuadroGrande span4 centrar">
+    <div class="cuadroGrande span4 centrar" style="margin-left: 50px">
       <h4>Solicitudes de camas</h4><br>
       <div id="notaccordion">
         <h3><a href="#">Emergencia Adultos</a></h3>
-        <div>
+        <div id="adultos">
 			{% for pac in pac_emergencia_adultos %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
@@ -129,7 +129,7 @@
 			{% endfor %}
         </div>
         <h3><a href="#">Emergencia Pedi&aacute;trica</a></h3>
-        <div>
+        <div id="pediatra">
             {% for pac in pac_emergencia_pediatra %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
@@ -144,7 +144,7 @@
 			{% endfor %}
         </div>
         <h3>Quir&oacute;fano</h3>
-        <div>
+        <div id="quirofano">
             {% for pac in pac_quirofano %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
@@ -159,7 +159,7 @@
 			{% endfor %}
         </div>
         <h3>Sala de Partos</h3>
-        <div>
+        <div id="partos">
             {% for pac in pac_parto %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
@@ -174,7 +174,7 @@
 			{% endfor %}
         </div>
         <h3>UCI</h3>
-        <div>
+        <div id="uci">
             {% for pac in pac_uci %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
@@ -204,7 +204,7 @@
 			{% endfor %}
         </div>
         <h3>Especiales</h3>
-        <div>
+        <div id="especiales">
             {% for pac in pac_especial %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
@@ -218,8 +218,8 @@
 			</li>
 			{% endfor %}
         </div>
-		<h3>Translados</h3>
-        <div>
+		<h3>Traslados</h3>
+        <div id="traslado">
             {% for pac in pac_traslado %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
