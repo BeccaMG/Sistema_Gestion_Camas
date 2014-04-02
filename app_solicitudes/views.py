@@ -25,13 +25,13 @@ from forms import *
 # hora_en_segundos[6] -> Segundos en 6 horas
 hora_en_segundos = [0,3600,7200,10800,14400,18000,21600] 
 
+@login_required(login_url='/')
 def solicitar_habitacion(request):
     mensaje = ""
     msj_tipo = ""
     msj_info = ""
     if request.method == 'POST':
         form = SolicitarHabitacion(request.POST)
-        print "karen"
         if form.is_valid():
             
             pcd = form.cleaned_data
@@ -50,13 +50,13 @@ def solicitar_habitacion(request):
             if prueba:
                 s = Solicitud(paciente = prueba,
                          num_historia = s_num_historia,
-                         diagnostico = s_diagnostico,
-                         nombre_doctor = s_nombre_doctor,
+						diagnostico = s_diagnostico,
+						medico = Medico.objects.get(cedula = s_nombre_doctor),
                          fecha_salida = s_fecha_salida,
                          procedencia = s_procedencia,
                          observacion = s_observacion)
                 s.save()
-                return redirect('/emergencia/listar/todas')
+                return redirect('/sesion/iniciar/')
             else:
                 msj_tipo = "error"
                 msj_info = "El paciente no se encuentra registrado en el sistema."
