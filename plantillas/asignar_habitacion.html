@@ -56,7 +56,13 @@
   </script>
   
   <div class="row">
+
     <div class="cuadroGrande span8 centrar" style="margin-left: 10px">
+	  {% if asignados %}	
+		  <div class="{% if error %}habitacion_error{% else %}habitacion_info{% endif %}">
+			{{ asignados }}
+		  </div>
+	  {% endif %}
       <div class="titulo">
         Asignaci&oacute;n de Camas
       </div>
@@ -64,7 +70,7 @@
       <p>Se muestran las habitaciones libres para asignar pacientes.</p>
       <p>Arrastre el paciente de las listas de la derecha hasta la habitaci&oacute;n que desea asignarle.</p>
       {% if formset.total_form_count > 0 %}
-      <table class="table table-bordered" style="border-right: 0">
+      <table class="table table-bordered">
         <tr>
             <th>N&uacute;mero de Habitaci&oacute;n</th>
             <th>N&uacute;mero de Historia</th>
@@ -75,8 +81,10 @@
         </tr>
 		
 		<form method="post" action="">
+			{% csrf_token %}
 			{{ formset.management_form }}
 			{% for form in formset %}
+			{% if form.numero_habitacion.value %}
 			<tr class="habitacion">
 				<input type="hidden" name="id" value="{{ forloop.counter0 }}" />
 				<td>
@@ -98,11 +106,13 @@
 				<td>
 					{{form.procedencia}}
 				</td>
-                <td>hola</td>
 			</tr>
+			{% endif %}
 			{% endfor %}
+			<tr>
+				<td><input type="submit" value="Enviar" /></td>
+			</tr>
 		</form>
-		
       </table>
       {% else %}
       <h4>No hay habitaciones disponibles en este momento.</h4>
@@ -133,7 +143,7 @@
             {% for pac in pac_emergencia_pediatra %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Emergencia Pedi&aacute;trica">
+                <input type="hidden" name="procedencia" value="Emergencia Pediatrica">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
@@ -143,12 +153,12 @@
 			</li>
 			{% endfor %}
         </div>
-        <h3>Quir&oacute;fano</h3>
+        <h3>Quirofano</h3>
         <div id="quirofano">
             {% for pac in pac_quirofano %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Quir&oacute;fano">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">

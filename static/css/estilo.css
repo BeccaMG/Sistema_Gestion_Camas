@@ -100,3 +100,19 @@ td li {
     background-color: #000000;
     color: white;
 }
+
+.habitacion_info{
+	background: #92f986;
+	border: solid 1px #5ae54a;
+	padding:5px;
+	margin:10px;
+	text-align:center;
+}
+
+.habitacion_error{
+	background: #ff8b8b;
+	border: solid 1px #f64e4e;
+	padding:5px;
+	margin:10px;
+	text-align:center;
+}
