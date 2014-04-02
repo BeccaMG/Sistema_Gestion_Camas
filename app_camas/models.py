@@ -11,7 +11,7 @@ class Habitacion(models.Model):
 class Ingreso(models.Model):
     paciente =              models.ForeignKey(Paciente)
     habitacion =            models.ForeignKey(Habitacion)
-    fecha_ingreso =         models.DateTimeField()
+    fecha_ingreso =         models.DateTimeField(auto_now_add=True)
     fecha_estimada_salida = models.DateTimeField()
     
     def num_dias(self):

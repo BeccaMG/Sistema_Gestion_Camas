@@ -59,6 +59,11 @@
   
   <div class="row">
     <div class="cuadroGrande span8 centrar">
+	  {% if asignados %}	
+		  <div class="{% if error %}habitacion_error{% else %}habitacion_info{% endif %}">
+			{{ asignados }}
+		  </div>
+	  {% endif %}
       <div class="titulo">
         Asignaci&oacute;n de Camas
       </div>
@@ -77,6 +82,7 @@
         </tr>
 		
 		<form method="post" action="">
+			{% csrf_token %}
 			{{ formset.management_form }}
 			{% for form in formset %}
 			<tr class="habitacion">
@@ -101,8 +107,10 @@
 				</td>
 			</tr>
 			{% endfor %}
+			<tr>
+				<td><input type="submit" value="Enviar" /></td>
+			</tr>
 		</form>
-		
       </table>
       {% else %}
       <h4>No hay habitaciones disponibles en este momento.</h4>
