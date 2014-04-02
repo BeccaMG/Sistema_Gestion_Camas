@@ -41,19 +41,23 @@ def solicitar_habitacion(request):
             s_num_historia     = pcd['num_historia']
             s_diagnostico        = pcd['diagnostico']
             s_nombre_doctor      = pcd['nombre_doctor']
+            s_fecha             = pcd['fecha']
             s_fecha_salida       = pcd['fecha_salida']
             s_procedencia       = pcd['procedencia']
+            s_correo_solicitante = pcd['correo_solicitante']
             s_observacion        = pcd['observacion']
             
-            
             prueba = Paciente.objects.get(cedula = s_cedula)
+			
             if prueba:
                 s = Solicitud(paciente = prueba,
                          num_historia = s_num_historia,
-						diagnostico = s_diagnostico,
-						medico = Medico.objects.get(cedula = s_nombre_doctor),
+                        diagnostico = s_diagnostico,
+                        medico = Medico.objects.get(cedula = s_nombre_doctor),
+                        fecha = s_fecha,
                          fecha_salida = s_fecha_salida,
                          procedencia = s_procedencia,
+                         correo = s_correo_solicitante,
                          observacion = s_observacion)
                 s.save()
                 return redirect('/sesion/iniciar/')

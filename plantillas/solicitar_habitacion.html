@@ -71,7 +71,38 @@
           
           {% for e in form %}
           <tr>
-              {% if e.label == "FECHA ESTIMADA DE SALIDA" %}
+                {% if e.label == "FECHA ESTIMADA DE INGRESO" %}
+                <td>Fecha y hora de ingreso</td>
+                <td>
+                   <div id="ingreso_picker" 
+                        class="input-append">
+                    {{e}}
+                     <span  class="add-on">
+                      <i data-time-icon="icon-time"
+                          data-date-icon="icon-calendar"> 
+                       </i>
+                    </span>
+                    <script type="text/javascript">
+                       $(function() {
+                         $('#ingreso_picker').datetimepicker({
+                           language: 'pt-BR'
+                         });
+                        
+                        // Se cierra el calendario al seleccionar fecha
+                        $('#ingreso_picker').on('changeDate', function(e) {
+                          $('#ingreso_picker').datetimepicker('hide');
+                        });
+                        
+                    });
+                     </script>
+ 
+                </td>
+                <td>
+                  {{e.errors}}
+                 </td> 
+                
+               {% elif e.label == "FECHA ESTIMADA DE SALIDA" %}
+        
               <td>Fecha estimada de salida</td>
                 <td>
                   <div id="egreso_picker" 
@@ -113,9 +144,21 @@
           </tr>
           
           <tr>
+            <td>Correo solicitante</td>
+            <td> 
+                {{form.correo_solicitante}}
+            </td>
+            <td>
+              <span class="msj-error"> 
+                {{form.correo_solicitante.errors}}
+              </span>
+            </td>
+          </tr> 
+          
+          <tr>
             <td>Observaciones</td>
             <td> 
-				{{form.observacion}}
+                {{form.observacion}}
             </td>
             <td>
               <span class="msj-error"> 

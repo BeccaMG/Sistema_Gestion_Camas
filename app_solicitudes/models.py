@@ -17,10 +17,11 @@ PROCEDENCIA = (
 class Solicitud(models.Model):
     paciente        = models.OneToOneField(Paciente)
     num_historia    = models.IntegerField()
-    fecha           = models.DateTimeField(auto_now_add=True)
+    fecha           = models.DateTimeField()
     diagnostico     = models.CharField(max_length=50)
     medico          = models.ForeignKey(Medico)
     fecha_salida    = models.DateTimeField()
     procedencia     = models.IntegerField(choices=PROCEDENCIA)
+    correo          = models.CharField(max_length=140)
     observacion     = models.CharField(max_length=140, null = True)
     
