@@ -13,7 +13,6 @@ from django.shortcuts import render_to_response,redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Manejo de Informacion de esta aplicacion
-##from forms import *
 from models import *
 from forms import *
 
