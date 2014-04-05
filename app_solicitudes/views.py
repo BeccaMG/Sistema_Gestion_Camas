@@ -40,30 +40,37 @@ def solicitar_habitacion(request):
             s_apellidos        = pcd['apellidos']
             s_num_historia     = pcd['num_historia']
             s_diagnostico        = pcd['diagnostico']
-            s_nombre_doctor      = pcd['nombre_doctor']
+            s_doctor_cedula      = pcd['cedula_doctor']
+            #s_doctor_noombre      = pcd['nombre_doctor']
+            #s_doctor_apellido      = pcd['apellido_doctor']
             s_fecha             = pcd['fecha']
             s_fecha_salida       = pcd['fecha_salida']
             s_procedencia       = pcd['procedencia']
             s_correo_solicitante = pcd['correo_solicitante']
             s_observacion        = pcd['observacion']
             
-            prueba = Paciente.objects.get(cedula = s_cedula)
-			
-            if prueba:
-                s = Solicitud(paciente = prueba,
-                         num_historia = s_num_historia,
-                        diagnostico = s_diagnostico,
-                        medico = Medico.objects.get(cedula = s_nombre_doctor),
-                        fecha = s_fecha,
-                         fecha_salida = s_fecha_salida,
-                         procedencia = s_procedencia,
-                         correo = s_correo_solicitante,
-                         observacion = s_observacion)
-                s.save()
-                return redirect('/sesion/iniciar/')
-            else:
+            try:
+                newPaciente = Paciente.objects.get(cedula = s_cedula)
+                try:
+                    newMedico = Medico.objects.get(cedula = s_doctor_cedula)
+                    s = Solicitud(paciente = newPaciente,
+                            num_historia = s_num_historia,
+                            diagnostico = s_diagnostico,
+                            medico = newMedico,
+                            fecha = s_fecha,
+                            fecha_salida = s_fecha_salida,
+                            procedencia = s_procedencia,
+                            correo = s_correo_solicitante,
+                            observacion = s_observacion)
+                    s.save()
+                    return redirect('/')
+                except:
+                    msj_tipo = "error"
+                    msj_info = "El medico no se encuentra registrado en el sistema."
+            except:
                 msj_tipo = "error"
                 msj_info = "El paciente no se encuentra registrado en el sistema."
+            
         info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
         return render_to_response('solicitar_habitacion.html',info,context_instance=RequestContext(request))
     form = SolicitarHabitacion()

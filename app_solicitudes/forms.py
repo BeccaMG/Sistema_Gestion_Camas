@@ -12,7 +12,9 @@ class SolicitarHabitacion(forms.Form):
                 label = "FECHA ESTIMADA DE INGRESO",
                 widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss'}))
     diagnostico = forms.CharField(max_length = 64)
-    nombre_doctor = forms.CharField(max_length = 64)
+    cedula_doctor = forms.IntegerField(widget=forms.TextInput)
+   # nombre_doctor = forms.CharField(max_length = 64, required = False)
+   # apellido_doctor = forms.CharField(max_length = 64, required = False)
     fecha_salida = forms.DateTimeField(
                 label = "FECHA ESTIMADA DE SALIDA",
                 widget = forms.TextInput(attrs = {'placeholder':'dd/MM/aaaa hh:mm:ss','data-format':'dd/MM/yyyy hh:mm:ss'}))

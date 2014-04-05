@@ -24,6 +24,7 @@
             <td><span class="msj-error"> {{form.cedula.errors}} </span></td>
           </tr>
           <tr>
+          
           <td>Nombres</td>
             <td>{{form.nombres}}</td>
             <td>
@@ -50,7 +51,17 @@
           </tr>
           
           <tr>
-           <td>M&eacute;dico tratante</td>
+           <td>C&eacute;dula m&eacute;dico tratante</td>
+            <td>{{form.cedula_doctor}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.cedula_doctor.errors}}
+              </span>
+            </td>
+          </tr>
+<!--          
+          <tr>
+          <td>Nombre m&eacute;dico tratante</td>
             <td>{{form.nombre_doctor}}</td>
             <td>
               <span class="msj-error"> 
@@ -59,6 +70,16 @@
             </td>
           </tr>
           
+          <tr>
+            <td>Apellido m&eacute;dico tratante</td>
+            <td>{{form.apellido_doctor}}</td>
+            <td>
+              <span class="msj-error"> 
+                {{form.apellido_doctor.errors}}
+              </span>
+            </td>
+          </tr>
+-->     
           <tr>
            <td>Diagn&oacute;stico</td>
             <td>{{form.diagnostico}}</td>
