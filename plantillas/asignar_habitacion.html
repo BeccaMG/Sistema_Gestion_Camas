@@ -15,6 +15,9 @@
         helper: "clone"
     });
     
+    
+    $("#header ul").append('<li><a href="/user/messages"><span class="tab">Message Center</span></a></li>');
+    
     $( "tr.habitacion" ).droppable({ // Hacer droppable la tabla
       drop: function( event, ui ) {
         var $item = ui.draggable; // item es el paciente arrastrado
@@ -25,6 +28,8 @@
         $( this ).find('input[name=form-'+id+'-procedencia]').val($item.find('input[name=procedencia]').val())
         $( this ).find('input[name=form-'+id+'-fecha]').val($item.find('input[name=fecha_salida]').val())
         $( this ).find('input[name=form-'+id+'-nombre_medico]').val($item.find('input[name=medico]').val())
+        $( this ).find('img').attr("src", "/static/img/delete_en.png")
+        $( this ).find('a').attr("onclick", "deshacer(this);").attr("href", "#");
         ui.draggable.fadeOut();
       }
     });    
@@ -53,6 +58,24 @@
 
     $("#notaccordion").togglepanels();
   });
+  
+  function deshacer( item ) {
+    var $objeto = $( item ).parent().parent();
+    var id = $objeto.find('input[name=id]').val();
+    
+    
+//     var id = $( this ).find('input[name=id]').val();
+//         $( this ).find('input[name=form-'+id+'-nombre]').val($item.find('input[name=nombres]').val())
+//         $( this ).find('input[name=form-'+id+'-numero_historia]').val($item.find('input[name=num_historia]').val())
+//         $( this ).find('input[name=form-'+id+'-procedencia]').val($item.find('input[name=procedencia]').val())
+//         $( this ).find('input[name=form-'+id+'-fecha]').val($item.find('input[name=fecha_salida]').val())
+//         $( this ).find('input[name=form-'+id+'-nombre_medico]').val($item.find('input[name=medico]').val())
+    
+    $objeto.find("input").val('');
+    $objeto.find('input[name=id]').val(id);
+    $objeto.find('img').attr("src", "/static/img/delete_dis.png");
+    $objeto.find('a').removeAttr("onclick").removeAttr("href");
+  };
   </script>
   
   <div class="row">
@@ -75,9 +98,10 @@
             <th>N&uacute;mero de Habitaci&oacute;n</th>
             <th>N&uacute;mero de Historia</th>
             <th>Paciente</th>
-            <th>M&eacute;dico</th>
+            <th style="display:none;">M&eacute;dico</th>
             <th>Fecha estimada de salida</th>
             <th>Procedencia</th>
+            <td></td>
         </tr>
 		
 		<form method="post" action="">
@@ -97,7 +121,7 @@
 				<td>
 					{{form.nombre}}
 				</td>
-				<td>
+				<td style="display:none;">
 					{{form.nombre_medico}}
 				</td>
 				<td>
@@ -105,6 +129,9 @@
 				</td>
 				<td>
 					{{form.procedencia}}
+				</td>
+				<td>
+                    <a><img src="/static/img/delete_dis.png" /></a>
 				</td>
 			</tr>
 			{% endif %}
@@ -132,9 +159,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
@@ -147,13 +178,17 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
-        <h3>Quirofano</h3>
+        <h3>Quir&oacute;fano</h3>
         <div id="quirofano">
             {% for pac in pac_quirofano %}
 			<li class="solicitud_item">
@@ -162,9 +197,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+				<b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
 				<br>
 				{{pac.diagnostico}}
+				<br>
+				<i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+				<br>
+				<i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
@@ -177,9 +216,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
@@ -192,9 +235,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}}
 			</li>
 			{% endfor %}
         </div>
@@ -207,9 +254,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
@@ -222,9 +273,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
@@ -233,13 +288,17 @@
             {% for pac in pac_traslado %}
 			<li class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Translados">
+                <input type="hidden" name="procedencia" value="Traslados">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
@@ -252,9 +311,13 @@
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>{{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
-				<br>
-				{{pac.diagnostico}}
+                <b>Nro: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <br>
+                {{pac.diagnostico}}
+                <br>
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <br>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
 			{% endfor %}
         </div>
