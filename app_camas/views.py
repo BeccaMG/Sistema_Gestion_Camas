@@ -67,6 +67,8 @@ def asignar_habitacion(request):
 			info['asignados'] = 'Asignados los pacientes :D'
 		else:
 			info['error'] = 1
+			
+		return HttpResponseRedirect('/habitacion/asignar')
 	
 	pacientes_quirofano = Solicitud.objects.filter(procedencia=1)
 	pacientes_emergencia_pediatra = Solicitud.objects.filter(procedencia=2)

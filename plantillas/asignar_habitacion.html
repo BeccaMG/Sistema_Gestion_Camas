@@ -93,7 +93,8 @@
       <p>Se muestran las habitaciones libres para asignar pacientes.</p>
       <p>Arrastre el paciente de las listas de la derecha hasta la habitaci&oacute;n que desea asignarle.</p>
       {% if formset.total_form_count > 0 %}
-      <table class="table table-bordered">
+	  <form method="post" action="">
+		<table class="table table-bordered">
         <tr>
             <th>N&uacute;mero de Habitaci&oacute;n</th>
             <th>N&uacute;mero de Historia</th>
@@ -104,7 +105,6 @@
             <td></td>
         </tr>
 		
-		<form method="post" action="">
 			{% csrf_token %}
 			{{ formset.management_form }}
 			{% for form in formset %}
@@ -136,11 +136,9 @@
 			</tr>
 			{% endif %}
 			{% endfor %}
-			<tr>
-				<td><input type="submit" value="Enviar" /></td>
-			</tr>
-		</form>
       </table>
+	  <input class="btn btn-primary" type="submit" value="Asignar habitaciones" />
+	</form>
       {% else %}
       <h4>No hay habitaciones disponibles en este momento.</h4>
       {% endif %}
