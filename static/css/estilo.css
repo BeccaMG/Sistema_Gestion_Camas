@@ -116,3 +116,7 @@ td li {
 	margin:10px;
 	text-align:center;
 }
+
+.habitacion-activa {
+    background: #FFFFCC;
+}

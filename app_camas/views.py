@@ -22,7 +22,7 @@ from datetime import date
 @login_required(login_url='/')
 def asignar_habitacion(request):
 	
-	habitaciones_libres = Habitacion.objects.filter(libre=True)
+	habitaciones_libres = Habitacion.objects.filter(libre=True).order_by('numero')
 	HabitacionesFormSet = formset_factory(HabitacionForm,max_num = len(habitaciones_libres))
 	
 	info = {}
