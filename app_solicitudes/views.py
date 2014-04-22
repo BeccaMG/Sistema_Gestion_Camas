@@ -85,3 +85,8 @@ def solicitar_habitacion(request):
     form = SolicitarHabitacion()
     info = {'form':form}
     return render_to_response('solicitar_habitacion.html',info,context_instance=RequestContext(request))
+
+#@login_required(login_url='/')	
+#def listar_solicitudes(request):
+#	if (request.user):
+		

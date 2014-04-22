@@ -44,8 +44,6 @@ class Paciente(models.Model):
     direccion = models.CharField(max_length = 128)
     tlf_casa = models.CharField(max_length = 11)
     
-    medico = models.ManyToManyField(Medico)
-    
     contacto_rel = models.IntegerField(choices = RELACION)
     contacto_nom = models.CharField(max_length = 64)
     contacto_tlf = models.CharField(max_length = 11)

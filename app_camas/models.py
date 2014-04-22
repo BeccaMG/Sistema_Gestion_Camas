@@ -1,6 +1,5 @@
 from django.db import models
-from app_paciente.models import *
-from app_usuario.models import *
+from app_solicitudes.models import *
 from datetime import datetime
 
 # Create your models here.
@@ -9,10 +8,9 @@ class Habitacion(models.Model):
     libre =     models.BooleanField(default=True)
     
 class Ingreso(models.Model):
-    paciente =              models.ForeignKey(Paciente)
+    solicitud =             models.ForeignKey(Solicitud)
     habitacion =            models.ForeignKey(Habitacion)
     fecha_ingreso =         models.DateTimeField(auto_now_add=True)
-    fecha_estimada_salida = models.DateTimeField()
     
     def num_dias(self):
         today = datetime.today()

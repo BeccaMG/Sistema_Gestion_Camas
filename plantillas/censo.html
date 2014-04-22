@@ -36,7 +36,7 @@
       <br/>
       <h4><center> Al d&iacute;a {{ hoy }} </center></h4>
       </br>
-      {% if pacientes %}
+      {% if ingresos %}
       <table class="table table-bordered">
         <tr>
             <th>N&uacute;mero de Habitaci&oacute;n</th>
@@ -47,28 +47,31 @@
             <th>Fecha estimada de salida</th>
             <th>Procedencia</th>
         </tr>
-        {% for p in pacientes %}
+        {% for ingreso in ingresos %}
         
         <tr class="habitacion">
             <td>
-                {{ p.habitacion.numero }}
+                {{ ingreso.habitacion.numero }}
             </td>
             <td>
-                {{ p.fecha_ingreso }}
+                {{ ingreso.fecha_ingreso }}
             </td>
             <td class="coloreable" style="text-align: center">
-                {{ p.num_dias }}
+                {{ ingreso.num_dias }}
             </td>
             <td>
-                {{ p.paciente.nombres }} {{ p.paciente.apellidos }}
+                {{ ingreso.solicitud.paciente.nombres }} {{ ingreso.solicitud.paciente.apellidos }}
             </td>
             <td>
-				{{ p.paciente.medico.first_name }}
+                Dr. {{ ingreso.solicitud.medico.first_name }} {{ ingreso.solicitud.medico.last_name }}
             </td>
             <td>
-                {{ p.fecha_estimada_salida }}
+                {{ ingreso.solicitud.fecha_salida }}
             </td>
             <td>
+				{% with var as ingreso.solicitud.procedencia %}
+                   {{ procedencias.var }}
+				{% endwith %}
             </td>
         </tr>
         
