@@ -69,9 +69,7 @@
                 {{ ingreso.solicitud.fecha_salida }}
             </td>
             <td>
-				{% with var as ingreso.solicitud.procedencia %}
-                   {{ procedencias.var }}
-				{% endwith %}
+                {{ ingreso.procedencia }}
             </td>
         </tr>
         

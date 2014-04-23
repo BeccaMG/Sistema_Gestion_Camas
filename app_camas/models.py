@@ -12,11 +12,15 @@ class Ingreso(models.Model):
     habitacion =            models.ForeignKey(Habitacion)
     fecha_ingreso =         models.DateTimeField(auto_now_add=True)
     
+    def procedencia(self):
+        return PROCEDENCIA[self.solicitud.procedencia - 1][1]
+    
     def num_dias(self):
         today = datetime.today()
-        print today
         dias = today - self.fecha_ingreso
         total = dias.days
         if total < 1:
             total = 1
         return total
+
+    

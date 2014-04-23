@@ -70,15 +70,15 @@ def asignar_habitacion(request):
             
         return HttpResponseRedirect('/habitacion/asignar')
     
-    pacientes_quirofano = Solicitud.objects.filter(procedencia=1)
-    pacientes_emergencia_pediatra = Solicitud.objects.filter(procedencia=2)
-    pacientes_emergencia_adultos = Solicitud.objects.filter(procedencia=3)
-    pacientes_parto = Solicitud.objects.filter(procedencia=4)
-    pacientes_uci = Solicitud.objects.filter(procedencia=5)
-    pacientes_adicional = Solicitud.objects.filter(procedencia=6)
-    pacientes_especial = Solicitud.objects.filter(procedencia=7)
-    pacientes_traslado = Solicitud.objects.filter(procedencia=8)
-    pacientes_otros = Solicitud.objects.filter(procedencia=9)
+    pacientes_quirofano = Solicitud.objects.filter(procedencia=1, activa=True)
+    pacientes_emergencia_pediatra = Solicitud.objects.filter(procedencia=2, activa=True)
+    pacientes_emergencia_adultos = Solicitud.objects.filter(procedencia=3, activa=True)
+    pacientes_parto = Solicitud.objects.filter(procedencia=4, activa=True)
+    pacientes_uci = Solicitud.objects.filter(procedencia=5, activa=True)
+    pacientes_adicional = Solicitud.objects.filter(procedencia=6, activa=True)
+    pacientes_especial = Solicitud.objects.filter(procedencia=7, activa=True)
+    pacientes_traslado = Solicitud.objects.filter(procedencia=8, activa=True)
+    pacientes_otros = Solicitud.objects.filter(procedencia=9, activa=True)
     
     initials = []
     for libres in habitaciones_libres:
@@ -110,10 +110,9 @@ def asignar_habitacion(request):
 def censo(request):
     ingresos = Ingreso.objects.all()
     hoy = date.today
-    print PROCEDENCIAS
+ #   print PROCEDENCIAS
     info = {
         'ingresos':ingresos,
         'hoy':hoy,
-        'procedencias':PROCEDENCIAS,
         }
     return render_to_response('censo.html',info,context_instance=RequestContext(request))

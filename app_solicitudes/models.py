@@ -15,18 +15,6 @@ PROCEDENCIA = (
     (9,'Otros'),
 )
 
-PROCEDENCIAS = {
-1:'Quirofano',
-2:'Emergencia Pediatrica',
-3:'Emergencia Adultos',
-4:'Partos',
-5:'UCI',
-6:'Adicional',
-7:'Especial',
-8:'Traslado',
-9:'Otros'
-}
-
 class Solicitud(models.Model):
     paciente        = models.ForeignKey(Paciente)
     num_historia    = models.IntegerField()
