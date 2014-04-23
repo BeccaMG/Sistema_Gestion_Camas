@@ -110,7 +110,6 @@ def asignar_habitacion(request):
 def censo(request):
     ingresos = Ingreso.objects.all()
     hoy = date.today
- #   print PROCEDENCIAS
     info = {
         'ingresos':ingresos,
         'hoy':hoy,

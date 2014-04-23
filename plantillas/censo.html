@@ -46,6 +46,7 @@
             <th>M&eacute;dico</th>
             <th>Fecha estimada de salida</th>
             <th>Procedencia</th>
+			<th>Dar alta</th>
         </tr>
         {% for ingreso in ingresos %}
         
@@ -71,6 +72,9 @@
             <td>
                 {{ ingreso.procedencia }}
             </td>
+			<td>
+				<center><input type="button" class = "btn btn-primary" value = "Alta" ></center>
+			</td>
         </tr>
         
        {% endfor %}
