@@ -3,7 +3,7 @@
   <div class="row  text-center">
     <div class="botones">
     {% if usuario.is_admin or user.is_staff %}
-      <div class="span2 offset1">
+      <div class="span2 color">
         <a href="/habitacion/asignar" class="btn">  
           <img src="/static/img/menus/asignar.png" />
           <h5>ASIGNAR CAMA</h5>
@@ -13,6 +13,12 @@
         <a href="/censo" class="btn">
           <img src="/static/img/menus/censo.png" />
           <h5>CENSO</h5>
+        </a>
+      </div>
+	  <div class="span2 color">
+        <a href="/habitacion/solicitar" class="btn">  
+          <img src="/static/img/menus/carta_mail.png" />
+          <h5>SOLICITAR CAMA</h5>
         </a>
       </div>
       <div class="span2 color">
@@ -35,7 +41,7 @@
       </div>
     {% else %}
         {% if usuario.is_resp %}
-      <div class="span2 offset2">
+      <div class="span2 offset1">
         <a href="/emergencia/listar/todas" class="btn">
           <img src="/static/img/menus/censo.png" />
           <h5>CENSO</h5>
@@ -45,6 +51,12 @@
         <a href="/emergencia/listar/atencion" class="btn">
           <img src="/static/img/menus/altas.png" />
           <h5>ESTATUS DE ALTAS</h5>
+        </a>
+      </div>
+	  <div class="span2 color">
+        <a href="/habitacion/solicitar" class="btn">  
+          <img src="/static/img/menus/carta_mail.png" />
+          <h5>SOLICITAR CAMA</h5>
         </a>
       </div>
       <div class="span2 color">
@@ -71,7 +83,7 @@
                 {% if usuario.is_sol %}
           <div class="span2 offset4">
             <a href="/habitacion/solicitar" class="btn">  
-              <img src="/static/img/menus/asignar.png" />
+              <img src="/static/img/menus/carta_mail.png" />
               <h5>SOLICITAR HABITACION</h5>
             </a>
           </div>
