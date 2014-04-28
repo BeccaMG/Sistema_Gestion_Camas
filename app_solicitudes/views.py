@@ -33,6 +33,7 @@ def solicitar_habitacion(request):
     mensaje = ""
     msj_tipo = ""
     msj_info = ""
+    mnj_fecha = ""
     if request.method == 'POST':
         form = SolicitarHabitacion(request.POST)
         if form.is_valid():
