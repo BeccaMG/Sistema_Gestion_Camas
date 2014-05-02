@@ -15,14 +15,12 @@
     for (var i = 0; i < elements.length; i++) {
         coloreable = elements[i];
         num = coloreable.innerHTML;
-        if (num == 1) {
+        if (num <= 2) {
             coloreable.className += " verde";
-        } else if (num == 2) {
+        } else if (num <= 4) {
             coloreable.className += " amarillo";
-        } else if (num == 3) {
+        } else if (num >= 5) {
             coloreable.className += " rojo";
-        } else if (num > 3) {
-            coloreable.className += " negro";
         }
     }
   });
@@ -37,28 +35,22 @@
       <h4><center> Al d&iacute;a {{ hoy }} </center></h4>
       </br>
       {% if ingresos %}
-      <table class="table table-bordered">
+      <table class="table table-bordered centrado">
         <tr>
             <th>N&uacute;mero de Habitaci&oacute;n</th>
-            <th>Fecha de Ingreso</th>
-            <th>Nro. D&iacute;as</th>
             <th>Paciente</th>
             <th>M&eacute;dico</th>
             <th>Fecha estimada de salida</th>
+            <th>Nro. D&iacute;as en la habitaci&oacute;n</th>
+            <th>Nro. D&iacute;as en la instituci&oacute;n</th>
             <th>Procedencia</th>
 			<th>Dar alta</th>
         </tr>
         {% for ingreso in ingresos %}
         
-        <tr class="habitacion">
-            <td>
+        <tr style="text-align: center">
+            <td style="font-size: 18px; text-align: center">
                 {{ ingreso.habitacion.numero }}
-            </td>
-            <td>
-                {{ ingreso.fecha_ingreso }}
-            </td>
-            <td class="coloreable" style="text-align: center">
-                {{ ingreso.num_dias }}
             </td>
             <td>
                 {{ ingreso.solicitud.paciente.nombres }} {{ ingreso.solicitud.paciente.apellidos }}
@@ -66,8 +58,14 @@
             <td>
                 Dr. {{ ingreso.solicitud.medico.first_name }} {{ ingreso.solicitud.medico.last_name }}
             </td>
-            <td>
-                {{ ingreso.solicitud.fecha_salida }}
+            <td style="text-align: center; width: 100px">
+                {{ ingreso.solicitud.fecha_salida.day  }}/{{ ingreso.solicitud.fecha_salida.month  }}/{{ ingreso.solicitud.fecha_salida.year  }}
+            </td>
+            <td class="coloreable" style="text-align: center">
+                {{ ingreso.num_dias }}
+            </td>
+            <td class="coloreable" style="text-align: center">
+                {{ ingreso.num_dias }}
             </td>
             <td>
                 {{ ingreso.procedencia }}

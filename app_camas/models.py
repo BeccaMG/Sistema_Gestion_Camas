@@ -27,7 +27,7 @@ class Ingreso(models.Model):
         dias = today - self.fecha_ingreso
         total = dias.days
         if total < 1:
-            total = 1
+            total = 0
         return total
 
     

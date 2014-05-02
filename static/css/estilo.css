@@ -96,9 +96,14 @@ td li {
     background-color: #FF0000;
 }
 
-.negro{
-    background-color: #000000;
-    color: white;
+.coloreable  {
+    width: 100px;
+    text-align: center;
+}
+
+.centrado th,td,tr {
+    text-align: center;
+    vertical-align: middle;
 }
 
 .habitacion_info{
