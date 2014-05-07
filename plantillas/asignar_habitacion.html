@@ -30,7 +30,22 @@
         $( this ).find('a').attr("onclick", "deshacer(this);").attr("href", "#");
         ui.draggable.fadeOut();
       }
-    });    
+    });
+
+	$( ".papelera" ).droppable({
+      drop: function( event, ui ) {
+	  var $item = ui.draggable;
+		if (confirm("HOLA")) {
+			$.ajax({
+			  url: "/habitacion/eliminarSolicitud"
+			}).done(function() {
+			  alert("HOLA")
+			});
+		}
+		ui.draggable.fadeOut();
+      }
+    });
+    
   });
   
   $(function() { // Acordeon que no cierra automaticamente
@@ -142,7 +157,9 @@
     
     <!--  Lista de Pacientes    -->
     <div class="cuadroGrande span4 centrar" style="margin-left: 50px">
-      <h4>Solicitudes de camas</h4><br>
+  	  <h4>Solicitudes de camas</h4>
+	  <div style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;" class="papelera" width="42px" height="42px"> <img width="42px" height="42px" src="/static/img/papelera.png" /> </div>
+	  <br>
       <div id="notaccordion">
         <h3><a href="#">Emergencia Adultos</a></h3>
         <div id="adultos">

@@ -106,6 +106,12 @@ def asignar_habitacion(request):
         
     return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
 
+def borrar_habitacion(request):
+	if request.method == 'GET':
+		print "HOLAAA"
+	return render_to_response('censo.html',info,context_instance=RequestContext(request))
+		
+	
 @login_required(login_url='/')
 def censo(request):
     ingresos = Ingreso.objects.all()
