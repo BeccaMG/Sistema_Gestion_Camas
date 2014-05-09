@@ -29,5 +29,11 @@ class Ingreso(models.Model):
         if total < 1:
             total = 0
         return total
+        
+    def es_hoy(self):
+        today = datetime.today()
+        if (today == self.solicitud.fecha_salida):
+            return 1
+        return 0
 
     

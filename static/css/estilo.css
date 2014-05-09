@@ -96,6 +96,14 @@ td li {
     background-color: #FF0000;
 }
 
+.azul_claro{
+    background-color: #99FFFF;
+}
+
+.amarillo_claro{
+    background-color: #FFFF99;
+}
+
 .coloreable  {
     width: 100px;
     text-align: center;

@@ -24,6 +24,28 @@
         }
     }
   });
+  
+  $(function() {
+    var elements = document.getElementsByClassName("hidden-coloreable");
+    var coloreable;
+    for (var i = 0; i < elements.length; i++) {
+        coloreable = elements[i];
+        bool = coloreable.innerHTML;
+        if (bool == 1) {
+            $(elements[i]).parent().addClass("amarillo_claro");
+        }
+    }
+  });
+  
+  function dar_alta( item ) {
+    if (confirm("Realmente desea dar de alta a este paciente?")) {
+        $( item ).find('img').attr("src", "/static/img/alta_dis.png");
+    //     $( item ).innerHTML = "En proceso";
+        var $objeto = $( item ).parent().parent();
+        $objeto.removeClass();
+        $objeto.addClass("azul_claro");
+    }
+  }
   </script>
   
   <div class="row">
@@ -49,6 +71,9 @@
         {% for ingreso in ingresos %}
         
         <tr style="text-align: center">
+            <td class="hidden-coloreable" style="display: none;">
+                {{ ingreso.es_hoy }}
+            </td>
             <td style="font-size: 18px; text-align: center">
                 {{ ingreso.habitacion.numero }}
             </td>
@@ -70,8 +95,8 @@
             <td>
                 {{ ingreso.procedencia }}
             </td>
-			<td>
-				<center><input type="button" class = "btn btn-primary" value = "Alta" ></center>
+			<td style="text-align: center">
+				<a onclick="dar_alta(this);" href="#"><img class = "marginleft5 width40" src="/static/img/alta_en.png" /></a>
 			</td>
         </tr>
         
