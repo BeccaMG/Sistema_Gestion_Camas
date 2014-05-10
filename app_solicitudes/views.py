@@ -18,6 +18,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from models import *
 from forms import *
 
+from django.utils import simplejson
+from django.core import serializers
+
 # Cantidad de segundos en 1,2,..,6 horas
 # hora_en_segundos[0] -> Segundos en 0 horas
 # hora_en_segundos[1] -> Segundos en 1 hora
@@ -27,6 +30,18 @@ from forms import *
 # hora_en_segundos[6] -> Segundos en 6 horas
 hora_en_segundos = [0,3600,7200,10800,14400,18000,21600] 
 
+def buscar_paciente_cedula(request):
+    if request.method == 'POST':
+        c = request.POST['cedula']
+        try:
+            paciente = serializers.serialize('json', Paciente.objects.filter(cedula = c))
+            data = {
+                'result' : 'success',
+                'message' : paciente,
+            }
+        except ObjectDoesNotExist:
+            msj_info = "El paciente no se encuentra registrado en el sistema."
+        return HttpResponse(simplejson.dumps(data), content_type='application/json')
 
 @login_required(login_url='/')
 def solicitar_habitacion(request):

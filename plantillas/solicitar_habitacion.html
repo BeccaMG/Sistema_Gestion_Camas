@@ -3,28 +3,94 @@
   <!--Datetime Picker -->
   <script type="text/javascript"
     src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript"
+    src="/static/scripts/jquery.tipsy.js"></script>
+  <script type="text/javascript"
+    src="/static/scripts/spin.js"></script>
+  <script type="text/javascript"
+    src="/static/scripts/spin.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $("#buscador").click(function() {
+            var target = document.getElementById('spiner');
+            var spinner = new Spinner().spin();
+            target.appendChild(spinner.el);
+            
+            var objeto = $('#cedula');
+            $.ajax({
+                url : $(objeto).attr("action"),
+                type : $(objeto).attr("method"),
+                dataType: "json",
+                data : $(objeto).serialize(),
+                success : function(json) {
+                    spinner.stop();
+                    var arr_from_json = JSON.parse(json.message);
+                    mostrar_paciente(arr_from_json[0].fields);
+                },
+                error : function(xhr,errmsg,err) {
+                    spinner.stop();
+                    alert("error");
+                }
+            });
+            return false;
+        });
+        
+        $('#buscador').tipsy({gravity: 'w'});
+        
+        $('#cedula').submit(function() {
+            return false;
+        });
+    });
+    
+    
+    function mostrar_paciente( paciente ) {
+        $('#muestra_paciente').fadeIn();
+        $('#nombres_paciente').text(paciente.nombres);
+        $('#apellidos_paciente').text(paciente.apellidos);
+        $('#edad_paciente').text(paciente.edad);
+        $('#sexo_paciente').text(paciente.sexo);
+        $('#sexo_paciente').text(paciente.sexo);
+    }
+    
+  </script>
+  
   <link rel="stylesheet"
     href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet"
+    href="/static/css/tipsy.css">
+    
 {% endblock %} 
   {% block cuerpo %}
   {% if mensaje %}
     {{ mensaje }}
   {% endif %}
   <div class="row">
-    <div class="cuadroGrande span12 centrar">
-      <h4>
+    <h4>
         Solicitar habitaci&oacute;n
-      </h4>
-      <form class= "tablaAgregar" method="post" action="/habitacion/solicitar">
+    </h4>
+    </br>
+    
+    <div class="cuadroGrande span6 centrar">
+      <form id="cedula" class= "tablaAgregar" method="post" action="/buscar/paciente">
         {% csrf_token %}
         <table>
-          <tr>
-            <td>C&eacute;dula</td>
+         <tr>
+            <td>C&eacute;dula del paciente</td>
             <td>{{form.cedula}}</td>
+            <td><a href="#">
+                    <img id="buscador" 
+                        title='Buscar paciente con esta c&eacute;dula' 
+                        style="margin-left: 12px;" 
+                        src="/static/img/lupa.png"/>
+                </a>
+            </td>
+            <td><span id="spiner"></span><td>
             <td><span class="msj-error"> {{form.cedula.errors}} </span></td>
           </tr>
-          <tr>
+        </table>
+      </form>
           
+          <!--<tr>
           <td>Nombres</td>
             <td>{{form.nombres}}</td>
             <td>
@@ -59,7 +125,7 @@
               </span>
             </td>
           </tr>
-<!--          
+          
           <tr>
           <td>Nombre m&eacute;dico tratante</td>
             <td>{{form.nombre_doctor}}</td>
@@ -79,7 +145,7 @@
               </span>
             </td>
           </tr>
--->     
+   
           <tr>
            <td>Diagn&oacute;stico</td>
             <td>{{form.diagnostico}}</td>
@@ -187,18 +253,56 @@
                 {{form.observacion.errors}}
               </span>
             </td>
-          </tr>   
+          </tr>  -->
           
-          <tr>
+          <!--<tr>
             <td></td>
             <td>
               <input class="btn btn-primary" 
                      type="submit" 
                      value="Solicitar Habitaci&oacute;n" />
             </td>
-          </tr>
+          </tr>-->
         </table>
       </form>
     </div>
+    
+    <div id="muestra_paciente" class="span6 container" style="display: none">
+        <table style="text-align: left" width="100%" border=1>
+            <td>
+                foto
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Nombres:</td>
+                        <td id="nombres_paciente"></td>
+                    </tr>
+                    <tr>
+                        <td>Apellidos:</td>
+                        <td id="apellidos_paciente"></td>
+                    </tr>
+                    <tr>
+                        <td>Edad:</td>
+                        <td id="edad_paciente"></td>
+                    </tr>
+                    <tr>
+                        <td>Sexo:</td>
+                        <td id="sexo_paciente"></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha de Ingreso a la institucion:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Contacto:</td>
+                        <td id="contacto_paciente"></td>
+                    </tr>
+                </table>
+            </td>
+        </table>
+    </div>
+    
+    
   </div>
 {% endblock %}

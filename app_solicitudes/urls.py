@@ -5,4 +5,5 @@ from views import *
 urlpatterns = patterns('app_solicitudes.views',
     # Acesso a esperas
     url('^habitacion/solicitar$','solicitar_habitacion'),
+    url('^buscar/paciente$','buscar_paciente_cedula'),
 )
