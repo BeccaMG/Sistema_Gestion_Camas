@@ -33,14 +33,18 @@ hora_en_segundos = [0,3600,7200,10800,14400,18000,21600]
 def buscar_paciente_cedula(request):
     if request.method == 'POST':
         c = request.POST['cedula']
-        try:
-            paciente = serializers.serialize('json', Paciente.objects.filter(cedula = c))
+        paciente = serializers.serialize('json', Paciente.objects.filter(cedula = c))
+        hay = Paciente.objects.filter(cedula = c)
+        if hay:
             data = {
                 'result' : 'success',
                 'message' : paciente,
             }
-        except ObjectDoesNotExist:
-            msj_info = "El paciente no se encuentra registrado en el sistema."
+        else:
+            data = {
+                'result' : 'error',
+                'message' : 'La cedula ingresada no se encuentra en el sistema.',
+            }
         return HttpResponse(simplejson.dumps(data), content_type='application/json')
 
 @login_required(login_url='/')
