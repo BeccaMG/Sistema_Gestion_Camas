@@ -1,39 +1,48 @@
 from django.db import models
 from app_solicitudes.models import *
-from datetime import datetime
+from datetime import date
 
-ESTADO_ALTA = (
-    (1,'Activo'),
-    (2,'Proceso alta'),
-    (3,'Alta'),
+TIPO_HABITACION = (
+    ('H','Hospitalizacion'),
+    ('A','UCI-A'),
+    ('P','UCI-P'),
 )
 
-# Create your models here.
+ESTADO_HABITACION = (
+    ('D','Disponible'),
+    ('O','Ocupada'),
+    ('L','En proceso de limpieza'),
+    ('A','En proceso de alta'),
+    ('M','En mantenimiento'),
+)
+
 class Habitacion(models.Model):
-    numero =    models.CharField(max_length=6, unique=True)
-    libre =     models.BooleanField(default=True)
+    numero    = models.CharField(max_length=6, unique=True)
+    reservada = models.BooleanField(default=False)
+    estado    = models.CharField(max_length=1, choices=ESTADO_HABITACION)
+    tipo      = models.CharField(max_length=1, choices=TIPO_HABITACION)
+    razon     = models.CharField(max_length=140)
     
 class Ingreso(models.Model):
-    solicitud =             models.ForeignKey(Solicitud)
-    habitacion =            models.ForeignKey(Habitacion)
-    fecha_ingreso =         models.DateTimeField(auto_now_add=True)
-   # estado      =           models.IntegerField(choices = ESTADO_ALTA, default=1)
+    paciente      = models.ForeignKey(Paciente)
+    solicitud     = models.ForeignKey(Solicitud)
+    habitacion    = models.ForeignKey(Habitacion)
+    fecha_ingreso = models.DateField(auto_now_add=True)
+    alta          = models.BooleanField(default=False,blank=True)
     
     def procedencia(self):
         return PROCEDENCIA[self.solicitud.procedencia - 1][1]
     
     def num_dias(self):
-        today = datetime.today()
+        today = date.today()
         dias = today - self.fecha_ingreso
         total = dias.days
         if total < 1:
-            total = 0
+            total = 1
         return total
         
     def es_hoy(self):
-        today = datetime.today()
+        today = date.today()
         if (today == self.solicitud.fecha_salida):
             return 1
         return 0
-
-    

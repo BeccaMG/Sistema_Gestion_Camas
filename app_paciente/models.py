@@ -48,16 +48,9 @@ class Paciente(models.Model):
     contacto_nom = models.CharField(max_length = 64)
     contacto_tlf = models.CharField(max_length = 11)
 
-    foto = models.ImageField(upload_to = "/home/jlego/tds-gense/media/img/pacientes",blank = True)
-    signos_tmp = models.FloatField(default = 0,blank = True)
-    signos_fc = models.FloatField(default = 0,blank = True)
-    signos_fr = models.IntegerField(default = 0,blank = True)
-    signos_pa = models.IntegerField(default = 0,blank = True)
-    signos_pb = models.IntegerField(default = 0,blank = True)
-    signos_saod = models.FloatField(default = 0,blank = True)
-    enfermedades = models.ManyToManyField(Enfermedad, blank = True)
+    foto = models.ImageField(upload_to = "/static/img/pacientes/%d",default="/static/img/pacientes/person.gif")
+    
     def __unicode__(self):
-
         return "%s, %s" % (self.apellidos,self.nombres)
 
     def edad(self):
