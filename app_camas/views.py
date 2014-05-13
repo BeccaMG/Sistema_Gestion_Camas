@@ -21,7 +21,7 @@ from datetime import date
 @login_required(login_url='/')
 def asignar_habitacion(request):
     
-    habitaciones_libres = Habitacion.objects.filter(libre=True).order_by('numero')
+    habitaciones_libres = Habitacion.objects.filter(estado='D').order_by('numero')
     HabitacionesFormSet = formset_factory(HabitacionForm,max_num = len(habitaciones_libres))
     
     info = {}
@@ -55,7 +55,7 @@ def asignar_habitacion(request):
                 )
                 
                 ingreso.save()
-                hab.libre = False
+                hab.estado = 'O'
                 hab.save()
                 solicitud.activa = False
                 solicitud.save()                
@@ -106,10 +106,13 @@ def asignar_habitacion(request):
         
     return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
 
-def borrar_habitacion(request):
+def eliminar_solicitud(request):
 	if request.method == 'GET':
-		print "HOLAAA"
-	return render_to_response('censo.html',info,context_instance=RequestContext(request))
+		cedula = request.GET["cedula"]
+		pac = Paciente.objects.filter(cedula = cedula)
+		Solicitud.objects.filter(paciente = pac).delete()
+	
+	return render_to_response('censo.html',context_instance=RequestContext(request))
 		
 	
 @login_required(login_url='/')

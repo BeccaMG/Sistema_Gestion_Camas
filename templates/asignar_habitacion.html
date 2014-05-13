@@ -35,11 +35,13 @@
 	$( ".papelera" ).droppable({
       drop: function( event, ui ) {
 	  var $item = ui.draggable;
-		if (confirm("HOLA")) {
+		if (confirm("Esta seguro de que desea eliminar esta solicitud")) {
+			var cedula = $item.find('input[name=cedula]').val();
+			alert(cedula);
 			$.ajax({
-			  url: "/habitacion/eliminarSolicitud"
-			}).done(function() {
-			  alert("HOLA")
+			  method: "GET",
+			  url: "/habitacion/eliminarSolicitud",
+			  data : { cedula: cedula }
 			});
 		}
 		ui.draggable.fadeOut();
@@ -167,6 +169,7 @@
 			<li id={{pac.num_historia}} class="solicitud_item">
                 <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
                 <input type="hidden" name="procedencia" value="Emergencia Adultos">
+				<input type="hidden" name="cedula_paciente" value="{{ pac.paciente.cedula }}">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
                 <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
