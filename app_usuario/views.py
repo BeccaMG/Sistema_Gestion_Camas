@@ -21,17 +21,18 @@ from django.core.mail import EmailMessage
 
 # Create your views here.
 def sesion_iniciar(request):
+    
     if request.user.is_authenticated():
         info = {}
         if not request.user.is_staff:
-                    usuario = get_object_or_404(Usuario,cedula=request.user.username)
-                    info = {'usuario':usuario}
-                    print usuario.tipo
+                    usuario = get_object_or_404(Usuario, cedula=request.user.username)
+                    info = {'usuario': usuario}
         return render_to_response('loged.html',info,context_instance=RequestContext(request))
+    
     if request.method == 'POST':
         unombre = request.POST.get('unombre', 'userDefault')
         uclave  = request.POST.get('uclave', 'psswdDefault')
-        user = authenticate(username=unombre,password=uclave)
+        user = authenticate(username=unombre, password=uclave)
         
         #Si le doy a iniciar sesion y NO estoy en el home, tengo userDefault y
         #psswdDefault, redirecciono al home para introducir datos
@@ -108,9 +109,11 @@ def usuario_solicitar(request):
 
 @login_required(login_url='/')
 def usario_listarPendientes(request):    
-    listaP = Usuario.objects.filter(habilitado=False)
-    info = {'listaP':listaP} 
-    return render_to_response('usuariosPendientes.html',info,context_instance=RequestContext(request))
+    listaP = Usuario.objects.all()
+    info = {
+        'listaP':listaP
+        } 
+    return render_to_response('usuarios_pendientes.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def usario_listarRechazados(request):    
@@ -119,10 +122,12 @@ def usario_listarRechazados(request):
     return render_to_response('usuariosPendientes.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
-def usario_listar(request):    
-    listaU = Usuario.objects.filter(habilitado=True)
-    info = {'listaU':listaU}
-    return render_to_response('listaUsuarios.html',info,context_instance=RequestContext(request))
+def usuario_listar(request):    
+    listaU = Usuario.objects.all()
+    info = {
+        'listaU':listaU
+        }
+    return render_to_response('lista_usuarios.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def usuario_rechazar(request,cedulaU):
@@ -214,22 +219,25 @@ def usuario_crear(request):
             u_nombres          = pcd['nombres']
             u_apellidos        = pcd['apellidos']
             u_tipo		       = pcd['tipo']
-            u_sexo             = pcd['sexo']
-            u_cel              = pcd['cod_cel'] + pcd['num_cel']
-            u_direccion        = pcd['direccion']
-            u_tlf_casa         = pcd['cod_casa'] + pcd['num_casa']
             u_email            = pcd['email']
             u_email0           = pcd['email0']
             u_clave            = pcd['clave']
             u_clave0           = pcd['clave0']
             u_administrador    = pcd['administrador']
-            prueba = Usuario.objects.filter(cedula=u_cedula)
+            prueba = Usuario.objects.filter(username=u_cedula)
             prueba2 = (u_clave==u_clave0)
             if not prueba:
                 if prueba2:
                     prueba2 = (u_email==u_email0)
                     if prueba2:
-		              u = Usuario(username=u_cedula,cedula=u_cedula,first_name=u_nombres,habilitado=True,last_name=u_apellidos,tipo=u_tipo,administrador=u_administrador,sexo=u_sexo,tlf_cel=u_cel,direccion=u_direccion,tlf_casa=u_tlf_casa,email=u_email,password=u_clave)
+		              u = Usuario(
+                          username=u_cedula,
+                          first_name=u_nombres,
+                          last_name=u_apellidos,
+                          tipo=u_tipo,
+                          email=u_email,
+                          password=u_clave
+                          )
 		              u.is_active = True
 		              u.set_password(u_clave)
 		              if u_administrador == True:
@@ -246,27 +254,27 @@ def usuario_crear(request):
         	msj_info = "Error con el formulario."
         msj_tipo = "error"
         info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form}
-        return render_to_response('crearUsuario.html',info,context_instance=RequestContext(request))
+        return render_to_response('crear_usuario.html',info,context_instance=RequestContext(request))
     form = SolicitarCuenta()
     info = {'form':form}
-    return render_to_response('crearUsuario.html',info,context_instance=RequestContext(request))
+    return render_to_response('crear_usuario.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def usuario_deshabilitar(request,cedulaU):
-    usuario = get_object_or_404(Usuario,cedula=cedulaU)
+    #usuario = get_object_or_404(Usuario,cedula=cedulaU)
     usuario.is_active = False
     usuario.save()
     return redirect("/usuario/listar")
 
 @login_required(login_url='/')
 def usuario_habilitar(request,cedulaU):
-	usuario = get_object_or_404(Usuario,cedula=cedulaU)
+	#usuario = get_object_or_404(Usuario,cedula=cedulaU)
 	usuario.is_active = True
 	usuario.save()
 	return redirect("/usuario/listar")
 
 @login_required(login_url='/')
 def usuario_examinar(request,cedulaU):
-    usuario = get_object_or_404(Usuario,cedula=cedulaU)
+    #usuario = get_object_or_404(Usuario,cedula=cedulaU)
     info = {'usuario':usuario}
     return render_to_response('usuarioExaminar.html',info)

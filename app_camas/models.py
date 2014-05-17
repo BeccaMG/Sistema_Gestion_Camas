@@ -19,16 +19,20 @@ ESTADO_HABITACION = (
 class Habitacion(models.Model):
     numero    = models.CharField(max_length=6, unique=True)
     reservada = models.BooleanField(default=False)
+    libre     = models.BooleanField(default=False)
     estado    = models.CharField(max_length=1, choices=ESTADO_HABITACION)
     tipo      = models.CharField(max_length=1, choices=TIPO_HABITACION)
     razon     = models.CharField(max_length=140)
+    
+    class Meta:
+        verbose_name_plural = "Habitaciones"
     
 class Ingreso(models.Model):
     paciente      = models.ForeignKey(Paciente)
     solicitud     = models.ForeignKey(Solicitud)
     habitacion    = models.ForeignKey(Habitacion)
     fecha_ingreso = models.DateField(auto_now_add=True)
-    alta          = models.BooleanField(default=False,blank=True)
+    alta          = models.BooleanField(default=False)
     
     def procedencia(self):
         return PROCEDENCIA[self.solicitud.procedencia - 1][1]
