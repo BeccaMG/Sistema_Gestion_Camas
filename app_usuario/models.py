@@ -29,8 +29,11 @@ class Usuario(User):
     
 
 class Medico(Usuario):
-    especialidad = models.CharField(max_length=128)
+    codigo = models.IntegerField(max_length=3)
     
+    def codigo_str(self):
+        print str(self.codigo).zfill(3)
+        
     class Meta:
         verbose_name = "Medico"
         verbose_name_plural = "Medicos"
