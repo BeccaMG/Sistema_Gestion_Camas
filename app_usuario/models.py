@@ -25,6 +25,11 @@ class Usuario(User):
     tlf_casa      = models.CharField(max_length=11)
     habilitado    = models.BooleanField(default=False)
 
+    #def save(self):
+        #do_something()
+        #super(Blog, self).save(*args, **kwargs) # Call the "real" save() method.
+        #do_something_else()
+        
     def sexoR(self):
         resp = "Hombre"
         if (self.sexo == '2'):
@@ -56,4 +61,7 @@ class Usuario(User):
     
 
 class Medico(Usuario):
+    especialidad = models.CharField(max_length=128)
+    
+class Solicitante(Usuario):
     especialidad = models.CharField(max_length=128)
