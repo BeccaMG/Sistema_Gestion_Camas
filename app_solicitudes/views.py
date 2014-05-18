@@ -55,33 +55,26 @@ def solicitar_habitacion(request):
     mnj_fecha = ""
     if request.method == 'POST':
         form = SolicitarHabitacion(request.POST)
-        if form.is_valid():
-            
+        if form.is_valid():            
             pcd = form.cleaned_data
-            s_cedula           = pcd['cedula']
-            s_nombres          = pcd['nombres']
-            s_apellidos        = pcd['apellidos']
-            s_num_historia     = pcd['num_historia']
-            s_diagnostico        = pcd['diagnostico']
-            s_doctor_cedula      = pcd['cedula_doctor']
-            #s_doctor_noombre      = pcd['nombre_doctor']
-            #s_doctor_apellido      = pcd['apellido_doctor']
-            s_fecha             = pcd['fecha']
-            s_fecha_salida       = pcd['fecha_salida']
-            s_procedencia       = pcd['procedencia']
-            s_correo_solicitante = pcd['correo_solicitante']
-            s_observacion        = pcd['observacion']
+            s_cedula                = pcd['cedula']
+            s_diagnostico           = pcd['diagnostico']
+            s_cedula_doctor         = pcd['cedula_doctor']
+            s_fecha_ingreso         = pcd['fecha_ingreso']
+            s_fecha_salida          = pcd['fecha_salida']
+            s_procedencia           = pcd['procedencia']
+            s_correo_solicitante    = pcd['correo_solicitante']
+            s_observacion           = pcd['observacion']
             
             try:
                 newPaciente = Paciente.objects.get(cedula = s_cedula)
                 try:
-                    newMedico = Medico.objects.get(cedula = s_doctor_cedula)
-                    if (s_fecha <= s_fecha_salida):
+                    newMedico = Medico.objects.get(codigo = s_cedula_doctor)
+                    if (s_fecha_ingreso <= s_fecha_salida):
                         s = Solicitud(paciente = newPaciente,
-                                num_historia = s_num_historia,
-                                diagnostico = s_diagnostico,
                                 medico = newMedico,
-                                fecha = s_fecha,
+                                diagnostico = s_diagnostico,
+                                fecha_ingreso = s_fecha_ingreso,
                                 fecha_salida = s_fecha_salida,
                                 procedencia = s_procedencia,
                                 correo = s_correo_solicitante,

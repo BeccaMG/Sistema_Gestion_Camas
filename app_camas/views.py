@@ -46,12 +46,14 @@ def asignar_habitacion(request):
                 fecha = cdata['fecha']
                 procedencia = str(cdata['procedencia'])
                 
-                solicitud = Solicitud.objects.filter(num_historia=numero_historia)[0]
+                pac = Paciente.objects.filter(num_historia=numero_historia)[0]
+                sol = Solicitud.objects.filter(paciente=pac)[0]
                 hab = Habitacion.objects.filter(numero=numero_habitacion)[0]
                 
                 ingreso = Ingreso(
-                solicitud = solicitud,
-                habitacion = hab
+                    solicitud = sol,
+                    habitacion = hab,
+                    paciente = pac
                 )
                 
                 ingreso.save()
@@ -92,17 +94,18 @@ def asignar_habitacion(request):
     
     titulo = "Asignacion de Habitaciones"
     info = {
-    'pac_quirofano':pacientes_quirofano,
-    'pac_emergencia_adultos':pacientes_emergencia_adultos,
-    'pac_emergencia_pediatra':pacientes_emergencia_pediatra,
-    'pac_parto':pacientes_parto,
-    'pac_uci':pacientes_uci,
-    'pac_adicional':pacientes_adicional,
-    'pac_especial':pacientes_especial,
-    'pac_traslado':pacientes_traslado,
-    'pac_otros':pacientes_otros,
-    'titulo':titulo,
-    'formset':formset}
+        'pac_quirofano':pacientes_quirofano,
+        'pac_emergencia_adultos':pacientes_emergencia_adultos,
+        'pac_emergencia_pediatra':pacientes_emergencia_pediatra,
+        'pac_parto':pacientes_parto,
+        'pac_uci':pacientes_uci,
+        'pac_adicional':pacientes_adicional,
+        'pac_especial':pacientes_especial,
+        'pac_traslado':pacientes_traslado,
+        'pac_otros':pacientes_otros,
+        'titulo':titulo,
+        'formset':formset
+    }
         
     return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
 

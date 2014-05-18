@@ -86,8 +86,11 @@
   };
   </script>
   
+  
   <div class="row">
 
+  
+    <!--   Lista de habitaciones    -->
     <div class="cuadroGrande span8 centrar" style="margin-left: 10px">
 	  {% if asignados %}	
 		  <div class="{% if error %}habitacion_error{% else %}habitacion_info{% endif %}">
@@ -166,52 +169,51 @@
         <h3><a href="#">Emergencia Adultos</a></h3>
         <div id="adultos">
 			{% for pac in pac_emergencia_adultos %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Emergencia Adultos">
-				<input type="hidden" name="cedula_paciente" value="{{ pac.paciente.cedula }}">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
         <h3><a href="#">Emergencia Pedi&aacute;trica</a></h3>
         <div id="pediatra">
             {% for pac in pac_emergencia_pediatra %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Emergencia Pediatrica">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
         <h3>Quir&oacute;fano</h3>
         <div id="quirofano">
             {% for pac in pac_quirofano %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
                 <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-				<b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+				<b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
 				<br>
 				{{pac.diagnostico}}
 				<br>
@@ -224,115 +226,115 @@
         <h3>Sala de Partos</h3>
         <div id="partos">
             {% for pac in pac_parto %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Sala de Partos">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
         <h3>UCI</h3>
         <div id="uci">
             {% for pac in pac_uci %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="UCI">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
-                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}}
-			</li>
+                <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
+            </li>
 			{% endfor %}
         </div>
         <h3>Adicionales</h3>
         <div>
             {% for pac in pac_adicional %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Adicionales">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
         <h3>Especiales</h3>
         <div id="especiales">
             {% for pac in pac_especial %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Especiales">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
 		<h3>Traslados</h3>
         <div id="traslado">
             {% for pac in pac_traslado %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Traslados">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
         <h3>Otros</h3>
         <div>
             {% for pac in pac_otros %}
-			<li id={{pac.num_historia}} class="solicitud_item">
-                <input type="hidden" name="num_historia" value="{{pac.num_historia}}">
-                <input type="hidden" name="procedencia" value="Otros">
+			<li id={{pac.paciente.num_historia}} class="solicitud_item">
+                <input type="hidden" name="num_historia" value="{{pac.paciente.num_historia}}">
+                <input type="hidden" name="procedencia" value="Quirofano">
                 <input type="hidden" name="nombres" value="{{pac.paciente.nombres}} {{pac.paciente.apellidos}}">
                 <input type="hidden" name="fecha_salida" value="{{pac.fecha_salida}}">
-                <input type="hidden" name="medico" value="{{pac.medico.cedula}}">
-                <b>Nro. de Historia: {{pac.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
+                <input type="hidden" name="medico" value="{{pac.medico.codigo}}">
+                <b>Nro. de Historia: {{pac.paciente.num_historia}}</b> - {{pac.paciente.nombres}} {{pac.paciente.apellidos}}
                 <br>
                 {{pac.diagnostico}}
                 <br>
                 <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
-			</li>
+            </li>
 			{% endfor %}
         </div>
   

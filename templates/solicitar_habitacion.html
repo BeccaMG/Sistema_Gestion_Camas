@@ -111,13 +111,7 @@
                 {{form.cedula.as_hidden}}
             
             <tr>
-                <td>N&uacute;mero de historia</td>
-                <td>{{form.num_historia}}</td>
-                <td><span class="msj-error"> {{form.num_historia.errors}} </span></td>
-            </tr>
-            
-            <tr>
-            <td>C&eacute;dula m&eacute;dico tratante</td>
+            <td>C&oacute;digo del m&eacute;dico tratante</td>
                 <td>{{form.cedula_doctor}}</td>
                 <td>
                 <span class="msj-error"> 
@@ -125,27 +119,7 @@
                 </span>
                 </td>
             </tr>
-    <!--          
-            <tr>
-            <td>Nombre m&eacute;dico tratante</td>
-                <td>{{form.nombre_doctor}}</td>
-                <td>
-                <span class="msj-error"> 
-                    {{form.nombre_doctor.errors}}
-                </span>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>Apellido m&eacute;dico tratante</td>
-                <td>{{form.apellido_doctor}}</td>
-                <td>
-                <span class="msj-error"> 
-                    {{form.apellido_doctor.errors}}
-                </span>
-                </td>
-            </tr>
-    -->     
+
             <tr>
             <td>Diagn&oacute;stico</td>
                 <td>{{form.diagnostico}}</td>
@@ -159,7 +133,7 @@
             {% for e in form %}
             <tr>
                     {% if e.label == "FECHA ESTIMADA DE INGRESO" %}
-                    <td>Fecha y hora de ingreso</td>
+                    <td>Fecha estimada de ingreso&nbsp&nbsp</td>
                     <td>
                     <div id="ingreso_picker" 
                             class="input-append">

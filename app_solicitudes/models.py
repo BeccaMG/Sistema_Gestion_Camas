@@ -18,10 +18,7 @@ PROCEDENCIA = (
 
 class Solicitud(models.Model):
     paciente        = models.ForeignKey(Paciente)
-    solicitante     = models.ForeignKey(Usuario, 
-                                        related_name = 'solicitud_solicitante')
-    medico          = models.ForeignKey(Medico, 
-                                        related_name = 'solicitud_medico')
+    medico          = models.ForeignKey(Medico)
     fecha_solicitud = models.DateTimeField(auto_now_add=True)
     diagnostico     = models.CharField(max_length=50)
     fecha_ingreso   = models.DateField()
