@@ -32,22 +32,72 @@
       }
     });
 
+	$(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+	});
+		
 	$( ".papelera" ).droppable({
       drop: function( event, ui ) {
-	  var $item = ui.draggable;
+		var item = ui.draggable;
 		if (confirm("Esta seguro de que desea eliminar esta solicitud")) {
-			var cedula = $item.find('input[name=cedula]').val();
-			alert(cedula);
+			var objeto = $(item).find('input[name=num_historia]').val();
 			$.ajax({
-			  method: "GET",
-			  url: "/habitacion/eliminarSolicitud",
-			  data : { cedula: cedula }
+				url : 'eliminarSolicitud',
+				type : 'POST',
+				dataType: "json",
+				data : {num_historia:objeto},
+				success : function(json) {
+					if (json.result == 'success') {
+						alert("Solicitud eliminada con exito.");
+						ui.draggable.fadeOut();
+					} else {
+						alert("Error: No se pudo eliminar la solicitud.");
+					}
+				},
+				error : function(xhr,errmsg,err) {
+		
+					alert("Error: No se pudo eliminar la solicitud.");
+				}
+			  
 			});
-		}
-		ui.draggable.fadeOut();
+		} 
       }
-    });
-    
+	  
+	  });
+	
   });
   
   $(function() { // Acordeon que no cierra automaticamente
@@ -162,9 +212,20 @@
     
     <!--  Lista de Pacientes    -->
     <div class="cuadroGrande span4 centrar" style="margin-left: 50px">
-  	  <h4>Solicitudes de camas</h4>
-	  <div style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;" class="papelera" width="42px" height="42px"> <img width="42px" height="42px" src="/static/img/papelera.png" /> </div>
-	  <br>
+	
+	<div>
+		<div style="width:58%; float:left">
+			<h4>Solicitudes de camas</h4>
+		</div>
+		<div style="width:42%; float:right">
+			<div style="padding-top:10px;padding-bottom:10px;padding-left:42px;padding-right:42px;float:right" class="papelera"> 
+				<img width="48px" height="42px" src="/static/img/papelera.png" /> 
+			</div> 
+		</div>
+	</div>
+	
+	<div style="clear:both"></div>
+	  
       <div id="notaccordion">
         <h3><a href="#">Emergencia Adultos</a></h3>
         <div id="adultos">
@@ -179,7 +240,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -198,7 +259,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -217,7 +278,7 @@
 				<br>
 				{{pac.diagnostico}}
 				<br>
-				<i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+				<i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
 				<br>
 				<i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
 			</li>
@@ -236,7 +297,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -255,7 +316,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -274,7 +335,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>:{{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -293,7 +354,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -312,7 +373,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>
@@ -331,7 +392,7 @@
                 <br>
                 {{pac.diagnostico}}
                 <br>
-                <i><b>Salida estimada</b></i>: {{pac.fecha_salida.date}}
+                <i><b>Salida estimada</b></i>: {{pac.fecha_salida}}
                 <br>
                 <i><b>M&eacute;dico tratante</b></i>: {{pac.medico.first_name}} {{pac.medico.last_name}}
             </li>

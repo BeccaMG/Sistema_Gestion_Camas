@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^', include('app_camas.urls')),
     url(r'^', include('app_solicitudes.urls')),
     url(r'^', include('app_usuario.urls')),
+	url(r'^', include('app_estadisticas.urls')),
 
 
     ## COSAS DJANGISTICAS

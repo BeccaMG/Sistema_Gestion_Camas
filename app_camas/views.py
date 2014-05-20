@@ -16,6 +16,9 @@ from models import *
 from forms import *
 from app_solicitudes.models import *
 from datetime import date
+import pdb
+
+from django.utils import simplejson
 
 # Create your views here.
 @login_required(login_url='/')
@@ -110,14 +113,22 @@ def asignar_habitacion(request):
     return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
 
 def eliminar_solicitud(request):
-	if request.method == 'GET':
-		cedula = request.GET["cedula"]
-		pac = Paciente.objects.filter(cedula = cedula)
-		Solicitud.objects.filter(paciente = pac).delete()
-	
-	return render_to_response('censo.html',context_instance=RequestContext(request))
-		
-	
+    if request.method == 'POST':
+       # pdb.set_trace()
+        c = request.POST['num_historia']
+        pac = Paciente.objects.filter(num_historia = c)
+        hay = Solicitud.objects.filter(paciente = pac)
+        if hay:
+            hay.delete(),
+            data = {
+                'result' : 'success',
+            }
+        else:
+            data = {
+                'result' : 'error',
+            }
+        return HttpResponse(simplejson.dumps(data), content_type='application/json')
+    
 @login_required(login_url='/')
 def censo(request):
     ingresos = Ingreso.objects.all()
