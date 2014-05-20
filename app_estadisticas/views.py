@@ -9,8 +9,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from app_solicitudes.models import *
 from app_camas.models import *
-from datetime import date
+import datetime
+from django.utils import timezone
 
 from django.utils import simplejson
-# Create your views here.
 
+
+@login_required(login_url='/')
+def termometro(request):
+	camas_libres = Habitacion.objects.all().filter(estado='D')
+	now = timezone.now()
+	dos_dias = now - datetime.timedelta(days=2)
+	camas_verde = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_dias,fecha_ingreso__lte=now)
+	
+	print camas_verde
+	
+	return HttpResponse("hola")
+	
