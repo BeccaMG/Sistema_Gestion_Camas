@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% block estilos %}
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+{% endblock %}
+{% block cuerpo %}
+
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    var elements = document.getElementsByClassName("coloreable");
+    var coloreable;
+    for (var i = 0; i < elements.length; i++) {
+        coloreable = elements[i];
+        num = coloreable.innerHTML;
+        if (num <= 2) {
+            coloreable.className += " verde";
+        } else if (num <= 4) {
+            coloreable.className += " amarillo";
+        } else if (num >= 5) {
+            coloreable.className += " rojo";
+        }
+    }
+  });
+  
+  // Instantiate and draw our chart, passing in some options.
+	 
+      function selectHandler() {
+        var selectedItem = chart.getSelection()[0];
+        if (selectedItem) {
+          var topping = data.getValue(selectedItem.row, 0);
+          alert('The user selected ' + topping);
+        }
+      }
+  
+      google.visualization.events.addListener(chart, 'select', selectHandler);    
+      chart.draw(data, options);
+      chart2.draw(data2,options2);
+    }
+  </script>
+  
+  
+  <div class="row">
+	<div class="titulo">
+        Term&oacute;metro
+     </div>
+	 <br>
+	 <div class="text-right">
+      <a href="/estadisticas/{{inicio.day}}-{{inicio.month}}-{{inicio.year}}">
+        Ver Semana Anterior
+      </a> |
+      <a href="/estadisticas/">
+        Ver Semana Actual 
+      </a> |
+      <a href="/estadisticas/{{sig.day}}-{{sig.month}}-{{sig.year}}"> 
+        Siguiente Semana 
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <h3>B&uacute;squeda Espec&iacute;fica</h3>
+      Desde:
+      <span id="fecha_inicio" class="input-append">
+        <input data-format="dd-mm-aaaa" 
+               placeholder="dd-mm-aaaa" 
+               id="inicio" 
+               type="text">
+        </input>
+        <span class="add-on">
+          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+          </i>
+        </span>
+      </span>
+      <span id="error_inicio" class="errorlist"></span>
+      <br/>
+      <script type="text/javascript">
+        $(function() {
+          $('#fecha_inicio').datetimepicker({
+            pickTime: false
+          });
+		  
+		  // Se cierra el calendario al seleccionar fecha
+		  $('#fecha_inicio').on('changeDate', function(e) {
+		    $('#fecha_inicio').datetimepicker('hide');
+		  });	
+        });
+      </script>
+      Hasta:&nbsp;
+      <span id="fecha_fin" class="input-append">
+        <input data-format="dd-MM-yyyy" 
+               placeholder="dd-mm-yyyy" 
+               id="fin" 
+               type="text">
+        </input>
+        <span class="add-on">
+          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+          </i>
+        </span>
+      </span>
+      <span id="error_fin" class="errorlist"></span>
+      <br/>
+      <script type="text/javascript">
+        $(function() {
+          $('#fecha_fin').datetimepicker({
+            pickTime: false
+          });
+		  
+		  // Se cierra el calendario al seleccionar fecha
+		  $('#fecha_fin').on('changeDate', function(e) {
+		    $('#fecha_fin').datetimepicker('hide');
+		  });
+        });
+      </script>
+  
+      </script>
+        <div class="der">
+          <a id="ir_est" href="#" class="btn btn-primary">
+            Ver Per&iacute;odo
+          </a>
+          
+        <script>
+        function verificarFecha(valor) {
+	  var anoMin = 1902;
+	  var anoMax = (new Date()).getFullYear();
+
+	  var error = "";
+
+	  // regular expression to match required date format
+	  re = /^(\d{1,2})\-(\d{1,2})\-(\d{4})$/;
+
+	  if(valor != '') {
+	    if(regs = valor.match(re)) {
+	      if(regs[1] < 1 || regs[1] > 31) {
+		error = "Día inválido: " + regs[1];
+	      } else if(regs[2] < 1 || regs[2] > 12) {
+		error = "Mes inválido: " + regs[2];
+	      } else if(regs[3] < anoMin || regs[3] > anoMax) {
+		error = "Año inválido: " + regs[3];
+	      }
+	    } else {
+	      error = "Formato de fecha inválido: " + valor;
+	    }
+	  } else {
+	    error = "No se aceptan valores vacíos";
+	  }
+
+	  return error;
+	}
+        
+        </script>
+        <script>
+          $("#ir_est").click(function(){
+	    var inicio = $("#inicio").val();
+	    var fin = $("#fin").val()
+	    var error_inicio = verificarFecha(inicio);
+	    var error_fin = verificarFecha(fin);
+	    if (error_inicio != "" || error_fin != "") {
+	      $('#error_inicio').text(error_inicio);
+	      $('#error_fin').text(error_fin);
+	    } else {
+	      $("#ir_est").attr("href", "/estadisticas/" + 
+                                      inicio + "/" + 
+                                      fin);
+	    }
+          });      
+        </script>
+      </div>
+    </div>
+  
+	<div class="row">
+      {% if ingresos %}
+      <table  style="align:center;margin:20px 100px; overflow:scroll;height:100px;" >
+        <tr>
+            <th>{{ hoy.day}}/ {{hoy.month}} /{{hoy.year }}</th>
+        </tr>
+        {% for cama in camas_libres %}
+        
+        <tr style="text-align: center">
+		
+            <td style="text-align: center;background:#99FFFF">
+                {{ cama.numero }}
+            </td>
+            
+        </tr>
+        
+       {% endfor %}
+	   {% for cama in camas_verdes %}
+        
+        <tr style="text-align: center">
+		
+            <td style="text-align: center;background:#00CC33">
+                {{ cama.habitacion.numero }}
+            </td>
+            
+        </tr>
+        
+       {% endfor %}
+	   {% for cama in camas_amarillas %}
+        
+        <tr style="text-align: center">
+		
+            <td style="text-align: center;background:#FFFF00">
+                {{ cama.habitacion.numero }}
+            </td>
+            
+        </tr>
+		{% for cama in camas_rojas %}
+        
+        <tr style="text-align: center">
+		
+            <td style="text-align: center;background:#FF0000">
+                {{ cama.habitacion.numero }}
+            </td>
+            
+        </tr>
+        
+       {% endfor %}
+        
+       {% endfor %}
+      </table>
+      {% else %}
+      <h4>No existe ning&uacute;n intreso en la habitaci&oacute;n.</h4>
+      {% endif %}
+    
+  </div>
+{% endblock %}

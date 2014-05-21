@@ -16,7 +16,6 @@ from models import *
 from forms import *
 from app_solicitudes.models import *
 from datetime import date
-import pdb
 
 from django.utils import simplejson
 
@@ -112,6 +111,7 @@ def asignar_habitacion(request):
         
     return render_to_response('asignar_habitacion.html',info,context_instance=RequestContext(request))
 
+@login_required(login_url='/')
 def eliminar_solicitud(request):
     if request.method == 'POST':
        # pdb.set_trace()
