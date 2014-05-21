@@ -17,12 +17,27 @@ from django.utils import simplejson
 
 @login_required(login_url='/')
 def termometro(request):
-	camas_libres = Habitacion.objects.all().filter(estado='D')
-	now = timezone.now()
-	dos_dias = now - datetime.timedelta(days=2)
-	camas_verde = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_dias,fecha_ingreso__lte=now)
-	
-	print camas_verde
-	
-	return HttpResponse("hola")
-	
+    camas_libres = Habitacion.objects.all().filter(estado='D')
+    
+    now = timezone.now()
+    
+    dos_dias = now - datetime.timedelta(days=2)
+    cuatro_dias = now - datetime.timedelta(days=4)
+    cinco_dias = now - datetime.timedelta(days=5)
+    
+    camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_dias,fecha_ingreso__lte=now)  
+    camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_dias,fecha_ingreso__lte=dos_dias)  
+    camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cinco_dias)  
+    
+    ingresos = Ingreso.objects.all()
+    hoy = date.today
+    
+    info = {
+        'ingresos':ingresos,
+        'camas_libres':camas_libres,
+        'camas_verdes':camas_verdes,
+        'camas_amarillas':camas_amarillas,
+        'camas_rojas':camas_rojas,
+        'hoy':hoy,
+    }
+    return render_to_response('estadistica_termometro.html',info)
