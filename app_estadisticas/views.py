@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 # General HTML
 from django.shortcuts import render_to_response,redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template import RequestContext
 
 from app_solicitudes.models import *
 from app_camas.models import *
@@ -40,4 +41,4 @@ def termometro(request):
         'camas_rojas':camas_rojas,
         'hoy':hoy,
     }
-    return render_to_response('estadistica_termometro.html',info)
+    return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
