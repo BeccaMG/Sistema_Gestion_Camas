@@ -11,7 +11,7 @@ USUARIO = (
 
 # Create your models here.
 class Usuario(User):
-    tipo          = models.CharField(max_length = 1, choices = USUARIO)
+    tipo = models.CharField(max_length = 1, choices = USUARIO)
 
     def tipoR(self):
         return USUARIO[self.tipo][1]
@@ -32,8 +32,13 @@ class Medico(Usuario):
     codigo = models.IntegerField(max_length=3)
     
     def codigo_str(self):
-        print str(self.codigo).zfill(3)
+        return str(self.codigo).zfill(3)
+        
+    def __unicode__(self):
+        return "%s, %s (%s)" % (self.last_name, self.first_name, 
+                                str(self.codigo).zfill(3))
         
     class Meta:
         verbose_name = "Medico"
         verbose_name_plural = "Medicos"
+        

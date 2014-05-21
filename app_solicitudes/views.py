@@ -69,7 +69,7 @@ def solicitar_habitacion(request):
             try:
                 newPaciente = Paciente.objects.get(cedula = s_cedula)
                 try:
-                    newMedico = Medico.objects.get(codigo = s_cedula_doctor)
+                    newMedico = s_cedula_doctor
                     if (s_fecha_ingreso <= s_fecha_salida):
                         s = Solicitud(paciente = newPaciente,
                                 medico = newMedico,

@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.utils import timezone
-
+from datetime import date
 from app_usuario.models import *
 
 
@@ -35,6 +35,14 @@ class Paciente(models.Model):
     
     def __unicode__(self):
         return "%s, %s" % (self.apellidos,self.nombres)
+    
+    def ingreso(self):
+        today = date.today()
+        dias = today - self.fecha_ingreso_institucion
+        total = dias.days
+        if total < 1:
+            total = 1
+        return total
 
     def edad(self):
         edad = timezone.datetime.now().year - self.fecha_nacimiento.year

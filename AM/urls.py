@@ -10,6 +10,8 @@ urlpatterns = patterns('',
     url(r'^', include('app_solicitudes.urls')),
     url(r'^', include('app_usuario.urls')),
 	url(r'^', include('app_estadisticas.urls')),
+	
+	(r'^selectable/', include('selectable.urls')),
 
 
     ## COSAS DJANGISTICAS

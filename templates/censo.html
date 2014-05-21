@@ -1,53 +1,48 @@
 {% extends "base.html" %}
-{% block estilos %}
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-{% endblock %}
-{% block cuerpo %}
 
-  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+{% block scripts %}
   <script>
-  $(function() {
-    var elements = document.getElementsByClassName("coloreable");
-    var coloreable;
-    for (var i = 0; i < elements.length; i++) {
-        coloreable = elements[i];
-        num = coloreable.innerHTML;
-        if (num <= 2) {
-            coloreable.className += " verde";
-        } else if (num <= 4) {
-            coloreable.className += " amarillo";
-        } else if (num >= 5) {
-            coloreable.className += " rojo";
+    $(function() {
+        var elements = document.getElementsByClassName("coloreable");
+        var coloreable;
+        for (var i = 0; i < elements.length; i++) {
+            coloreable = elements[i];
+            num = coloreable.innerHTML;
+            if (num <= 2) {
+                coloreable.className += " verde";
+            } else if (num <= 4) {
+                coloreable.className += " amarillo";
+            } else if (num >= 5) {
+                coloreable.className += " rojo";
+            }
         }
-    }
-  });
-  
-  $(function() {
-    var elements = document.getElementsByClassName("hidden-coloreable");
-    var coloreable;
-    for (var i = 0; i < elements.length; i++) {
-        coloreable = elements[i];
-        bool = coloreable.innerHTML;
-        if (bool == 1) {
-            $(elements[i]).parent().addClass("amarillo_claro");
+    });
+    
+    $(function() {
+        var elements = document.getElementsByClassName("hidden-coloreable");
+        var coloreable;
+        for (var i = 0; i < elements.length; i++) {
+            coloreable = elements[i];
+            bool = coloreable.innerHTML;
+            if (bool == 1) {
+                $(elements[i]).parent().addClass("amarillo_claro");
+            }
         }
-    }
-  });
-  
-  function dar_alta( item ) {
-    if (confirm("Realmente desea dar de alta a este paciente?")) {
-        $( item ).find('img').attr("src", "/static/img/alta_dis.png");
-    //     $( item ).innerHTML = "En proceso";
-        var $objeto = $( item ).parent().parent();
-        $objeto.removeClass();
-        $objeto.addClass("azul_claro");
-    }
-  }
+    });
+    
+    function dar_alta( item ) {
+        if (confirm("Realmente desea dar de alta a este paciente?")) {
+            $( item ).find('img').attr("src", "/static/img/alta_dis.png");
+        //     $( item ).innerHTML = "En proceso";
+            var $objeto = $( item ).parent().parent();
+            $objeto.removeClass();
+            $objeto.addClass("azul_claro");
+        }
+    }  
   </script>
-  
+{% endblock %}
+
+{% block body %}
   <div class="row">
     <div class="cuadroGrande centrar">
       <div class="titulo">
@@ -70,7 +65,7 @@
         </tr>
         {% for ingreso in ingresos %}
         
-        <tr style="text-align: center">
+        <tr style="text-align: center" class="alta-{{ ingreso.alta }}">
             <td class="hidden-coloreable" style="display: none;">
                 {{ ingreso.es_hoy }}
             </td>
@@ -78,19 +73,19 @@
                 {{ ingreso.habitacion.numero }}
             </td>
             <td>
-                {{ ingreso.solicitud.paciente.nombres }} {{ ingreso.solicitud.paciente.apellidos }}
+                {{ ingreso.solicitud.paciente }}
             </td>
             <td>
-                Dr. {{ ingreso.solicitud.medico.first_name }} {{ ingreso.solicitud.medico.last_name }}
+                Dr. {{ ingreso.solicitud.medico }}
             </td>
             <td style="text-align: center; width: 100px">
-                {{ ingreso.solicitud.fecha_salida.day  }}/{{ ingreso.solicitud.fecha_salida.month  }}/{{ ingreso.solicitud.fecha_salida.year  }}
+                {{ ingreso.solicitud.salida }}
             </td>
             <td class="coloreable" style="text-align: center">
                 {{ ingreso.num_dias }}
             </td>
             <td class="coloreable" style="text-align: center">
-                {{ ingreso.num_dias }}
+                {{ ingreso.solicitud.paciente.ingreso }}
             </td>
             <td>
                 {{ ingreso.procedencia }}

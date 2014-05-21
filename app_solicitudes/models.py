@@ -28,5 +28,8 @@ class Solicitud(models.Model):
     observacion     = models.CharField(max_length=140, null = True, blank = True)
     activa        	= models.BooleanField(default=True)
     
+    def salida(self):
+        return self.fecha_salida.strftime("%d/%m/%y")
+        
     class Meta:
         verbose_name_plural = "Solicitudes"

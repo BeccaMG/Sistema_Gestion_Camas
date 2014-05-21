@@ -62,8 +62,8 @@ def asignar_habitacion(request):
                 ingreso.save()
                 hab.estado = 'O'
                 hab.save()
-                solicitud.activa = False
-                solicitud.save()                
+                sol.activa = False
+                sol.save()                
                 habitaciones_libres = Habitacion.objects.filter(libre=True)
             else:
                 info['asignados'] = info['asignados'] + '\n' + str(form.errors)

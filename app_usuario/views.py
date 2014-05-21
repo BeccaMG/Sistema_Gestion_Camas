@@ -25,8 +25,8 @@ def sesion_iniciar(request):
     if request.user.is_authenticated():
         info = {}
         if not request.user.is_staff:
-                    usuario = get_object_or_404(Usuario, cedula=request.user.username)
-                    info = {'usuario': usuario}
+            usuario = get_object_or_404(Usuario, username=request.user.username)
+            info = {'usuario': usuario}
         return render_to_response('loged.html',info,context_instance=RequestContext(request))
     
     if request.method == 'POST':
@@ -48,7 +48,7 @@ def sesion_iniciar(request):
                 login(request,user)
                 info = {}
                 if not user.is_staff:
-                    usuario = get_object_or_404(Usuario,cedula=request.user.username)
+                    usuario = get_object_or_404(Usuario,username=request.user.username)
                     info = {'usuario':usuario}
                 return render_to_response('loged.html',info,context_instance=RequestContext(request))
 

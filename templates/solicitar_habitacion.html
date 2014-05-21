@@ -1,14 +1,25 @@
 {% extends "base.html" %}
+
+{% block styles %}  
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/tipsy.css">    
+  <link rel="stylesheet" 
+   href="{{ STATIC_URL }}libs/jquery/themes/base/jquery-ui.css" type="text/css">
+  <link rel="stylesheet"
+   href="{{ STATIC_URL }}libs/datepicker/css/bootstrap-datetimepicker.min.css">
+  
+  <link href="{{ STATIC_URL }}selectable/css/dj.selectable.css" 
+        type="text/css" media="all" rel="stylesheet">
+{% endblock %} 
+
 {% block scripts %}
   <!--Datetime Picker -->
   <script type="text/javascript"
-    src="/static/libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
-  <script type="text/javascript"
-    src="/static/scripts/jquery.tipsy.js"></script>
-  <script type="text/javascript"
-    src="/static/scripts/spin.js"></script>
-  <script type="text/javascript"
-    src="/static/scripts/spin.min.js"></script>
+    src="{{ STATIC_URL }}libs/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+    
+  <script src="{{ STATIC_URL }}libs/spin/js/spin.js"></script>
+  <script src="{{ STATIC_URL }}libs/spin/js/spin.min.js"></script>   
+  <script src="{{ STATIC_URL }}libs/jquery/js/jquery.tipsy.js"></script>
+  <script src="{{ STATIC_URL }}selectable/js/jquery.dj.selectable.js"></script>
   
   <script>
     $(document).ready(function() {
@@ -62,14 +73,9 @@
     }
     
   </script>
-  
-  <link rel="stylesheet"
-    href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
-  <link rel="stylesheet"
-    href="/static/css/tipsy.css">    
 {% endblock %} 
 
-{% block cuerpo %}
+{% block body %}
   {% if mensaje %}
     {{ mensaje }}
   {% endif %}
@@ -111,7 +117,7 @@
                 {{form.cedula.as_hidden}}
             
             <tr>
-            <td>C&oacute;digo del m&eacute;dico tratante</td>
+            <td>M&eacute;dico tratante</td>
                 <td>{{form.cedula_doctor}}</td>
                 <td>
                 <span class="msj-error"> 
@@ -283,6 +289,4 @@
     </div>
     
   </div>
-        
-    
 {% endblock %}

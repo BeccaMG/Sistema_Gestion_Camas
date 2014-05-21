@@ -1,142 +1,137 @@
 {% extends "base.html" %}
-{% block estilos %}
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-{% endblock %}
-{% block cuerpo %}
 
-  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+{% block scripts %}  
   <script>
-  $(function() {
-    $( "li.solicitud_item" ).draggable({ // Hacer draggable todos los pacientes
-        revert: "invalid",
-        helper: "clone"
+    $(function() {
+        $( "li.solicitud_item" ).draggable({ // Hacer draggable todos los pacientes
+            revert: "invalid",
+            helper: "clone"
+        });
+        
+        $( "tr.habitacion" ).droppable({ // Hacer droppable la tabla
+            hoverClass: "habitacion-activa",
+            drop: function( event, ui ) {
+                var $item = ui.draggable; // item es el paciente arrastrado
+                                        // this es la tabla
+                var id = $( this ).find('input[name=id]').val();
+                $( this ).find('input[name=form-'+id+'-nombre]').val($item.find('input[name=nombres]').val())
+                $( this ).find('input[name=form-'+id+'-numero_historia]').val($item.find('input[name=num_historia]').val())
+                $( this ).find('input[name=form-'+id+'-procedencia]').val($item.find('input[name=procedencia]').val())
+                $( this ).find('input[name=form-'+id+'-fecha]').val($item.find('input[name=fecha_salida]').val())
+                $( this ).find('input[name=form-'+id+'-nombre_medico]').val($item.find('input[name=medico]').val())
+                $( this ).find('img').attr("src", "/static/img/delete_en.png")
+                $( this ).find('a').attr("onclick", "deshacer(this);").attr("href", "#");
+                ui.draggable.fadeOut();
+            }
+        });
+
+        $(document).ajaxSend(function(event, xhr, settings) {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            function sameOrigin(url) {
+                // url could be relative or scheme relative or absolute
+                var host = document.location.host; // host + port
+                var protocol = document.location.protocol;
+                var sr_origin = '//' + host;
+                var origin = protocol + sr_origin;
+                // Allow absolute or scheme relative URLs to same origin
+                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                    // or any other URL that isn't scheme relative or absolute i.e relative.
+                    !(/^(\/\/|http:|https:).*/.test(url));
+            }
+            
+            function safeMethod(method) {
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        
+        });
+            
+        $( ".papelera" ).droppable({
+          drop: function( event, ui ) {
+            var item = ui.draggable;
+            if (confirm("Esta seguro de que desea eliminar esta solicitud")) {
+                var objeto = $(item).find('input[name=num_historia]').val();
+                $.ajax({
+                    url : 'eliminarSolicitud',
+                    type : 'POST',
+                    dataType: "json",
+                    data : {num_historia:objeto},
+                    success : function(json) {
+                        if (json.result == 'success') {
+                            alert("Solicitud eliminada con exito.");
+                            ui.draggable.fadeOut();
+                        } else {
+                            alert("Error: No se pudo eliminar la solicitud.");
+                        }
+                    },
+                    error : function(xhr,errmsg,err) {
+            
+                        alert("Error: No se pudo eliminar la solicitud.");
+                    }
+                
+                });
+            } 
+          }
+        });
     });
     
-    $( "tr.habitacion" ).droppable({ // Hacer droppable la tabla
-      hoverClass: "habitacion-activa",
-      drop: function( event, ui ) {
-        var $item = ui.draggable; // item es el paciente arrastrado
-                                  // this es la tabla
-        var id = $( this ).find('input[name=id]').val();
-        $( this ).find('input[name=form-'+id+'-nombre]').val($item.find('input[name=nombres]').val())
-        $( this ).find('input[name=form-'+id+'-numero_historia]').val($item.find('input[name=num_historia]').val())
-        $( this ).find('input[name=form-'+id+'-procedencia]').val($item.find('input[name=procedencia]').val())
-        $( this ).find('input[name=form-'+id+'-fecha]').val($item.find('input[name=fecha_salida]').val())
-        $( this ).find('input[name=form-'+id+'-nombre_medico]').val($item.find('input[name=medico]').val())
-        $( this ).find('img').attr("src", "/static/img/delete_en.png")
-        $( this ).find('a').attr("onclick", "deshacer(this);").attr("href", "#");
-        ui.draggable.fadeOut();
-      }
+    $(function() { // Acordeon que no cierra automaticamente
+        $.fn.togglepanels = function(){
+            return this.each(function(){
+                $(this).addClass("ui-accordion ui-accordion-icons ui-widget ui-helper-reset")
+                    .find("h3")
+                    .addClass("ui-accordion-header ui-helper-reset ui-state-default ui-corner-top ui-corner-bottom")
+                    .hover(function() { $(this).toggleClass("ui-state-hover"); })
+                    .click(function() {
+                        $(this)
+                            .toggleClass("ui-accordion-header-active ui-state-active ui-state-default ui-corner-bottom")
+                            .find("> .ui-icon").toggleClass("ui-icon-triangle-1-e ui-icon-triangle-1-s").end()
+                            .next().slideToggle();
+                            return false;
+                    })
+                    .next()
+                    .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom")
+                    .hide();
+            });
+        };
+
+        $("#notaccordion").togglepanels();
     });
-
-	$(document).ajaxSend(function(event, xhr, settings) {
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    function sameOrigin(url) {
-        // url could be relative or scheme relative or absolute
-        var host = document.location.host; // host + port
-        var protocol = document.location.protocol;
-        var sr_origin = '//' + host;
-        var origin = protocol + sr_origin;
-        // Allow absolute or scheme relative URLs to same origin
-        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-            // or any other URL that isn't scheme relative or absolute i.e relative.
-            !(/^(\/\/|http:|https:).*/.test(url));
-    }
-    function safeMethod(method) {
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-
-    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
-        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-    }
-	});
-		
-	$( ".papelera" ).droppable({
-      drop: function( event, ui ) {
-		var item = ui.draggable;
-		if (confirm("Esta seguro de que desea eliminar esta solicitud")) {
-			var objeto = $(item).find('input[name=num_historia]').val();
-			$.ajax({
-				url : 'eliminarSolicitud',
-				type : 'POST',
-				dataType: "json",
-				data : {num_historia:objeto},
-				success : function(json) {
-					if (json.result == 'success') {
-						alert("Solicitud eliminada con exito.");
-						ui.draggable.fadeOut();
-					} else {
-						alert("Error: No se pudo eliminar la solicitud.");
-					}
-				},
-				error : function(xhr,errmsg,err) {
-		
-					alert("Error: No se pudo eliminar la solicitud.");
-				}
-			  
-			});
-		} 
-      }
-	  
-	  });
-	
-  });
-  
-  $(function() { // Acordeon que no cierra automaticamente
-    $.fn.togglepanels = function(){
-        return this.each(function(){
-            $(this).addClass("ui-accordion ui-accordion-icons ui-widget ui-helper-reset")
-                .find("h3")
-                .addClass("ui-accordion-header ui-helper-reset ui-state-default ui-corner-top ui-corner-bottom")
-                .hover(function() { $(this).toggleClass("ui-state-hover"); })
-                .click(function() {
-                    $(this)
-                        .toggleClass("ui-accordion-header-active ui-state-active ui-state-default ui-corner-bottom")
-                        .find("> .ui-icon").toggleClass("ui-icon-triangle-1-e ui-icon-triangle-1-s").end()
-                        .next().slideToggle();
-                        return false;
-                })
-                .next()
-                .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom")
-                .hide();
-        });
+    
+    // Funcion para devolver el paciente
+    function deshacer( item ) {
+        var $objeto = $( item ).parent().parent();
+        var id = $objeto.find('input[name=id]').val();    
+        var num_historia = $objeto.find('input[name=form-'+id+'-numero_historia]').val();
+        $objeto.find("input").val('');
+        $objeto.find('input[name=id]').val(id);
+        $objeto.find('img').attr("src", "/static/img/delete_dis.png");
+        $objeto.find('a').removeAttr("onclick").removeAttr("href");
+        $('#'+num_historia+'').fadeIn(1000);
     };
-
-    $("#notaccordion").togglepanels();
-  });
-  
-  // Funcion para devolver el paciente
-  function deshacer( item ) {
-    var $objeto = $( item ).parent().parent();
-    var id = $objeto.find('input[name=id]').val();    
-    var num_historia = $objeto.find('input[name=form-'+id+'-numero_historia]').val();
-    $objeto.find("input").val('');
-    $objeto.find('input[name=id]').val(id);
-    $objeto.find('img').attr("src", "/static/img/delete_dis.png");
-    $objeto.find('a').removeAttr("onclick").removeAttr("href");
-    $('#'+num_historia+'').fadeIn(1000);
-  };
   </script>
+{% endblock %}  
   
-  
+{% block body %}  
   <div class="row">
 
   
