@@ -26,9 +26,14 @@ def termometro(request):
     cuatro_dias = now - datetime.timedelta(days=4)
     cinco_dias = now - datetime.timedelta(days=5)
     
-    camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_dias,fecha_ingreso__lte=now)  
-    camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_dias,fecha_ingreso__lte=dos_dias)  
-    camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cinco_dias)  
+    nowS = str(now.date())
+    dos_diasS = str(dos_dias.date())
+    cuatro_diasS = str(cuatro_dias.date())
+    cinco_diasS = str(cinco_dias.date())
+	
+    camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
+    camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
+    camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)  
     
     ingresos = Ingreso.objects.all()
     hoy = date.today
