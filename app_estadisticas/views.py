@@ -12,7 +12,7 @@ from app_solicitudes.models import *
 from app_camas.models import *
 import datetime
 from django.utils import timezone
-
+import pdb
 from django.utils import simplejson
 
 # Termometro = {'fecha':camas}
@@ -27,7 +27,9 @@ def termometro(request):
     now = timezone.now()
     nowS = str(now.date())
     
-    if (nowS < Termometro.keys()[-1]):
+    #pdb.set_trace()
+    
+    if (nowS > Termometro.keys()[-1]):
     
         camas_libres = Habitacion.objects.all().filter(estado='D')
         dos_dias = now - datetime.timedelta(days=2)
@@ -45,6 +47,7 @@ def termometro(request):
         ingresos = Ingreso.objects.all()
         hoy = date.today
         
+        #pdb.set_trace()
         Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
         
         info = {

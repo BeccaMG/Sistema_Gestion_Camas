@@ -175,24 +175,38 @@
   
 	<div class="row">
       {% if ingresos %}
+	  
       <table  style="align:center;margin:20px 100px; overflow:scroll;height:100px;" >
 		{% for fecha,camas in Termometro.items %}
 		<tr> 
             <th>{{ fecha }} </th>
 			
 			{% for cama in camas %}
-			<!--	{% for num in cama %}
-				<tr style="text-align: center">
 				
-					<td style="text-align: center;background:#99FFFF">
-						{{ num }}
-					</td>
+				{% if forloop.counter == 1 %}
+					{% for num in cama %}
+					<tr style="text-align: center">
 					
-				</tr>
-				{% endfor %}-->
-				<td style="text-align: center;background:#99FFFF">
-						{{ cama }}
-					</td>
+						<td style="text-align: center;background:#99FFFF">
+							{{ num }}
+						</td>
+						
+					</tr>
+					{% endfor %}
+				{% endif %}
+				
+				{% if forloop.counter == 2 %}
+					{% for num in cama %}
+					<tr style="text-align: center">
+					
+						<td style="text-align: center;background:#ff0000">
+							{{ num }}
+						</td>
+						
+					</tr>
+					{% endfor %}
+				{% endif %}
+				
 		   {% endfor %}
 			
         </tr>
