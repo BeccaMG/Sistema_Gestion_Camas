@@ -27,6 +27,9 @@ class Habitacion(models.Model):
     
     class Meta:
         verbose_name_plural = "Habitaciones"
+        
+    def __unicode__(self):
+        return str(self.numero)
     
 class Ingreso(models.Model):
     paciente      = models.ForeignKey(Paciente)
