@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  
+  <!-- PRUEBA DE CARGA -->
+
+  <div class="row">
+
+    <div class="cuadroGrande cuadroGrande span12 centrar">
+	  {% if asignados %}	
+		  <div class="{% if error %}lista_solicitudes_error{% else %}lista_solicitudes_info{% endif %}">
+			{{ asignados }}
+		  </div>
+	  {% endif %}
+      <div class="titulo">
+        Solicitudes Activas
+      </div>
+      <br/>
+      <p>Se muestran las solicitudes pendientes por aprobaci&oacute;n hasta el momento</p>
+      {% if formset.total_form_count > 0 %}
+	  <form method="post" action="">
+		<table class="table table-bordered">
+        <tr>
+            <th>Nombre del paciente</th>
+            <th>Fecha de solicitud</th>
+			<th>Inicio de Ocupaci&oacute;n</th>
+            <th>Fin de Ocupaci&oacute;n</th>
+            <th>Procedencia</th>
+        </tr>
+		
+			{% csrf_token %}
+			{{ formset.management_form }}
+			{% for form in formset %}
+			{% if form.nombre.value %}
+			<tr class="solicitud">
+				<input type="hidden" name="id" value="{{ forloop.counter0 }}" />
+				<td style="font-size:150%;">
+                    {{form.nombre.as_hidden }}
+					{{form.nombre.value }}
+				</td>
+				<td style="font-size:150%;">
+                    {{form.fecha_solicitud.as_hidden }}
+					{{form.fecha_solicitud.value|date:"d/m/y" }}
+				</td>
+				<td style="font-size:150%;">
+                    {{form.fecha_ingreso.as_hidden }}
+					{{form.fecha_ingreso.value|date:"d/m/y"}}
+				</td>
+				<td style="font-size:150%;">
+                    {{form.fecha_salida.as_hidden }}
+					{{form.fecha_salida.value|date:"d/m/y" }}
+				</td>
+				<td style="font-size:150%;">
+                    {{form.procedencia.as_hidden }}
+					{{form.procedencia.value }}
+				</td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+      </table>
+	</form>
+      {% else %}
+      <h4>No hay solicitudes pendientes en este momento.</h4>
+      {% endif %}
+    </div>
+	
+{% endblock %}

@@ -13,6 +13,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 # General HTML
 from django.shortcuts import render_to_response,redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.forms.formsets import formset_factory
 
 # Manejo de Informacion de esta aplicacion
 from models import *
@@ -102,4 +103,27 @@ def solicitar_habitacion(request):
 #@login_required(login_url='/')	
 #def listar_solicitudes(request):
 #	if (request.user):
-		
+
+@login_required(login_url='/')	
+def lista_solicitudes(request):
+    
+    solicitudes_activas = Solicitud.objects.filter(activa=True).order_by('fecha_ingreso')
+    SolicitudesFormSet = formset_factory(SolicitudesForm,max_num = len(solicitudes_activas))
+    
+	#if (request.user):
+    
+    initials = []
+    for activas in solicitudes_activas:
+        initials.append(
+        {
+        'fecha_ingreso': activas.fecha_ingreso,'fecha_salida':activas.fecha_salida,
+        'fecha_solicitud': activas.fecha_solicitud,'procedencia': PROCEDENCIA[int(activas.procedencia)][1],
+        'nombre': str(activas.paciente),
+        })
+    
+    formset = SolicitudesFormSet(initial=initials )
+    
+    info = {
+    'formset':formset}
+
+    return render_to_response('lista_solicitudes.html',info,context_instance=RequestContext(request))
