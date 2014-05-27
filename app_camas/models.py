@@ -25,6 +25,9 @@ class Habitacion(models.Model):
     tipo      = models.CharField(max_length=1, choices=TIPO_HABITACION)
     razon     = models.CharField(max_length=140, blank = True)
     
+    def __unicode__(self):
+        return "%s" % (self.numero)
+    
     class Meta:
         verbose_name_plural = "Habitaciones"
         

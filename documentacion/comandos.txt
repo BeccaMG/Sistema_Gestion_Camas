@@ -35,9 +35,3 @@ Comandos Útiles
 	// Agregar aqui las tablas que se desean visualizar:
 	admin.site.register(Paciente)
 
-
-Diagrama de Casos de Uso:
-
-- No está actualizado, mediante este enlace se puede editar:
-http://www.gliffy.com/go/publish/3977401
-

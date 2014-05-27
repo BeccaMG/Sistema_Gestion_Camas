@@ -15,30 +15,50 @@ from django.utils import timezone
 
 from django.utils import simplejson
 
+# Termometro = {'fecha':camas}
+camas_prueba = Habitacion.objects.all().filter(estado='D')
+camas_prueba1 = Habitacion.objects.all().filter(estado='O')
+camas = [camas_prueba, camas_prueba1]
+Termometro = {'2014-05-24':camas, '2014-05-25':camas}
 
 @login_required(login_url='/')
 def termometro(request):
-    camas_libres = Habitacion.objects.all().filter(estado='D')
     
     now = timezone.now()
+    nowS = str(now.date())
     
-    dos_dias = now - datetime.timedelta(days=2)
-    cuatro_dias = now - datetime.timedelta(days=4)
-    cinco_dias = now - datetime.timedelta(days=5)
+    if (nowS < Termometro.keys()[-1]):
     
-    camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_dias,fecha_ingreso__lte=now)  
-    camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_dias,fecha_ingreso__lte=dos_dias)  
-    camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cinco_dias)  
-    
-    ingresos = Ingreso.objects.all()
-    hoy = date.today
-    
-    info = {
-        'ingresos':ingresos,
-        'camas_libres':camas_libres,
-        'camas_verdes':camas_verdes,
-        'camas_amarillas':camas_amarillas,
-        'camas_rojas':camas_rojas,
-        'hoy':hoy,
-    }
+        camas_libres = Habitacion.objects.all().filter(estado='D')
+        dos_dias = now - datetime.timedelta(days=2)
+        cuatro_dias = now - datetime.timedelta(days=4)
+        cinco_dias = now - datetime.timedelta(days=5)
+        
+        dos_diasS = str(dos_dias.date())
+        cuatro_diasS = str(cuatro_dias.date())
+        cinco_diasS = str(cinco_dias.date())
+        
+        camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
+        camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
+        camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)  
+        
+        ingresos = Ingreso.objects.all()
+        hoy = date.today
+        
+        Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
+        
+        info = {
+            'hoy':hoy,
+            'ingresos':ingresos,
+            'Termometro':Termometro,    
+        }
+    else:
+        ingresos = Ingreso.objects.all()
+        hoy = date.today
+        info = {
+            'Termometro':Termometro,
+            'ingresos':ingresos,
+            'hoy':hoy,
+        }
+        
     return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
