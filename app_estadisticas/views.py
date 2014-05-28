@@ -10,6 +10,8 @@ from django.template import RequestContext
 
 from app_solicitudes.models import *
 from app_camas.models import *
+from app_estadisticas.models import *
+
 import datetime
 from django.utils import timezone
 import pdb
@@ -17,12 +19,7 @@ import pdb
 from django.utils import simplejson
 
 # Termometro = {'fecha':camas}
-camas_libres = Habitacion.objects.all().filter(estado='D')
-camas_verdes = []
-camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O') 
-camas_rojas = []
-camas = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
-Termometro = {'2014-05-27':camas}
+
 
 @login_required(login_url='/')
 def termometro(request):
@@ -41,7 +38,7 @@ def termometro(request):
 		cuatro_diasS = str(cuatro_dias.date())
 		cinco_diasS = str(cinco_dias.date())
 		
-		camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
+		camas_verdes = Termometro.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
 		camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
 		camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)	
 		 
@@ -51,8 +48,6 @@ def termometro(request):
 			'Termometro':Termometro,	
 		}
 	else:
-	
-		hoy = date.today
 		info = {
 			'Termometro':Termometro,
 		}
