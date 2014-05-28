@@ -18,11 +18,11 @@ from django.utils import simplejson
 
 # Termometro = {'fecha':camas}
 camas_libres = Habitacion.objects.all().filter(estado='D')
-camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O') 
+camas_verdes = []
 camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O') 
-camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O') 
+camas_rojas = []
 camas = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
-Termometro = {'2014-05-26':camas}
+Termometro = {'2014-05-27':camas}
 
 @login_required(login_url='/')
 def termometro(request):
