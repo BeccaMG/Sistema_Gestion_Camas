@@ -61,7 +61,7 @@
   </div>
   
   <div class="row">
-    <div class="span6">
+    <div class="span4">
       <h3>B&uacute;squeda Espec&iacute;fica</h3>
       Desde:
       <span id="fecha_inicio" class="input-append">
@@ -173,14 +173,12 @@
       </div>
     </div>
   
-	<div class="row">
-      {% if ingresos %}
-	  
-      <table  style="align:center;margin:20px 100px; overflow:scroll;height:100px;" >
+	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
+		<table>
 		{% for fecha,camas in Termometro.items %}
-		<tr> 
+		 <td style="margin:auto;">
+		 <table style="margin:0px 20px;">
             <th>{{ fecha }} </th>
-			
 			{% for cama in camas %}
 				
 				{% if forloop.counter == 1 %}
@@ -199,8 +197,32 @@
 					{% for num in cama %}
 					<tr style="text-align: center">
 					
-						<td style="text-align: center;background:#ff0000">
-							{{ num }}
+						<td style="text-align: center;background:#00CC33">
+							{{ num.habitacion.numero }}
+						</td>
+						
+					</tr>
+					{% endfor %}
+				{% endif %}
+				
+				{% if forloop.counter == 3 %}
+					{% for num in cama %}
+					<tr style="text-align: center">
+					
+						<td style="text-align: center;background:#FFFF00">
+							{{ num.habitacion.numero }}
+						</td>
+						
+					</tr>
+					{% endfor %}
+				{% endif %}
+				
+				{% if forloop.counter == 4 %}
+					{% for num in cama %}
+					<tr style="text-align: center">
+					
+						<td style="text-align: center;background:#FF0000">
+							{{ num.habitacion.numero }}
 						</td>
 						
 					</tr>
@@ -208,59 +230,11 @@
 				{% endif %}
 				
 		   {% endfor %}
-			
-        </tr>
-<!--		
-			{% for cama in camas_libres %}
-			
-			<tr style="text-align: center">
-			
-				<td style="text-align: center;background:#99FFFF">
-					{{ cama.numero }}
-				</td>
-				
-			</tr>
-			
-		   {% endfor %}
-		   {% for cama in camas_verdes %}
-			
-			<tr style="text-align: center">
-			
-				<td style="text-align: center;background:#00CC33">
-					{{ cama.habitacion.numero }}
-				</td>
-				
-			</tr>
-			
-		   {% endfor %}
-		   {% for cama in camas_amarillas %}
-			
-			<tr style="text-align: center">
-			
-				<td style="text-align: center;background:#FFFF00">
-					{{ cama.habitacion.numero }}
-				</td>
-				
-			</tr>
-			   {% endfor %}
-			
-			{% for cama in camas_rojas %}
-			
-			<tr style="text-align: center">
-			
-				<td style="text-align: center;background:#FF0000">
-					{{ cama.habitacion.numero }}
-				</td>
-				
-			</tr>
-		   {% endfor %}
-		   -->
-		   {% endfor %}
-      </table>
-	  
-      {% else %}
-      <h4>No existe ning&uacute;n intreso en la habitaci&oacute;n.</h4>
-      {% endif %}
+		</table>	
+		</td>
+		 {% endfor %}
+		
+		</table>     
     
   </div>
 {% endblock %}
