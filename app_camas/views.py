@@ -141,7 +141,9 @@ def censo(request):
 
 def prueba(request):
     habs = Habitacion.objects.all().order_by('numero')
+    hoy = date.today
     info = { 
         'habs':habs,
+        'hoy':hoy,
         }
     return render_to_response('prueba.html',info,context_instance=RequestContext(request))
