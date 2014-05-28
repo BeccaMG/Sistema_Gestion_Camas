@@ -16,6 +16,7 @@ from models import *
 from forms import *
 from app_solicitudes.models import *
 from datetime import date
+from datetime import datetime
 
 from django.utils import simplejson
 
@@ -140,10 +141,9 @@ def censo(request):
     return render_to_response('censo.html',info,context_instance=RequestContext(request))
 
 def prueba(request):
-    habs = Habitacion.objects.all().order_by('numero')
-    hoy = date.today
-    info = { 
-        'habs':habs,
-        'hoy':hoy,
+    poll = Habitacion.objects.get(numero="600")
+    total = poll.history.as_of(datetime(2014, 05, 28, 14, 50, 0))
+    info = {
+        'total':total,
         }
     return render_to_response('prueba.html',info,context_instance=RequestContext(request))

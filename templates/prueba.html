@@ -5,11 +5,9 @@
 	{{ habs }}
     <div class="cuadroGrande centrar span8">
         <table class="table table-bordered">
-        {% for hab in habs %}
             {% cycle '<tr>' '' '' '' '' '' '' '' '' '' '' '' '' '' '' %}
-                <td class="{{ hab.estado }}">{{ hab.numero }}</td>
+                <td>{{ total }}</td>
             {% cycle '' '' '' '' '' '' '' '' '' '' '' '' '' '' '</tr>' %}
-        {% endfor %}
         </table>
     </div>
 </div>

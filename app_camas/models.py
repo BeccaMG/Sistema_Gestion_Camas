@@ -1,6 +1,7 @@
 from django.db import models
 from app_solicitudes.models import *
 from datetime import date
+from simple_history.models import HistoricalRecords
 
 TIPO_HABITACION = (
     ('H','Hospitalizacion'),
@@ -22,17 +23,20 @@ class Habitacion(models.Model):
     libre     = models.BooleanField(default=True)
     estado    = models.CharField(max_length=1, choices=ESTADO_HABITACION, 
                                  default = 'D')
-    tipo      = models.CharField(max_length=1, choices=TIPO_HABITACION)
+    tipo      = models.CharField(max_length=1, choices=TIPO_HABITACION,
+                                 default = 'H')
     razon     = models.CharField(max_length=140, blank = True)
+    history   = HistoricalRecords()
     
     def __unicode__(self):
         return "%s" % (self.numero)
-    
+        
+    def como_termometro(self,fecha):
+        return self.history.as_of(fecha)
+        
     class Meta:
         verbose_name_plural = "Habitaciones"
-        
-    def __unicode__(self):
-        return str(self.numero)
+
     
 class Ingreso(models.Model):
     paciente      = models.ForeignKey(Paciente)
