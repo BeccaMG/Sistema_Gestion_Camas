@@ -138,3 +138,10 @@ def censo(request):
         'hoy':hoy,
         }
     return render_to_response('censo.html',info,context_instance=RequestContext(request))
+
+def prueba(request):
+    habs = Habitacion.objects.all().order_by('numero')
+    info = { 
+        'habs':habs,
+        }
+    return render_to_response('prueba.html',info,context_instance=RequestContext(request))
