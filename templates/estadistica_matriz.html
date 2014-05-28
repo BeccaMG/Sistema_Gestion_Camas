@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock %}
+
+{% block body %}
+  
+	<div class="row">
+		<div class="titulo">
+			Matriz
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="cuadroGrande centrar span8">
+			<table class="table table-bordered">
+			{% for hab in habs %}
+				{% cycle '<tr>' '' '' '' '' '' '' '' '' '' '' '' '' '' '' %}
+					<td class="{{ hab.estado }}">{{ hab.numero }}</td>
+				{% cycle '' '' '' '' '' '' '' '' '' '' '' '' '' '' '</tr>' %}
+			{% endfor %}
+			</table>
+		</div>
+	</div>
+
+{% endblock %}

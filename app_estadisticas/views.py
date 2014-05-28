@@ -62,27 +62,16 @@ def termometro(request):
 @login_required(login_url='/')
 def matriz(request):
 	
+	hab_libre =  [ item for item in Habitacion.objects.all().filter(estado='D') ]
+	hab_alta = [ item for item in Habitacion.objects.all().filter(estado='A') ]
+	hab_ocu = [ item for item in Habitacion.objects.all().filter(estado='O') ]
+	hab_limp = [ item for item in Habitacion.objects.all().filter(estado='L') ]
+	hab_mant = [ item for item in Habitacion.objects.all().filter(estado='M') ]
+	
+	habs = hab_libre + hab_alta + hab_ocu + hab_limp + hab_mant
+	habs.sort( key = lambda x: x.numero , reverse = False )
 	info = {}
-	now = timezone.now()
-	nowS = str(now.date())
-	
-	dos_dias = now - datetime.timedelta(days=2)
-	cuatro_dias = now - datetime.timedelta(days=4)
-	cinco_dias = now - datetime.timedelta(days=5)
-	
-	dos_diasS = str(dos_dias.date())
-	cuatro_diasS = str(cuatro_dias.date())
-	cinco_diasS = str(cinco_dias.date())
-	
-	camas_libres = [ {'hab': item , 'tipo' : 'L' } for item in Habitacion.objects.all().filter(estado='D') ]
-	camas_verdes = [ {'hab': item.habitacion , 'tipo' : 'V' } for item in Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS) ]
-	camas_amarillas = [ {'hab': item.habitacion , 'tipo' : 'A' } for item in Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)	 ]
-	camas_rojas = [ {'hab': item.habitacion , 'tipo' : 'R' } for item in Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)  ]	
-	
-	camas = camas_libres + camas_verdes + camas_amarillas + camas_rojas
-	
-	#pdb.set_trace()
-	info['camas'] = camas.sort( key = lambda x: x['hab'].numero , reverse = False )
+	info['habs'] = habs
 	
 	return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
 	
