@@ -2,19 +2,19 @@
 
 {% block styles %}
 <!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}libs/jquery/themes/dataTables/jquery.dataTables.css">
 {% endblock %}
 
 {% block scripts %}
 <!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="http://jquery-datatables-column-filter.googlecode.com/svn/trunk/media/js/jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript" charset="utf8" src="{{ STATIC_URL }}libs/jquery/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="{{ STATIC_URL }}libs/jquery/js/jquery.dataTables.columnFilter.js"></script>
 
 <script> 
    $(document).ready(function() {
     $('#tabla_censo').dataTable( {
         "paging":   false,
-        "scrollY":  300,
+        "scrollY":  250,
         "info":     false,
         "autoWidth": false
        
@@ -143,7 +143,7 @@
                        {{ ingreso.procedencia }}
                   </td>
                   <td alt="{{ ingreso.id }}" class="{{ ingreso.id }}">
-                      <a onclick="dar_alta(this);" href="#"><img class = "marginleft5 width40" src="/static/img/alta_en.png" /></a>
+                      <a onclick="dar_alta(this);" href="#"><img class="marginleft5 width40" src="/static/img/alta_en.png" /></a>
                   </td>
                 </tr>
                 {% endfor %}

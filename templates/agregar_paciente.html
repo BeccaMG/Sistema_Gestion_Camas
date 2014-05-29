@@ -1,4 +1,5 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+
 {% block scripts %}
   <!--Datetime Picker -->
   <script type="text/javascript"
@@ -7,19 +8,19 @@
     href="/static/libs/datepicker/css/bootstrap-datetimepicker.min.css">
 {% endblock %} 
 
-{% block cuerpo %}
+{% block body %}
   <div class="row">
     <div class="cuadroGrande span12 centrar">
       <h4>Agregar Paciente</h4>
       <form id="formulario" 
             class="tablaAgregar" 
             method="post"
-            action="/emergencia/agregar">
+            action="/paciente/agregar">
         {% csrf_token %}
         <table>
           {% for e in form %}
             <tr>
-              {% if e.label == "FECHA Y HORA DE INGRESO" %}
+              {% if e.label == "FECHA DE NACIMIENTO" %}
                 <td>
                 {{e.label}}
                 </td>

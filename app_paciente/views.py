@@ -22,23 +22,21 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 @login_required(login_url='/')
-def paciente_agregar(request):
+def agregar_paciente(request):
     mensaje = ""
+    
     if request.method == 'POST':
-        form = AgregarPacienteForm(request.POST)
+        form = agregar_paciente_form(request.POST)
         if form.is_valid():
             pcd = form.cleaned_data
+            p_num_historia     = pcd['num_historia']
+            p_tipo_cedula      = pcd['tipo_cedula']
             p_cedula           = pcd['cedula']
             p_nombres          = pcd['nombres']
             p_apellidos        = pcd['apellidos']
             p_sexo             = pcd['sexo']
             p_fecha_nacimiento = pcd['fecha_nacimiento']
-            p_cel              = pcd['cod_cel'] + pcd['num_cel']
-            p_email            = pcd['email']
-            p_direccion        = pcd['direccion']
-            p_tlf_casa         = pcd['cod_tlf_casa'] + pcd['num_tlf_casa']
-            p_contacto_nombre  = pcd['contacto_nombre']
-            p_contacto_tlf     = pcd['contacto_cod_tlf'] + pcd['contacto_num_tlf']
+            p_fecha_ingreso    = pcd['fecha_ingreso']
             prueba = Paciente.objects.filter(cedula=p_cedula)
             if not prueba:
                 p = Paciente(cedula=p_cedula,nombres=p_nombres,apellidos=p_apellidos,sexo=p_sexo,fecha_nacimiento=p_fecha_nacimiento,tlf_cel=p_cel,email=p_email,direccion=p_direccion,tlf_casa=p_tlf_casa,contacto_nom=p_contacto_nombre,contacto_tlf=p_contacto_tlf)
@@ -48,9 +46,12 @@ def paciente_agregar(request):
                 mensaje = "Ya hay un paciente registrado con esa cedula"                
         info = {'form':form,'mensaje':mensaje}
         return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
-    form = AgregarPacienteForm()
-    info = {'form':form}
-    return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
+    
+    form = agregar_paciente_form()
+    info = {
+        'form':form
+        }
+    return render_to_response('agregar_paciente.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def paciente_listarPacientes(request):    
