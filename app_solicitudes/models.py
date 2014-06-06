@@ -31,5 +31,8 @@ class Solicitud(models.Model):
     def salida(self):
         return self.fecha_salida.strftime("%d/%m/%y")
         
+    def procedenciatex(self):
+        return PROCEDENCIA[self.procedencia -1][1]
+        
     class Meta:
         verbose_name_plural = "Solicitudes"

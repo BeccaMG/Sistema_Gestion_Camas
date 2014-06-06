@@ -9,7 +9,6 @@ from selectable.forms import AutoCompleteWidget
 class SolicitarHabitacion(forms.Form):
     cedula          = forms.IntegerField(widget = forms.TextInput)
     diagnostico     = forms.CharField(max_length = 64)
-    #cedula_doctor   = forms.IntegerField(widget = forms.TextInput)
     cedula_doctor   = forms.CharField(
                         label='Type the name of a fruit (AutoCompleteWidget)',
                         widget = AutoCompleteWidget(MedicoLookup),
