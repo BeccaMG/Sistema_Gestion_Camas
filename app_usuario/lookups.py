@@ -9,4 +9,12 @@ class MedicoLookup(ModelLookup):
                      'first_name__icontains', 
                      'last_name__icontains',)
     
+    def get_item_value(self, item):
+        # Display for currently selected item
+        return item.codigo
+
+    def get_item_label(self, item):
+        # Display for choice listings
+        return u"%s" % item.first_name
+
 registry.register(MedicoLookup)
