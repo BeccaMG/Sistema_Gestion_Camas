@@ -2,19 +2,19 @@
 
 {% block styles %}
 <!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}libs/jquery/themes/dataTables/jquery.dataTables.css">
 {% endblock %}
 
 {% block scripts %}
 <!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="http://jquery-datatables-column-filter.googlecode.com/svn/trunk/media/js/jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript" charset="utf8" src="{{ STATIC_URL }}libs/jquery/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="{{ STATIC_URL }}libs/jquery/js/jquery.dataTables.columnFilter.js"></script>
 
 <script> 
    $(document).ready(function() {
     $('#tabla_censo').dataTable( {
         "paging":   false,
-        "scrollY":  300,
+        "scrollY":  250,
         "info":     false,
         "autoWidth": false
        
@@ -85,74 +85,71 @@
         Censo
       </div>
       <br/>
-      <h4><center> Al d&iacute;a {{ hoy }} </center></h4>
-      </br>
+      <h4><center> {{ hoy }} </center></h4>
       {% if ingresos %}
 
-<table id="tabla_censo">
-    <thead>
-        <tr>
-            <th>N&uacute;mero de Habitaci&oacute;n</th>
-            <th>Paciente</th>
-            <th>M&eacute;dico</th>
-            <th>Fecha estimada de salida</th>
-            <th>Nro. D&iacute;as en la habitaci&oacute;n</th>
-            <th>Nro. D&iacute;as en la instituci&oacute;n</th>
-            <th>Procedencia</th>
-            <th>Dar alta</th>
-        </tr>
-    </thead>
-    
-    <tfoot>
-        <tr>
-            <th>N&uacute;mero de Habitaci&oacute;n</th>
-            <th>Paciente</th>
-            <th>M&eacute;dico</th>
-            <th>Fecha estimada de salida</th>
-            <th>Nro. D&iacute;as en la habitaci&oacute;n</th>
-            <th>Nro. D&iacute;as en la instituci&oacute;n</th>
-            <th>Procedencia</th>
-			<th>Dar alta</th>
-        </tr>
-    </tfoot>
-    
-    <tbody>
-        {% for ingreso in ingresos %}
-        <div alt="{{ ingreso.id }}" class="hidden-coloreable" style="display: none;">
-            {{ ingreso.es_hoy }}
-        </div>
-        <tr>
-            <td class="{{ ingreso.id }}">
-                {{ ingreso.habitacion.numero }}
-            </td>
-            <td class="{{ ingreso.id }}">
-                {{ ingreso.solicitud.paciente }}
-            </td>
-            <td class="{{ ingreso.id }}">
-                Dr. {{ ingreso.solicitud.medico }}
-            </td>
-            <td class="{{ ingreso.id }}">
-                {{ ingreso.solicitud.salida }}
-            </td>
-            <td class="coloreable" style="font-size: 25px; color: white">
-                {{ ingreso.num_dias }}
-            </td>
-            <td class="coloreable" style="font-size: 25px; color: white">
-                {{ ingreso.solicitud.paciente.ingreso }}
-            </td>
-            <td class="{{ ingreso.id }}">
-                {{ ingreso.procedencia }}
-            </td>
-            <td alt="{{ ingreso.id }}" class="{{ ingreso.id }}">
-                <a onclick="dar_alta(this);" href="#"><img class = "marginleft5 width40" src="/static/img/alta_en.png" /></a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-        
-    
-</table>
-{% else %}
+        <table id="tabla_censo">
+            <thead>
+                <tr>
+                    <th>N&uacute;mero de Habitaci&oacute;n</th>
+                    <th>Paciente</th>
+                    <th>M&eacute;dico</th>
+                    <th>Fecha estimada de salida</th>
+                    <th>Nro. D&iacute;as en la habitaci&oacute;n</th>
+                    <th>Nro. D&iacute;as en la instituci&oacute;n</th>
+                    <th>Procedencia</th>
+                    <th>Dar alta</th>
+                </tr>
+            </thead>
+            
+            <tfoot>
+                <tr>
+                    <th>N&uacute;mero de Habitaci&oacute;n</th>
+                    <th>Paciente</th>
+                    <th>M&eacute;dico</th>
+                    <th>Fecha estimada de salida</th>
+                    <th>Nro. D&iacute;as en la habitaci&oacute;n</th>
+                    <th>Nro. D&iacute;as en la instituci&oacute;n</th>
+                    <th>Procedencia</th>
+                    <th>Dar alta</th>
+                </tr>
+            </tfoot>
+            
+            <tbody>
+                {% for ingreso in ingresos %}
+                <div alt="{{ ingreso.id }}" class="hidden-coloreable" style="display: none;">
+                    {{ ingreso.es_hoy }}
+                </div>
+                <tr>
+                  <td class="{{ ingreso.id }}">
+                      {{ ingreso.habitacion.numero }}
+                  </td>
+                  <td class="{{ ingreso.id }}">
+                      {{ ingreso.solicitud.paciente }}
+                  </td>
+                  <td class="{{ ingreso.id }}">
+                      Dr. {{ ingreso.solicitud.medico }}
+                  </td>
+                  <td class="{{ ingreso.id }}">
+                      {{ ingreso.solicitud.salida }}
+                  </td>
+                  <td class="coloreable" style="font-size: 25px; color: white">
+                      {{ ingreso.num_dias }}
+                  </td>
+                  <td class="coloreable" style="font-size: 25px; color: white">
+                      {{ ingreso.solicitud.paciente.ingreso }}
+                  </td>
+                  <td class="{{ ingreso.id }}">
+                       {{ ingreso.procedencia }}
+                  </td>
+                  <td alt="{{ ingreso.id }}" class="{{ ingreso.id }}">
+                      <a onclick="dar_alta(this);" href="#"><img class="marginleft5 width40" src="/static/img/alta_en.png" /></a>
+                  </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+      {% else %}
       <h4>No hay pacientes en este momento.</h4>
       {% endif %}
     </div>

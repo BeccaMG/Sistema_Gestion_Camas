@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     url(r'^', include('app_camas.urls')),
     url(r'^', include('app_solicitudes.urls')),
     url(r'^', include('app_usuario.urls')),
-	url(r'^', include('app_estadisticas.urls')),
+    url(r'^', include('app_estadisticas.urls')),
+	url(r'^', include('app_paciente.urls')),
 	
 	(r'^selectable/', include('selectable.urls')),
 
