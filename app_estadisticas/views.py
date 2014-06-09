@@ -19,23 +19,29 @@ import pdb
 from django.utils import simplejson
 from simple_history.models import HistoricalRecords
 
-# Termometro = {'fecha':camas}
-
-
 @login_required(login_url='/')
 def termometro(request):
     
-    total = []
+    total = {}
+    mar = {}
     habs = Habitacion.objects.all()
-    
+        
     for hab in habs:
         try:
-            total.append(hab.como_termometro(datetime.now()))
+            total[hab] = hab.como_termometro(datetime.now())
         except:
-            pass
+            total[hab] = None
 
+    
+    ings = Ingreso.objects.all()
+    
+    for ing in ings:
+        try:
+            mar[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
+        except:
+            mar[ing.habitacion.numero] = None
+    
     lun = total
-    mar = []
     mier = []
     juev = []
     vier = []

@@ -63,5 +63,5 @@ class Ingreso(models.Model):
             return 1
         return 0
         
-    def como_termometro(self,fecha):
+    def como_termometro1(self,fecha):
         return self.history.as_of(fecha)
