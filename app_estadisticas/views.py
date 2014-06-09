@@ -67,6 +67,7 @@ def matriz(request):
 	habs.sort( key = lambda x: x.numero , reverse = False )
 	info = {}
 	info['habs'] = habs
+	info['hoy'] = timezone.now().date()
 	
 	return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
 	
