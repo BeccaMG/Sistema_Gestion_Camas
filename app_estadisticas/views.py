@@ -42,13 +42,13 @@ def termometro(request):
             total[hab] = None
 
     
-    ings = Ingreso.objects.all()
+    #ings = Ingreso.objects.all()
     
-    for ing in ings:
-        try:
-            mar[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
-        except:
-            mar[ing.habitacion.numero] = None
+    #for ing in ings:
+    #    try:
+    #        mar[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
+    #    except:
+    #       mar[ing.habitacion.numero] = None
     
     lun = total
     mier = []

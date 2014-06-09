@@ -175,22 +175,17 @@
   
 	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
 		<table>
+		{% for hab,camas in lun.items %}
 		<tr style="text-align: center">
 			
-				<td style="text-align: center">
-					{{ lun }}
-					
-					{{ mar }}
+				<td class ="{{ camas }}" style="text-align: center;">
+					{{ hab }}
 				</td>
-				
-				
+	
 		</tr>
+		{% endfor %}
 		
-			
 	<!--	
-	
-	
-	
 	
 	{% for fecha,camas in Termometro.items %}
 		 <td style="margin:auto;">
