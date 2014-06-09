@@ -12,13 +12,20 @@ from app_solicitudes.models import *
 from app_camas.models import *
 from app_estadisticas.models import *
 
-from datetime import datetime, timedelta
+import datetime
 from django.utils import timezone
 import pdb
 
 from django.utils import simplejson
 from simple_history.models import HistoricalRecords
 
+# Termometro = {'fecha':camas}
+camas_libres = Habitacion.objects.all().filter(estado='D')
+camas_verdes = []
+camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O') 
+camas_rojas = []
+camas = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
+Termometro = {'2014-06-08':camas}
 
 # Te da la fecha del dia de la semana mas cercano hacia atras.
 def dia_anterior(d, weekday):
@@ -31,57 +38,65 @@ def dia_anterior(d, weekday):
 @login_required(login_url='/')
 def termometro(request):
     
-    total = {}
-    mar = {}
-    habs = Habitacion.objects.all()
+    now = timezone.now()
+    nowS = str(now.date())
+
+    if (nowS > Termometro.keys()[-1]):
+
+        camas_libres = Habitacion.objects.all().filter(estado='D')
+        dos_dias = now - datetime.timedelta(days=2)
+        cuatro_dias = now - datetime.timedelta(days=4)
+        cinco_dias = now - datetime.timedelta(days=5)
+
+        dos_diasS = str(dos_dias.date())
+        cuatro_diasS = str(cuatro_dias.date())
+        cinco_diasS = str(cinco_dias.date())
+
+        camas_verdes = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
+        camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
+        camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)  
+
+        Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
+        info = {
+            'Termometro':Termometro,    
+        }
+    else:
+
+        info = {
+            'Termometro':Termometro,
+        }
         
-    for hab in habs:
-        try:
-            total[hab] = hab.como_termometro(datetime.now())
-        except:
-            total[hab] = None
+   # total = {}
+   # mar = {}
+   # habs = Habitacion.objects.all()
+        
+  #  for hab in habs:
+     #   try:
+     #       total[hab] = hab.como_termometro(datetime.now())
+     #   except:
+     #       total[hab] = None
 
-    
-    #ings = Ingreso.objects.all()
-    
-    #for ing in ings:
-    #    try:
-    #        mar[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
-    #    except:
-    #       mar[ing.habitacion.numero] = None
-    
-    lun = total
-    mier = []
-    juev = []
-    vier = []
-    sab = []
-    dom = []
-    
-#       camas_libres = Habitacion.objects.all().filter(estado='D')
-#       dos_dias = now - datetime.timedelta(days=2)
-#       cuatro_dias = now - datetime.timedelta(days=4)
-#       cinco_dias = now - datetime.timedelta(days=5)
-#       
-#       dos_diasS = str(dos_dias.date())
-#       cuatro_diasS = str(cuatro_dias.date())
-#       cinco_diasS = str(cinco_dias.date())
-#       
-#       camas_verdes = Termometro.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
-#       camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
-#       camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)  
-#        
-#       Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
-#
+   
+  #  ings = Ingreso.objects.all()
+   # for ing in ings:
+    #    total[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
 
-    info = {
-        'lun':lun,
-        'mar':mar,
-        'mier':mier,
-        'juev':juev,
-        'vier':vier,
-        'sab':sab,
-        'dom':dom,
-    }
+   # lun = total
+  #  mier = []
+   # juev = []
+    #vier = []
+    #sab = []
+   # dom = []
+    
+#    info = {
+ #       'lun':lun,
+  #      'mar':mar,
+   #     'mier':mier,
+    #    'juev':juev,
+     #   'vier':vier,
+      #  'sab':sab,
+       # 'dom':dom,
+    #}
 
     return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
 

@@ -10,20 +10,20 @@
   <script src="{{ STATIC_URL }}libs/jquery/js/jquery-ui.js"></script>
   <script>
   $(function() {
-    var elements = document.getElementsByClassName("coloreable");
-    var coloreable;
-    for (var i = 0; i < elements.length; i++) {
-        coloreable = elements[i];
-        num = coloreable.innerHTML;
-        if (num <= 2) {
-            coloreable.className += " verde";
-        } else if (num <= 4) {
-            coloreable.className += " amarillo";
-        } else if (num >= 5) {
-            coloreable.className += " rojo";
+        var elements = document.getElementsByClassName("coloreable");
+        var coloreable;
+        for (var i = 0; i < elements.length; i++) {
+            coloreable = elements[i];
+            num = coloreable.innerHTML;
+            if (num <= 2) {
+                coloreable.className += " verde";
+            } else if (num <= 4) {
+                coloreable.className += " amarillo";
+            } else if (num >= 5) {
+                coloreable.className += " rojo";
+            }
         }
-    }
-  });
+    });
   
   // Instantiate and draw our chart, passing in some options.
 	 
@@ -175,18 +175,17 @@
   
 	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
 		<table>
-		{% for hab,camas in lun.items %}
+	<!--	{% for hab,camas in lun.items %}
 		<tr style="text-align: center">
 			
-				<td class ="{{ camas }}" style="text-align: center;">
+				<td style="text-align: center;">
 					{{ hab }}
 				</td>
 	
 		</tr>
 		{% endfor %}
-		
-	<!--	
-	
+		-->
+
 	{% for fecha,camas in Termometro.items %}
 		 <td style="margin:auto;">
 		 <table style="margin:0px 20px;">
@@ -198,7 +197,7 @@
 					{% for num in cama %}
 					<tr style="text-align: center">
 					
-						<td class = style="text-align: center;background:#99FFFF">
+						<td style="text-align: center;background:#99FFFF">
 							{{ num }}
 						</td>
 						
@@ -247,7 +246,7 @@
 		</td>
 		 {% endfor %}
 		
-		-->
+		
 		</table>     
     
   </div>
