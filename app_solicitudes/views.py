@@ -73,7 +73,6 @@ def solicitar_habitacion(request):
 			s_observacion			= pcd['observacion']
 						
 			try:
-				pdb.set_trace()
 				newPaciente = Paciente.objects.get(cedula = s_cedula)
 				try:
 					newMedico = Medico.objects.get( codigo = s_cedula_doctor )
