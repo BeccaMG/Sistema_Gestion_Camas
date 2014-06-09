@@ -24,13 +24,21 @@ from simple_history.models import HistoricalRecords
 
 @login_required(login_url='/')
 def termometro(request):
-
-    #habs = Habitacion.objects.get(numero="202")
     
-    poll = Habitacion.objects.get(numero="202")
-    total = poll.history.most_recent()
+    total = []
+    #habs = Habitacion.objects.get(numero="202")
+    try: 
+        total = [ item.history.as_of(datetime.now()) for item in Habitacion.objects.all()  ]
+    except: 
+        pass
+    
+    print total
+    
+    habs = Habitacion.objects.all()
+    poll = habs.filter(numero="200")[0]
+    total = poll.history.as_of(datetime.now())
 
-    lun = habs
+    lun = total
     mar = []
     mier = []
     juev = []
@@ -69,17 +77,17 @@ def termometro(request):
 @login_required(login_url='/')
 def matriz(request):
 
-	hab_libre =  [ item for item in Habitacion.objects.all().filter(estado='D') ]
-	hab_alta = [ item for item in Habitacion.objects.all().filter(estado='A') ]
-	hab_ocu = [ item for item in Habitacion.objects.all().filter(estado='O') ]
-	hab_limp = [ item for item in Habitacion.objects.all().filter(estado='L') ]
-	hab_mant = [ item for item in Habitacion.objects.all().filter(estado='M') ]
-	
-	habs = hab_libre + hab_alta + hab_ocu + hab_limp + hab_mant
-	habs.sort( key = lambda x: x.numero , reverse = False )
-	info = {}
-	info['habs'] = habs
-	info['hoy'] = timezone.now().date()
-	
-	return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
-	
+    hab_libre =  [ item for item in Habitacion.objects.all().filter(estado='D') ]
+    hab_alta = [ item for item in Habitacion.objects.all().filter(estado='A') ]
+    hab_ocu = [ item for item in Habitacion.objects.all().filter(estado='O') ]
+    hab_limp = [ item for item in Habitacion.objects.all().filter(estado='L') ]
+    hab_mant = [ item for item in Habitacion.objects.all().filter(estado='M') ]
+    
+    habs = hab_libre + hab_alta + hab_ocu + hab_limp + hab_mant
+    habs.sort( key = lambda x: x.numero , reverse = False )
+    info = {}
+    info['habs'] = habs
+    info['hoy'] = timezone.now().date()
+    
+    return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
+    
