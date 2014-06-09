@@ -53,8 +53,10 @@ class Ingreso(models.Model):
         today = date.today()
         dias = today - self.fecha_ingreso
         total = dias.days
-        if total < 1:
+        if total <= 0:
             total = 1
+        else:
+            total = -1
         return total
     
     def es_hoy(self):

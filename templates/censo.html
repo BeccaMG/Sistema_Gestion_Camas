@@ -42,7 +42,7 @@
         for (var i = 0; i < elements.length; i++) {
             coloreable = elements[i];
             num = coloreable.innerHTML;
-            if (num <= 2) {
+            if ( 0<= num && num <= 2) {
                 coloreable.className += " verde";
             } else if (num <= 4) {
                 coloreable.className += " amarillo";
