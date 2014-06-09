@@ -44,6 +44,7 @@ class Ingreso(models.Model):
     habitacion    = models.ForeignKey(Habitacion)
     fecha_ingreso = models.DateField(auto_now_add=True)
     alta          = models.BooleanField(default=False)
+    history     = HistoricalRecords()
     
     def procedencia(self):
         return PROCEDENCIA[self.solicitud.procedencia - 1][1]
@@ -55,9 +56,12 @@ class Ingreso(models.Model):
         if total < 1:
             total = 1
         return total
-        
+    
     def es_hoy(self):
         today = date.today()
         if (today == self.solicitud.fecha_salida):
             return 1
         return 0
+        
+    def como_termometro(self,fecha):
+        return self.history.as_of(fecha)
