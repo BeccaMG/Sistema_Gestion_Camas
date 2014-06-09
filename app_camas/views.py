@@ -64,6 +64,11 @@ def asignar_habitacion(request):
                 hab.save()
                 sol.activa = False
                 sol.save()                
+                                
+               # total = hab.history.as_of(datetime(2014, 05, 28, 14, 50, 0))
+                hab_history_date = datetime.now()
+                hab.history.all()
+                
                 habitaciones_libres = Habitacion.objects.filter(libre=True)
             else:
                 info['asignados'] = info['asignados'] + '\n' + str(form.errors)

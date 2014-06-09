@@ -175,17 +175,30 @@
   
 	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
 		<table>
-		{% for fecha,camas in Termometro.items %}
+		{% for hab in lun %}
+
+			<tr style="text-align: center">
+			
+				<td style="text-align: center">
+					{{ hab.numero }}
+				</td>
+				
+				
+			</tr>
+		{% endfor %}
+			
+	<!--	{% for fecha,camas in Termometro.items %}
 		 <td style="margin:auto;">
 		 <table style="margin:0px 20px;">
             <th>{{ fecha }} </th>
+						
 			{% for cama in camas %}
 				
 				{% if forloop.counter == 1 %}
 					{% for num in cama %}
 					<tr style="text-align: center">
 					
-						<td style="text-align: center;background:#99FFFF">
+						<td class = style="text-align: center;background:#99FFFF">
 							{{ num }}
 						</td>
 						
@@ -233,7 +246,7 @@
 		</table>	
 		</td>
 		 {% endfor %}
-		
+		-->
 		</table>     
     
   </div>

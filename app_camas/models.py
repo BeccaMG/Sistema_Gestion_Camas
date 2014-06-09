@@ -27,6 +27,7 @@ class Habitacion(models.Model):
                                  default = 'H')
     razon     = models.CharField(max_length=140, blank = True)
     history   = HistoricalRecords()
+    __history_date = None
     
     def __unicode__(self):
         return "%s" % (self.numero)
@@ -36,6 +37,14 @@ class Habitacion(models.Model):
         
     class Meta:
         verbose_name_plural = "Habitaciones"
+        
+    @property
+    def _history_date(self):
+        return self.__history_date
+
+    @_history_date.setter
+    def _history_date(self, value):
+        self.__history_date = value
 
     
 class Ingreso(models.Model):
