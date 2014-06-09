@@ -25,51 +25,62 @@ from simple_history.models import HistoricalRecords
 @login_required(login_url='/')
 def termometro(request):
 
-    #habs = Habitacion.objects.get(numero="202")
-    
-    poll = Habitacion.objects.get(numero="202")
-    total = poll.history.most_recent()
-
-    lun = habs
-    mar = []
-    mier = []
-    juev = []
-    vier = []
-    sab = []
-    dom = []
-    
-#       camas_libres = Habitacion.objects.all().filter(estado='D')
-#       dos_dias = now - datetime.timedelta(days=2)
-#       cuatro_dias = now - datetime.timedelta(days=4)
-#       cinco_dias = now - datetime.timedelta(days=5)
-#       
-#       dos_diasS = str(dos_dias.date())
-#       cuatro_diasS = str(cuatro_dias.date())
-#       cinco_diasS = str(cinco_dias.date())
-#       
-#       camas_verdes = Termometro.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
-#       camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
-#       camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)  
-#        
-#       Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
+	pdb.set_trace()
+	#habs = Habitacion.objects.get(numero="202")
+	
+	habs = Habitacion.objects.all().order_by('numero')
+	
+	
+	for hab in habs:
+		try:
+			history = hab.como_termometro(Datetime.now())
+			print "Historico para la hab %s:\n%s" % (hab.numero,history)
+		except:
+			print 'No tiene historico la hab %s' % hab.numero
+	
+	#poll = Habitacion.objects.get(numero="202")
+	#total = poll.history.most_recent()
+	
+	lun = habs
+	mar = []
+	mier = []
+	juev = []
+	vier = []
+	sab = []
+	dom = []
+	
+#		camas_libres = Habitacion.objects.all().filter(estado='D')
+#		dos_dias = now - datetime.timedelta(days=2)
+#		cuatro_dias = now - datetime.timedelta(days=4)
+#		cinco_dias = now - datetime.timedelta(days=5)
+#		
+#		dos_diasS = str(dos_dias.date())
+#		cuatro_diasS = str(cuatro_dias.date())
+#		cinco_diasS = str(cinco_dias.date())
+#		
+#		camas_verdes = Termometro.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=dos_diasS,fecha_ingreso__lte=nowS)  
+#		camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
+#		camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)	
+#		 
+#		Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
 #
 
-    info = {
-        'lun':lun,
-        'mar':mar,
-        'mier':mier,
-        'juev':juev,
-        'vier':vier,
-        'sab':sab,
-        'dom':dom,
-    }
+	info = {
+		'lun':lun,
+		'mar':mar,
+		'mier':mier,
+		'juev':juev,
+		'vier':vier,
+		'sab':sab,
+		'dom':dom,
+	}
 
-    return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
+	return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def matriz(request):
 
-	hab_libre =  [ item for item in Habitacion.objects.all().filter(estado='D') ]
+	hab_libre =	 [ item for item in Habitacion.objects.all().filter(estado='D') ]
 	hab_alta = [ item for item in Habitacion.objects.all().filter(estado='A') ]
 	hab_ocu = [ item for item in Habitacion.objects.all().filter(estado='O') ]
 	hab_limp = [ item for item in Habitacion.objects.all().filter(estado='L') ]
