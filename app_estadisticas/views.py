@@ -25,19 +25,18 @@ from simple_history.models import HistoricalRecords
 @login_required(login_url='/')
 def termometro(request):
     
-    total = []
     #habs = Habitacion.objects.get(numero="202")
-    try: 
-        total = [ item.history.as_of(datetime.now()) for item in Habitacion.objects.all()  ]
-    except: 
-        pass
-    
-    print total
-    
+    total = []
     habs = Habitacion.objects.all()
-    poll = habs.filter(numero="200")[0]
-    total = poll.history.as_of(datetime.now())
+    
+    for hab in habs:
+        try:
+            total =  total.append(hab.como_termometro(datetime.now()))
+            print total
+        except:
+            pass
 
+	
     lun = total
     mar = []
     mier = []
