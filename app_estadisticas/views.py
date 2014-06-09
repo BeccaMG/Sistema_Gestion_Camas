@@ -24,24 +24,21 @@ from simple_history.models import HistoricalRecords
 
 @login_required(login_url='/')
 def termometro(request):
-
-	pdb.set_trace()
+	
 	#habs = Habitacion.objects.get(numero="202")
-	
-	habs = Habitacion.objects.all().order_by('numero')
-	
+	total = []
+	habs = Habitacion.objects.all()
 	
 	for hab in habs:
 		try:
-			history = hab.como_termometro(Datetime.now())
-			print "Historico para la hab %s:\n%s" % (hab.numero,history)
+			total.append(hab.como_termometro(datetime.now()))
+			print total
 		except:
-			print 'No tiene historico la hab %s' % hab.numero
+			pass
 	
-	#poll = Habitacion.objects.get(numero="202")
-	#total = poll.history.most_recent()
+	#pdb.set_trace()
 	
-	lun = habs
+	lun = total
 	mar = []
 	mier = []
 	juev = []
@@ -62,8 +59,7 @@ def termometro(request):
 #		camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
 #		camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)	
 #		 
-#		Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
-#
+#		Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]#
 
 	info = {
 		'lun':lun,
@@ -93,4 +89,3 @@ def matriz(request):
 	info['hoy'] = timezone.now().date()
 	
 	return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
-	
