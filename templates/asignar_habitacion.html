@@ -151,6 +151,9 @@
       {% if formset.total_form_count > 0 %}
 	  <form method="post" action="">
 		<table class="table table-bordered">
+		<tr>
+			<td><input class="btn btn-primary" type="submit" value="Asignar habitaciones" /></td>
+		</tr>
         <tr>
             <th>N&uacute;mero de Habitaci&oacute;n</th>
             <th>N&uacute;mero de Historia</th>
@@ -193,7 +196,6 @@
 			{% endif %}
 			{% endfor %}
       </table>
-	  <input class="btn btn-primary" type="submit" value="Asignar habitaciones" />
 	</form>
       {% else %}
       <h4>No hay habitaciones disponibles en este momento.</h4>

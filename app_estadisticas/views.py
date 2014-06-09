@@ -68,19 +68,18 @@ def termometro(request):
 
 @login_required(login_url='/')
 def matriz(request):
-    
-    hab_libre =  [ item for item in Habitacion.objects.all().filter(estado='D') ]
-    hab_alta = [ item for item in Habitacion.objects.all().filter(estado='A') ]
-    hab_ocu = [ item for item in Habitacion.objects.all().filter(estado='O') ]
-    hab_limp = [ item for item in Habitacion.objects.all().filter(estado='L') ]
-    hab_mant = [ item for item in Habitacion.objects.all().filter(estado='M') ]
-    
-    habs = hab_libre + hab_alta + hab_ocu + hab_limp + hab_mant
-    habs.sort( key = lambda x: x.numero , reverse = False )
-    info = {}
-    info['habs'] = habs
-    
-    return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
-    
-    
-    
+
+	hab_libre =  [ item for item in Habitacion.objects.all().filter(estado='D') ]
+	hab_alta = [ item for item in Habitacion.objects.all().filter(estado='A') ]
+	hab_ocu = [ item for item in Habitacion.objects.all().filter(estado='O') ]
+	hab_limp = [ item for item in Habitacion.objects.all().filter(estado='L') ]
+	hab_mant = [ item for item in Habitacion.objects.all().filter(estado='M') ]
+	
+	habs = hab_libre + hab_alta + hab_ocu + hab_limp + hab_mant
+	habs.sort( key = lambda x: x.numero , reverse = False )
+	info = {}
+	info['habs'] = habs
+	info['hoy'] = timezone.now().date()
+	
+	return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
+	

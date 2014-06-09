@@ -45,7 +45,7 @@ def agregar_paciente(request):
             else:
                 mensaje = "Ya hay un paciente registrado con esa cedula"                
         info = {'form':form,'mensaje':mensaje}
-        return render_to_response('agregarPaciente.html',info,context_instance=RequestContext(request))
+        return render_to_response('agregar_paciente.html',info,context_instance=RequestContext(request))
     
     form = agregar_paciente_form()
     info = {
