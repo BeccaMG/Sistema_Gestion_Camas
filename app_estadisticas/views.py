@@ -12,12 +12,21 @@ from app_solicitudes.models import *
 from app_camas.models import *
 from app_estadisticas.models import *
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 import pdb
 
 from django.utils import simplejson
 from simple_history.models import HistoricalRecords
+
+
+# Te da la fecha del dia de la semana mas cercano hacia atras.
+def dia_anterior(d, weekday):
+    days_back = d.weekday() - weekday
+    if days_back <= 0:
+        return d
+    
+    return d - timedelta(days_back)
 
 @login_required(login_url='/')
 def termometro(request):
@@ -92,4 +101,3 @@ def matriz(request):
     info['hoy'] = timezone.now().date()
     
     return render_to_response('estadistica_matriz.html',info,context_instance=RequestContext(request))
-    
