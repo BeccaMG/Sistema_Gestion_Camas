@@ -12,32 +12,36 @@ from app_solicitudes.models import *
 from app_camas.models import *
 from app_estadisticas.models import *
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 import pdb
 
 from django.utils import simplejson
 from simple_history.models import HistoricalRecords
 
+# Te da la fecha del dia de la semana mas cercano hacia atras.
+def dia_anterior(d, weekday):
+	days_back = d.weekday() - weekday
+	if days_back <= 0:
+		return d
+	
+	return d - timedelta(days_back)
+
 # Termometro = {'fecha':camas}
 
 
 @login_required(login_url='/')
 def termometro(request):
-	
-	#habs = Habitacion.objects.get(numero="202")
+
 	total = []
 	habs = Habitacion.objects.all()
 	
 	for hab in habs:
 		try:
 			total.append(hab.como_termometro(datetime.now()))
-			print total
 		except:
 			pass
-	
-	#pdb.set_trace()
-	
+
 	lun = total
 	mar = []
 	mier = []
@@ -59,7 +63,8 @@ def termometro(request):
 #		camas_amarillas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__gte=cuatro_diasS,fecha_ingreso__lte=dos_diasS)  
 #		camas_rojas = Ingreso.objects.all().filter(habitacion__estado='O', fecha_ingreso__lt=cuatro_diasS)	
 #		 
-#		Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]#
+#		Termometro[nowS] = [camas_libres, camas_verdes, camas_amarillas, camas_rojas]
+#
 
 	info = {
 		'lun':lun,
