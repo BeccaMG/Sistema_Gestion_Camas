@@ -9,21 +9,24 @@
   <script src="{{ STATIC_URL }}libs/jquery/js/jquery.js"></script>
   <script src="{{ STATIC_URL }}libs/jquery/js/jquery-ui.js"></script>
   <script>
-  $(function() {
-    var elements = document.getElementsByClassName("coloreable");
-    var coloreable;
-    for (var i = 0; i < elements.length; i++) {
-        coloreable = elements[i];
-        num = coloreable.innerHTML;
-        if (num <= 2) {
-            coloreable.className += " verde";
-        } else if (num <= 4) {
-            coloreable.className += " amarillo";
-        } else if (num >= 5) {
-            coloreable.className += " rojo";
+	$(function() {
+        var elements = document.getElementsByClassName("coloreable");
+        var coloreable;
+        for (var i = 0; i < elements.length; i++) {
+            coloreable = elements[i];
+            num = coloreable.innerHTML;
+            if (num <= 2) {
+                coloreable.className += " verde";
+            } else if (num <= 4) {
+                coloreable.className += " amarillo";
+            } else if (num >= 5) {
+                coloreable.className += " rojo";
+            }  else {
+				coloreable.className += " azul_claro"
+			}
         }
-    }
-  });
+    });
+    
   
   // Instantiate and draw our chart, passing in some options.
 	 
@@ -175,10 +178,22 @@
   
 	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
 		<table>
-		{% for fecha,camas in Termometro.items %}
+		{% for hab,camas in lun.items %}
+		<tr style="text-align: center">
+				
+				<td class="coloreable" style="text-align: center">
+					{{ camas.habitacion.numero }}
+				</td>
+	
+		</tr>
+		{% endfor %}
+		
+<!--
+	{% for fecha,camas in Termometro.items %}
 		 <td style="margin:auto;">
 		 <table style="margin:0px 20px;">
             <th>{{ fecha }} </th>
+						
 			{% for cama in camas %}
 				
 				{% if forloop.counter == 1 %}
@@ -234,6 +249,7 @@
 		</td>
 		 {% endfor %}
 		
+		-->
 		</table>     
     
   </div>

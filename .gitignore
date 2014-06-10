@@ -21,3 +21,4 @@ AM/settings.py
 *.aux
 *.log
 *.out
+*.db

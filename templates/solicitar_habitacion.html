@@ -41,7 +41,10 @@
     $(document).ready(function() {
         $("#buscador").click( buscar_paciente);
         $('#buscador').tipsy({gravity: 'w'});
-        $('#cedula').submit( buscar_paciente );        
+        $('#cedula').submit( buscar_paciente );
+		
+		$( "#id_fecha_ingreso, #id_fecha_salida" ).datepicker({ dateFormat: "dd/mm/yy" });
+		
     });
     
     function buscar_paciente () {
@@ -78,7 +81,7 @@
         $('#nombres_paciente').text(paciente.nombres);
         $('#apellidos_paciente').text(paciente.apellidos);
         $('#edad_paciente').text(paciente.edad);
-        if (paciente.sexo == 1) {
+        if (paciente.sexo == 'M') {
             $('#sexo_paciente').text("Masculino");
         } else {
             $('#sexo_paciente').text("Femenino");
@@ -133,7 +136,7 @@
                 {{form.cedula.as_hidden}}
             
             <tr>
-            <td>M&eacute;dico tratante</td>
+            <td>C&oacute;digo del M&eacute;dico tratante</td>
                 <td>{{form.cedula_doctor}}</td>
                 <td>
                 <span class="msj-error"> 
@@ -165,19 +168,6 @@
                             data-date-icon="icon-calendar"> 
                         </i>
                         </span>
-                        <script type="text/javascript">
-                        $(function() {
-                            $('#ingreso_picker').datetimepicker({
-                            language: 'pt-BR'
-                            });
-                            
-                            // Se cierra el calendario al seleccionar fecha
-                            $('#ingreso_picker').on('changeDate', function(e) {
-                            $('#ingreso_picker').datetimepicker('hide');
-                            });
-                            
-                        });
-                        </script>
     
                     </td>
                     <td>
@@ -197,18 +187,6 @@
                             data-date-icon="icon-calendar"> 
                         </i>
                         </span>
-                        <script type="text/javascript">
-                        $(function() {
-                            $('#egreso_picker').datetimepicker({
-                            language: 'pt-BR'
-                            });
-                            
-                            // Se cierra el calendario al seleccionar fecha
-                            $('#egreso_picker').on('changeDate', function(e) {
-                            $('#egreso_picker').datetimepicker('hide');
-                            });
-                        });
-                        </script>
                     </td>
                     <td>
                     {{e.errors}}

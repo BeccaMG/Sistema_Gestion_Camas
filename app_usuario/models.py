@@ -33,7 +33,7 @@ class Medico(Usuario):
     
     def codigo_str(self):
         return str(self.codigo).zfill(3)
-        
+    
     def __unicode__(self):
         return "%s, %s (%s)" % (self.last_name, self.first_name, 
                                 str(self.codigo).zfill(3))
