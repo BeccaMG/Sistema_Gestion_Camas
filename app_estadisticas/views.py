@@ -12,7 +12,7 @@ from app_solicitudes.models import *
 from app_camas.models import *
 from app_estadisticas.models import *
 
-import datetime
+from datetime import datetime
 from django.utils import timezone
 import pdb
 
@@ -38,40 +38,55 @@ def dia_anterior(d, weekday):
 @login_required(login_url='/')
 def termometro(request):
     
-   total = {}
+    total = []
    
-   habs = Habitacion.objects.all().order_by('numero')
-        
-   for hab in habs:
+    habs = Habitacion.objects.all().order_by('numero')
+
+    for h in habs:
         try:
-            ing = Ingreso.objects.all().filter(habitacion__numero = hab)
-            print ing
-            try:
-                total[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
-            except:
-				total[hab] = ing[0]
-        except:
-            total[hab] = None
+            #h1 = h.history.most_recent()
+            h1 = h.history.as_of(datetime(2014, 6, 11, 13, 00, 0))
+            total.append(h1)
+            print "si funciono"
+        except:  
+            total.append(h)
+            print "ocurrio una excepcion"
 
-   lun = total
-   mar = []
-   mier = []
-   juev = []
-   vier = []
-   sab = []
-   dom = []
+
+   #for hab in habs:
+        #try:
+            #ing = Ingreso.objects.all().filter(habitacion__numero = hab)
+            #print ing
+            #try:
+                #total[ing.habitacion.numero] = ing.como_termometro1(datetime.now())
+            #except:
+				#total[hab] = ing[0]
+        #except:
+            #total[hab] = None
+
+   #lun = total
+   #mar = []
+   #mier = []
+   #juev = []
+   #vier = []
+   #sab = []
+   #dom = []
     
-   info = {
-       'lun':lun,
-       'mar':mar,
-       'mier':mier,
-       'juev':juev,
-       'vier':vier,
-       'sab':sab,
-       'dom':dom,
-    }
+   #info = {
+       #'lun':lun,
+       #'mar':mar,
+       #'mier':mier,
+       #'juev':juev,
+       #'vier':vier,
+       #'sab':sab,
+       #'dom':dom,
+    #}
+    
+    info = {
+        'habs': total,
+        }
 
-   return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
+    return render_to_response('estadistica_termometro.html',info,context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def matriz(request):

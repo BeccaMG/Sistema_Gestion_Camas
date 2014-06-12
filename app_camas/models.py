@@ -44,7 +44,7 @@ class Ingreso(models.Model):
     habitacion    = models.ForeignKey(Habitacion)
     fecha_ingreso = models.DateField(auto_now_add=True)
     alta          = models.BooleanField(default=False)
-    history     = HistoricalRecords()
+    history       = HistoricalRecords()
     
     def procedencia(self):
         return PROCEDENCIA[self.solicitud.procedencia - 1][1]

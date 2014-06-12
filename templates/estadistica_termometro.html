@@ -178,11 +178,11 @@
   
 	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
 		<table>
-		{% for hab,camas in lun.items %}
+		{% for cama in habs %}
 		<tr style="text-align: center">
 				
 				<td class="coloreable" style="text-align: center">
-					{{ camas.habitacion.numero }}
+					{{ cama.numero }} - {{ cama.estado }}
 				</td>
 	
 		</tr>
