@@ -51,6 +51,35 @@ def termometro(request):
         except:  
             total.append(h)
             print "ocurrio una excepcion"
+            
+            
+    #>>>> LO QUE PIENSO
+    
+    #Algo tipo
+    #hoy = []
+    #Ingreso.objects.all()
+    #for i in ingreso:
+        #try:
+            #- pruebo si el ingreso existe para hoy a las 8:00
+            #ing = i.history.as_of(hoy a las 8)
+            #- si esta activo, lo meto, si no, no.
+            #if activo
+                #t = Termometro(fecha_termometro(hoy a las 8),
+                               #numero = ing.habitacion.numero,
+                               #fecha_ingreso = ing.fecha_ingreso) - no se si se crean asi los termometros XD
+                #hoy.append(t)            
+        #except:
+            #- si no existe no importa porque capaz hay uno anterior que si pasa por el for
+            
+     #- despues aqui
+    #habs = Habitacion.objects.all()
+    #for h in habs:
+        #- si existe el numero en la lista de hoy tipo:
+        #if h.numero exists in hoy.termometro.numero xD:
+            #- no agrego
+        #else:
+            #-agrego
+            
 
 
    #for hab in habs:
