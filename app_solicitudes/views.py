@@ -106,16 +106,28 @@ def solicitar_habitacion(request):
 	info = {'form':form}
 	return render_to_response('solicitar_habitacion.html',info,context_instance=RequestContext(request))
 
-#@login_required(login_url='/')	
-#def listar_solicitudes(request):
-#	if (request.user):
-
 @login_required(login_url='/')	
 def lista_solicitudes(request):
-	
-	solicitudes_activas = Solicitud.objects.all().filter(activa=True).order_by('fecha_ingreso')
-	
-	info = {
-	'solicitudes_activas':solicitudes_activas}
-
-	return render_to_response('lista_solicitudes.html',info,context_instance=RequestContext(request))
+    
+    solicitudes_activas = Solicitud.objects.all().filter(activa=True).order_by('fecha_ingreso')
+    
+    info = {
+    'solicitudes_activas':solicitudes_activas}
+    return render_to_response('lista_solicitudes.html',info,context_instance=RequestContext(request))
+    
+@login_required(login_url='/')
+def cancelar_solicitud(request):
+    if request.method == 'POST':
+        #pdb.set_trace()
+        c = request.POST['id']
+        identificador = Solicitud.objects.filter(id=c)
+        if identificador:
+            Solicitud.objects.filter(id=c).delete()
+            data = {
+                'result' : 'success',
+            }
+        else:
+            data = {
+                'result' : 'error',
+            }
+    return HttpResponse(simplejson.dumps(data), content_type='application/json')

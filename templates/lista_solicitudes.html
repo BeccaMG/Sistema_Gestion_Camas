@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+  <script>
+    // Funcion para eliminar solicitud
+    function cancelar_sol( item ) {
+	  var $objeto = $( item ).parent().parent();
+      var id = $objeto.find('input[name=id]').val();
+        $.ajax({
+          url : 'cancelar_solicitud',
+          type : 'POST',
+          dataType: "json",
+          data : {id:id},
+          success : function(json) {
+            if (json.result == 'success') {
+              alert("Solicitud eliminada con exito.");
+            } else {
+              alert("Error: No se pudo eliminar la solicitud.");
+            }
+          },
+          error : function(xhr,errmsg,err) {
+            alert("Error: No se pudo eliminar la solicitud.");
+          }
+		});
+    }
+  </script>
+{% endblock %}  
+
 {% block body %}
 
   <div class="row">
@@ -17,10 +43,12 @@
 	    <th>Inicio de Ocupaci&oacute;n</th>
         <th>Fin de Ocupaci&oacute;n</th>
         <th>Procedencia</th>
+		<td></td>
     </tr>
 		{% for activa in solicitudes_activas %}
 		{% if activa.paciente %}
 		<tr class="lista_solicitud">
+			<input type="hidden" name="id" value="{{ activa.id }}" />
 			<td style="font-size:150%;">
 				{{activa.paciente}}
 			</td>
@@ -35,6 +63,9 @@
 			</td>
 			<td style="font-size:150%;">
 				{{activa.procedenciatex}}
+			</td>
+			<td>
+				<a onclick="cancelar_sol(this);" href="#"><img src="/static/img/delete_en.png" /></a>
 			</td>
 		</tr>
 		{% endif %}
