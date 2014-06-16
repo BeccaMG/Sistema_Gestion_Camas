@@ -121,6 +121,22 @@ td li {
     background-color: #FF0000;
 }
 
+.dias_ocupada0{
+background: #99FFFF;
+}
+
+.dias_ocupada1,.dias_ocupada2{
+background-color: #00ff77;
+}
+
+.dias_ocupada3,.dias_ocupada4{
+background-color: #FFFF99;
+}
+
+.dias_ocupada5{
+background-color: #FF0000;
+}
+
 .None{
 	background-color: #99FFFF;
 }
