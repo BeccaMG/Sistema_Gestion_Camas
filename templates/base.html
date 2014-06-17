@@ -179,6 +179,16 @@
     {% if not user.is_authenticated %}
       <h3 class="tit-list"></h3>
     {% endif %} 
+	
+	{% if messages %}
+	<div onclick="$(this).fadeOut()" style="position: absolute; left: 50%; top:20px;z-index:2000;">
+		<div style="position: relative; left: -50%;">
+			{% for msg in messages %}
+				<div class="message-{% if msg.tags %}{{ msg.tags }}{% else %}info{% endif %}" >{{ msg }}</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
     
     {% block body %}
     {% endblock %}
