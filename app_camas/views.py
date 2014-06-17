@@ -70,7 +70,7 @@ def asignar_habitacion(request):
 				hab_history_date = datetime.now()
 				hab.history.all()
 				
-				habitaciones_libres = Habitacion.objects.filter(libre=True)
+				habitaciones_libres = Habitacion.objects.filter(estado='D')
 			else:
 				info['asignados'] = info['asignados'] + '\n' + str(form.errors)
 		
