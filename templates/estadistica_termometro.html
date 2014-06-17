@@ -210,8 +210,8 @@
 					<table cellpadding="13" width="100%" style="text-align:center">
 						<tr>
 						{% for termometro in termometros %}
-							<td>
-								<b>{{ termometro.dia|date:'D' }}</b>
+							<td valign="top">
+								<b>{{ termometro.dia|date:'D' }}<br>{{termometro.dia|date:'d/m/Y'}}</b>
 								<br>
 								<br>
 								<table border="1" cellpadding="5">
