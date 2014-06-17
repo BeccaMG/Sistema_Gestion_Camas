@@ -13,10 +13,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # 'django.db.backends.sqlite3', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'cmsb', # Or path to database file if using sqlite3.
+        'NAME': 'camas', # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'postgres',
-        'PASSWORD': 'le0x1212',
+        #'PASSWORD': 'le0x1212',
+        'PASSWORD': 'XXXX',
         'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '', # Set to empty string for default.
     }
@@ -104,13 +105,18 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+CRON_CLASSES = [
+    'app_estadisticas.cron.MyCronJob',
+    # ...
+]
+
 ROOT_URLCONF = 'AM.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'AM.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.getcwd() + "/plantillas/",
+    os.getcwd() + "/templates/",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -125,14 +131,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Aplicaciones de nuestro proyecto
-    'app_emergencia',
-    'app_enfermedad',
+    'app_solicitudes',
     'app_paciente',
-    'app_registro',
     'app_usuario',
+    'app_camas',
+    'app_estadisticas',
 
     # Utilidades
     'django_extensions',
+    'south',
+    'selectable',
+    'simple_history',
 
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
