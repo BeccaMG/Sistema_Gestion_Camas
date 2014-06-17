@@ -44,213 +44,163 @@
     
   </script>
   
-  
-  <div class="row">
-	<div class="titulo">
-        Term&oacute;metro
-     </div>
-	 <br>
-	 <div class="text-right">
-      <a href="/estadisticas/{{inicio.day}}-{{inicio.month}}-{{inicio.year}}">
-        Ver Semana Anterior
-      </a> |
-      <a href="/estadisticas/">
-        Ver Semana Actual 
-      </a> |
-      <a href="/estadisticas/{{sig.day}}-{{sig.month}}-{{sig.year}}"> 
-        Siguiente Semana 
-      </a>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="span4">
-      <h3>B&uacute;squeda Espec&iacute;fica</h3>
-      Desde:
-      <span id="fecha_inicio" class="input-append">
-        <input data-format="dd-mm-aaaa" 
-               placeholder="dd-mm-aaaa" 
-               id="inicio" 
-               type="text">
-        </input>
-        <span class="add-on">
-          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-          </i>
-        </span>
-      </span>
-      <span id="error_inicio" class="errorlist"></span>
-      <br/>
-      
-      <script type="text/javascript">
-        $(function() {
-          $('#fecha_inicio').datetimepicker({
-            pickTime: false
-          });
-		  
-		  // Se cierra el calendario al seleccionar fecha
-		  $('#fecha_inicio').on('changeDate', function(e) {
-		    $('#fecha_inicio').datetimepicker('hide');
-		  });	
-        });
-      </script>
-      
-      Hasta:&nbsp;
-      <span id="fecha_fin" class="input-append">
-        <input data-format="dd-MM-yyyy" 
-               placeholder="dd-mm-yyyy" 
-               id="fin" 
-               type="text">
-        </input>
-        <span class="add-on">
-          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-          </i>
-        </span>
-      </span>
-      <span id="error_fin" class="errorlist"></span>
-      <br/>
-      <script type="text/javascript">
-        $(function() {
-          $('#fecha_fin').datetimepicker({
-            pickTime: false
-          });
-		  
-		  // Se cierra el calendario al seleccionar fecha
-		  $('#fecha_fin').on('changeDate', function(e) {
-		    $('#fecha_fin').datetimepicker('hide');
-		  });
-        });
-      </script>
-  
-      
-        <div class="der">
-          <a id="ir_est" href="#" class="btn btn-primary">
-            Ver Per&iacute;odo
-          </a>
-          
-        <script>
-        function verificarFecha(valor) {
-	  var anoMin = 1902;
-	  var anoMax = (new Date()).getFullYear();
-
-	  var error = "";
-
-	  // regular expression to match required date format
-	  re = /^(\d{1,2})\-(\d{1,2})\-(\d{4})$/;
-
-	  if(valor != '') {
-	    if(regs = valor.match(re)) {
-	      if(regs[1] < 1 || regs[1] > 31) {
-		error = "Día inválido: " + regs[1];
-	      } else if(regs[2] < 1 || regs[2] > 12) {
-		error = "Mes inválido: " + regs[2];
-	      } else if(regs[3] < anoMin || regs[3] > anoMax) {
-		error = "Año inválido: " + regs[3];
-	      }
-	    } else {
-	      error = "Formato de fecha inválido: " + valor;
-	    }
-	  } else {
-	    error = "No se aceptan valores vacíos";
-	  }
-
-	  return error;
-	}
-        
-        </script>
-        <script>
-          $("#ir_est").click(function(){
-	    var inicio = $("#inicio").val();
-	    var fin = $("#fin").val()
-	    var error_inicio = verificarFecha(inicio);
-	    var error_fin = verificarFecha(fin);
-	    if (error_inicio != "" || error_fin != "") {
-	      $('#error_inicio').text(error_inicio);
-	      $('#error_fin').text(error_fin);
-	    } else {
-	      $("#ir_est").attr("href", "/estadisticas/" + 
-                                      inicio + "/" + 
-                                      fin);
-	    }
-          });      
-        </script>
-      </div>
-    </div>
-  
-	<div style="margin:20px 20px; overflow-x:hidden;overflow-y:scroll;height:500px;width:800px">
-		<table>
-		{% for cama in habs %}
-		<tr style="text-align: center">
-				
-				<td class="coloreable" style="text-align: center">
-					{{ cama.numero }} - {{ cama.estado }}
-				</td>
-	
-		</tr>
-		{% endfor %}
-		
-<!--
-	{% for fecha,camas in Termometro.items %}
-		 <td style="margin:auto;">
-		 <table style="margin:0px 20px;">
-            <th>{{ fecha }} </th>
-						
-			{% for cama in camas %}
-				
-				{% if forloop.counter == 1 %}
-					{% for num in cama %}
-					<tr style="text-align: center">
-					
-						<td style="text-align: center;background:#99FFFF">
-							{{ num }}
-						</td>
-						
-					</tr>
-					{% endfor %}
-				{% endif %}
-				
-				{% if forloop.counter == 2 %}
-					{% for num in cama %}
-					<tr style="text-align: center">
-					
-						<td style="text-align: center;background:#00CC33">
-							{{ num.habitacion.numero }}
-						</td>
-						
-					</tr>
-					{% endfor %}
-				{% endif %}
-				
-				{% if forloop.counter == 3 %}
-					{% for num in cama %}
-					<tr style="text-align: center">
-					
-						<td style="text-align: center;background:#FFFF00">
-							{{ num.habitacion.numero }}
-						</td>
-						
-					</tr>
-					{% endfor %}
-				{% endif %}
-				
-				{% if forloop.counter == 4 %}
-					{% for num in cama %}
-					<tr style="text-align: center">
-					
-						<td style="text-align: center;background:#FF0000">
-							{{ num.habitacion.numero }}
-						</td>
-						
-					</tr>
-					{% endfor %}
-				{% endif %}
-				
-		   {% endfor %}
-		</table>	
+  <table width="100%" style="text-align:center">
+	<tr>
+		<td>
+			<a href="/estadisticas/termometro/{{semana_ant}}">
+				Ver Semana Anterior
+			</a>
 		</td>
-		 {% endfor %}
-		
-		-->
-		</table>     
-    
-  </div>
+		<td>
+			<a href="/estadisticas/termometro/{{semana_sig}}">
+				Ver Semana Siguiente
+			</a>
+		</td>
+	</tr>
+  </table>
+  
+	
+	<table>
+		<tr>
+			<td valign="top">
+				<div class="span4">
+				  <h3>B&uacute;squeda Espec&iacute;fica</h3>
+				  Desde:
+				  <span id="fecha_inicio" class="input-append">
+					<input data-format="dd-mm-aaaa" 
+						   placeholder="dd-mm-aaaa" 
+						   id="inicio" 
+						   type="text">
+					</input>
+					<span class="add-on">
+					  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+					  </i>
+					</span>
+				  </span>
+				  <span id="error_inicio" class="errorlist"></span>
+				  <br/>
+				  
+				  <script type="text/javascript">
+					$(function() {
+					  $('#fecha_inicio').datetimepicker({
+						pickTime: false
+					  });
+					  
+					  // Se cierra el calendario al seleccionar fecha
+					  $('#fecha_inicio').on('changeDate', function(e) {
+						$('#fecha_inicio').datetimepicker('hide');
+					  });	
+					});
+				  </script>
+				  
+				  Hasta:&nbsp;
+				  <span id="fecha_fin" class="input-append">
+					<input data-format="dd-MM-yyyy" 
+						   placeholder="dd-mm-yyyy" 
+						   id="fin" 
+						   type="text">
+					</input>
+					<span class="add-on">
+					  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+					  </i>
+					</span>
+				  </span>
+				  <span id="error_fin" class="errorlist"></span>
+				  <br/>
+				  <script type="text/javascript">
+					$(function() {
+					  $('#fecha_fin').datetimepicker({
+						pickTime: false
+					  });
+					  
+					  // Se cierra el calendario al seleccionar fecha
+					  $('#fecha_fin').on('changeDate', function(e) {
+						$('#fecha_fin').datetimepicker('hide');
+					  });
+					});
+				  </script>
+			  
+				  
+					<div class="der">
+					  <a id="ir_est" href="#" class="btn btn-primary">
+						Ver Per&iacute;odo
+					  </a>
+					  
+					<script>
+					function verificarFecha(valor) {
+				  var anoMin = 1902;
+				  var anoMax = (new Date()).getFullYear();
+
+				  var error = "";
+
+				  // regular expression to match required date format
+				  re = /^(\d{1,2})\-(\d{1,2})\-(\d{4})$/;
+
+				  if(valor != '') {
+					if(regs = valor.match(re)) {
+					  if(regs[1] < 1 || regs[1] > 31) {
+					error = "Día inválido: " + regs[1];
+					  } else if(regs[2] < 1 || regs[2] > 12) {
+					error = "Mes inválido: " + regs[2];
+					  } else if(regs[3] < anoMin || regs[3] > anoMax) {
+					error = "Año inválido: " + regs[3];
+					  }
+					} else {
+					  error = "Formato de fecha inválido: " + valor;
+					}
+				  } else {
+					error = "No se aceptan valores vacíos";
+				  }
+
+				  return error;
+				}
+					
+					</script>
+					<script>
+					  $("#ir_est").click(function(){
+					var inicio = $("#inicio").val();
+					var fin = $("#fin").val()
+					var error_inicio = verificarFecha(inicio);
+					var error_fin = verificarFecha(fin);
+					if (error_inicio != "" || error_fin != "") {
+					  $('#error_inicio').text(error_inicio);
+					  $('#error_fin').text(error_fin);
+					} else {
+					  $("#ir_est").attr("href", "/estadisticas/" + 
+												  inicio + "/" + 
+												  fin);
+					}
+					  });      
+					</script>
+				  </div>
+				</div>
+			</td>
+			
+			<!-- TERMOMETROS -->
+			<td>
+				<div>
+					<table cellpadding="13" width="100%" style="text-align:center">
+						<tr>
+						{% for termometro in termometros %}
+							<td>
+								<b>{{ termometro.dia|date:'D' }}</b>
+								<br>
+								<br>
+								<table border="1" cellpadding="5">
+									{% for hab in termometro.habs %}
+									<tr class="dias_ocupada{{ hab.dias_ocu }}">
+										<td>{{ hab.hab.numero }}</td>
+									</tr>
+									{% endfor %}
+								</table>
+							</td>
+						{% endfor %}
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	
 {% endblock %}

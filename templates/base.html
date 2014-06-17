@@ -66,36 +66,7 @@
           <ul class="nav">          
             {% if user.is_authenticated %}
                 {% if user.is_staff %}
-                <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    Paciente
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                    <a href="/paciente/agregar">Agregar</a>
-                    </li>
-                    <li>
-                    <a href="/agregar/buscar">Buscar</a>
-                    </li>
-                </ul>
-                </li>
-                
-                <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    M&eacute;dico
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                    <a href="/medico/agregar">Agregar</a>
-                    </li>
-                    <li>
-                    <a href="/medico/buscar">Buscar</a>
-                    </li>
-                </ul>
-                </li>
-                
+                                
                 <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     Usuario
@@ -208,6 +179,16 @@
     {% if not user.is_authenticated %}
       <h3 class="tit-list"></h3>
     {% endif %} 
+	
+	{% if messages %}
+	<div onclick="$(this).fadeOut()" style="position: absolute; left: 50%; top:20px;z-index:2000;">
+		<div style="position: relative; left: -50%;">
+			{% for msg in messages %}
+				<div class="message-{% if msg.tags %}{{ msg.tags }}{% else %}info{% endif %}" >{{ msg }}</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
     
     {% block body %}
     {% endblock %}

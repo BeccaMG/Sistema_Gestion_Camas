@@ -121,6 +121,26 @@ td li {
     background-color: #FF0000;
 }
 
+.L{
+    background-color: #00CC33;
+}
+
+.dias_ocupada0{
+background: #99FFFF;
+}
+
+.dias_ocupada1,.dias_ocupada2{
+background-color: #00ff77;
+}
+
+.dias_ocupada3,.dias_ocupada4{
+background-color: #FFFF99;
+}
+
+.dias_ocupada5{
+background-color: #FF0000;
+}
+
 .None{
 	background-color: #99FFFF;
 }
@@ -148,6 +168,48 @@ td li {
 
 .habitacion-activa {
     background: #CFF0FF;
+}
+
+.message-info{
+width:300px;
+padding:4px;
+margin-bottom:10px;
+margin-left:auto;
+margin-right:auto;
+background:#FAF8A0;
+border:solid 1px #F8F234;
+font-size:14px;
+color:#FF9900;
+text-align:center;
+cursor:default;
+}
+
+.message-error{
+width:300px;
+padding:4px;
+margin-bottom:10px;
+margin-left:auto;
+margin-right:auto;
+background: #FEF1EC;
+border: 1px solid #CD0A0A;
+font-size:14px;
+color: #CD0A0A;
+text-align:center;
+cursor:default;
+}
+
+.message-success{
+width:300px;
+padding:4px;
+margin-bottom:10px;
+margin-left:auto;
+margin-right:auto;
+background:#A2F2AC;
+border:solid 1px #7CD986;
+font-size:14px;
+color:#088517;
+text-align:center;
+cursor:default;
 }
 
 .hc-preview { position: relative; display:inline; } 

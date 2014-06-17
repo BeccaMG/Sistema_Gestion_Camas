@@ -98,11 +98,22 @@
   {% if mensaje %}
     {{ mensaje }}
   {% endif %}
-  <div class="row">
-    <h4>
-        Solicitar habitaci&oacute;n
-    </h4>
-    </br>
+  <div class="row cuadroGrande span12">
+  
+    <table class="cuadroGrande span12">
+      <tr>
+	    <td width="80%">
+	      <h4>Solicitar habitaci&oacute;n</h4>
+	    </td>
+	    <td>
+	      <a href="listar_solicitudes" class="fontsize16">
+	        Lista de Solicitudes Activas
+	      <a>
+	      </br>
+	    </td>
+      <tr>
+    </table>
+
     
     <div class="cuadroGrande span5">
         <form id="cedula" class= "tablaAgregar" method="post" action="/buscar/paciente">

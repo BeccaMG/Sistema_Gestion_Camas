@@ -23,6 +23,7 @@ from app_usuario.models import *
 from django.utils import simplejson
 from django.core import serializers
 import pdb
+from django.contrib import messages
 
 # Cantidad de segundos en 1,2,..,6 horas
 # hora_en_segundos[0] -> Segundos en 0 horas
@@ -87,6 +88,8 @@ def solicitar_habitacion(request):
 								correo = s_correo_solicitante,
 								observacion = s_observacion)
 						s.save()
+						
+						messages.success(request, 'La solicitud fue enviada con exito')
 						return redirect('/')
 					else:
 						mnj_fecha = "La fecha de ingreso debe ser menor que la de egreso."
@@ -99,23 +102,35 @@ def solicitar_habitacion(request):
 			except:
 				msj_tipo = "error"
 				msj_info = "Ya existe una solicitud con este paciente."
-			
+		
 		info = {'msj_tipo':msj_tipo,'msj_info':msj_info,'form':form, 'mnj_fecha':mnj_fecha}
 		return render_to_response('solicitar_habitacion.html',info,context_instance=RequestContext(request))
 	form = SolicitarHabitacion()
 	info = {'form':form}
 	return render_to_response('solicitar_habitacion.html',info,context_instance=RequestContext(request))
 
-#@login_required(login_url='/')	
-#def listar_solicitudes(request):
-#	if (request.user):
-
 @login_required(login_url='/')	
 def lista_solicitudes(request):
-	
-	solicitudes_activas = Solicitud.objects.all().filter(activa=True).order_by('fecha_ingreso')
-	
-	info = {
-	'solicitudes_activas':solicitudes_activas}
-
-	return render_to_response('lista_solicitudes.html',info,context_instance=RequestContext(request))
+    
+    solicitudes_activas = Solicitud.objects.all().filter(activa=True).order_by('fecha_ingreso')
+    
+    info = {
+    'solicitudes_activas':solicitudes_activas}
+    return render_to_response('lista_solicitudes.html',info,context_instance=RequestContext(request))
+    
+@login_required(login_url='/')
+def cancelar_solicitud(request):
+    if request.method == 'POST':
+        #pdb.set_trace()
+        c = request.POST['id']
+        identificador = Solicitud.objects.filter(id=c)
+        if identificador:
+            Solicitud.objects.filter(id=c).delete()
+            data = {
+                'result' : 'success',
+            }
+        else:
+            data = {
+                'result' : 'error',
+            }
+    return HttpResponse(simplejson.dumps(data), content_type='application/json')
