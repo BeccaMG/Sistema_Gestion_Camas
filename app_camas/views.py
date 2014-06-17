@@ -66,7 +66,6 @@ def asignar_habitacion(request):
 				sol.activa = False
 				sol.save()				  
 								
-			   # total = hab.history.as_of(datetime(2014, 05, 28, 14, 50, 0))
 				hab_history_date = datetime.now()
 				hab.history.all()
 				
@@ -125,7 +124,6 @@ def asignar_habitacion(request):
 @login_required(login_url='/')
 def eliminar_solicitud(request):
 	if request.method == 'POST':
-	   # pdb.set_trace()
 		c = request.POST['num_historia']
 		pac = Paciente.objects.filter(num_historia = c)
 		hay = Solicitud.objects.filter(paciente = pac)
