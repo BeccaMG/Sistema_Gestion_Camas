@@ -24,9 +24,9 @@ class Solicitud(models.Model):
     fecha_ingreso   = models.DateField()
     fecha_salida    = models.DateField()
     procedencia     = models.IntegerField(choices=PROCEDENCIA)
-    correo          = models.CharField(max_length=140)
     observacion     = models.CharField(max_length=140, null = True, blank = True)
     activa        	= models.BooleanField(default=True)
+    correo_solicitante = models.CharField(max_length=140)
     
     def salida(self):
         return self.fecha_salida.strftime("%d/%m/%y")
