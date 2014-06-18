@@ -29,7 +29,6 @@
     
   
   // Instantiate and draw our chart, passing in some options.
-	 
       function selectHandler() {
         var selectedItem = chart.getSelection()[0];
         if (selectedItem) {
@@ -44,21 +43,63 @@
     
   </script>
   
-  <table width="100%" style="text-align:center">
+   <table  style="text-align:left">
+	<tr>
+		<td width="10%">
+			<h4>
+			<a href="/estadisticas/matriz">
+				Vista matriz
+			</a>
+			</h4>
+		</td>
+		
+		<td width="4%">
+			<h4>|</h4>
+		</td>
+		
+		<td width="50%" >
+			<h4 style="color:grey">
+				Vista term&oacute;metro
+			</h4>
+		</td>
+	</tr>
+  </table>
+  
+	<div class="titulo">
+		Term&oacute;metro
+	</div>
+  
+  <br>
+  <br>
+  
+  <table align="right">
 	<tr>
 		<td>
-			<a href="/estadisticas/termometro/{{semana_ant}}">
+			<a href="/estadisticas/termometro/{{ semana_ant }}">
 				Ver Semana Anterior
 			</a>
 		</td>
 		<td>
-			<a href="/estadisticas/termometro/{{semana_sig}}">
+			|
+		</td>
+		<td>
+			<a href="/estadisticas/termometro/{{ semana_act }}">
+				Ver Semana Actual
+			</a>
+		</td>
+		<td>
+			|
+		</td>
+		<td >
+			<a href="/estadisticas/termometro/{{ semana_sig }}">
 				Ver Semana Siguiente
 			</a>
 		</td>
 	</tr>
   </table>
   
+  <br>
+  <br>
 	
 	<table>
 		<tr>
@@ -182,8 +223,8 @@
 					<table cellpadding="13" width="100%" style="text-align:center">
 						<tr>
 						{% for termometro in termometros %}
-							<td>
-								<b>{{ termometro.dia|date:'D' }}</b>
+							<td valign="top">
+								<b>{{ termometro.dia|date:'D' }}<br>{{termometro.dia|date:'d/m/Y'}}</b>
 								<br>
 								<br>
 								<table border="1" cellpadding="5">

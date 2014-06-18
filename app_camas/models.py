@@ -20,7 +20,6 @@ ESTADO_HABITACION = (
 class Habitacion(models.Model):
     numero    = models.CharField(max_length=6, unique=True)
     reservada = models.BooleanField(default=False)
-    libre     = models.BooleanField(default=True)
     estado    = models.CharField(max_length=1, choices=ESTADO_HABITACION, 
                                  default = 'D')
     tipo      = models.CharField(max_length=1, choices=TIPO_HABITACION,
@@ -55,8 +54,6 @@ class Ingreso(models.Model):
         total = dias.days
         if total <= 0:
             total = 1
-        else:
-            total = -1
         return total
     
     def es_hoy(self):

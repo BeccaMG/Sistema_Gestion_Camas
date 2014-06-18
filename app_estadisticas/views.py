@@ -32,7 +32,7 @@ Termometro = {'2014-06-08':camas}
 def dia_anterior(d, weekday):
 	days_back = d.weekday() - weekday
 	if days_back <= 0:
-		return d
+		return d + timedelta(-days_back)
 	
 	return d - timedelta(days_back)
 	
@@ -74,6 +74,7 @@ def termometro(request , dia = None , mes = None , ano = None ):
 	
 	habs = Habitacion.objects.all().order_by('numero')
 	termometros_semana = []
+	hoy = datetime.now()
 	
 	if dia and mes and ano:
 		fecha = strptime('%s/%s/%s' % (dia,mes,ano),"%d/%m/%Y")
@@ -85,6 +86,13 @@ def termometro(request , dia = None , mes = None , ano = None ):
 		
 		termometro = []
 		dia = dia_anterior(fecha,dia_numero)
+		
+		if dia > hoy:
+			termometros_semana.append({
+				'dia' : dia,
+				'habs': None,
+			})
+			continue
 	
 		for h in habs:
 			try:
@@ -109,10 +117,12 @@ def termometro(request , dia = None , mes = None , ano = None ):
 	
 	semana_ant = (fecha - timedelta(7)).strftime('%d/%m/%Y')
 	semana_sig = (fecha + timedelta(7)).strftime('%d/%m/%Y')
+	semana_act = datetime.now().strftime('%d/%m/%Y')
 	
 	info = {
 		'termometros': termometros_semana,
 		'semana_ant': semana_ant,
+		'semana_act': semana_act,
 		'semana_sig': semana_sig,
 	}
 	
