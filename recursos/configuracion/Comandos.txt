@@ -1,4 +1,4 @@
-----------------
+﻿----------------
 Comandos Útiles
 ----------------
 
@@ -12,7 +12,7 @@ Comandos Útiles
 	python manage.py runserver <PUERTO>. 
 	Ejemplo: python manage.py runserver 8088
 
-4.-  Actualizar BD : python manage.py syncdb
+4.- Actualizar BD : python manage.py syncdb
 
 5.- Entrar al editor de postgres desde cónsola: python manage.py dbshell
 
