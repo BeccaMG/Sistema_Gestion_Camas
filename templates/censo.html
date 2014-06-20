@@ -14,7 +14,7 @@
    $(document).ready(function() {
     $('#tabla_censo').dataTable( {
         "paging":   false,
-        "scrollY":  250,
+        "scrollY":  300,
         "info":     false,
         "autoWidth": false
        
@@ -81,13 +81,11 @@
 {% block body %}
 <div class="row">
     <div class="cuadroGrande centrar">
-      <div class="titulo">
-        Censo
-      </div>
-      <br/>
-      <h4><center> {{ hoy }} </center></h4>
+      <h4>
+        <center><u>Censo</u></center>
+      </h4>  
+      <h5><center> {{ hoy }} </center></h5>
       {% if ingresos %}
-
         <table id="tabla_censo">
             <thead>
                 <tr>
@@ -101,20 +99,7 @@
                     <th>Dar alta</th>
                 </tr>
             </thead>
-            
-            <tfoot>
-                <tr>
-                    <th>N&uacute;mero de Habitaci&oacute;n</th>
-                    <th>Paciente</th>
-                    <th>M&eacute;dico</th>
-                    <th>Fecha estimada de salida</th>
-                    <th>Nro. D&iacute;as en la habitaci&oacute;n</th>
-                    <th>Nro. D&iacute;as en la instituci&oacute;n</th>
-                    <th>Procedencia</th>
-                    <th>Dar alta</th>
-                </tr>
-            </tfoot>
-            
+                       
             <tbody>
                 {% for ingreso in ingresos %}
                 <div alt="{{ ingreso.id }}" class="hidden-coloreable" style="display: none;">
