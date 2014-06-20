@@ -66,24 +66,60 @@
           <ul class="nav">          
             {% if user.is_authenticated %}
                 {% if user.is_staff %}
-                                
+                
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    Usuario
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                    <a href="/usuario/crear">Agregar</a>
-                    </li>
-                    <li>
-                    <a href="/usuario/buscar">Buscar</a>
-                    </li>
-                    <li>
-                    <a href="/usuario/listar">Listar</a>
-                    </li>
-                </ul>
-                </li> 
+                    <a href="/censo">
+                        Censo
+                    </a>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Habitaciones
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/habitacion/asignar">Asignar</a>
+                        </li>
+                        <li>
+                            <a href="/habitacion/solicitar">Solicitar</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Term&oacute;metro
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/estadisticas/termometro">Term&oacute;metro</a>
+                        </li>
+                        <li>
+                            <a href="/estadisticas/matriz">Matriz</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Usuarios
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/usuario/crear">Agregar</a>
+                        </li>
+                        <li>
+                            <a href="/usuario/buscar">Buscar</a>
+                        </li>
+                        <li>
+                            <a href="/usuario/listar">Listar</a>
+                        </li>
+                    </ul>
+                </li>
               
                 {% else %}
                 <li>

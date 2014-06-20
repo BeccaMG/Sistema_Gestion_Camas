@@ -1,15 +1,8 @@
 {% extends "base.html" %}
 
-{% block styles %}
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ STATIC_URL }}libs/jquery/themes/smoothness/jquery-ui.css">
-{% endblock %}
-
-{% block body %}
-  <script src="{{ STATIC_URL }}libs/jquery/js/jquery.js"></script>
-  <script src="{{ STATIC_URL }}libs/jquery/js/jquery-ui.js"></script>
+{% block scripts %}
   <script>
-	$(function() {
+    $(function() {
         var elements = document.getElementsByClassName("coloreable");
         var coloreable;
         for (var i = 0; i < elements.length; i++) {
@@ -22,8 +15,8 @@
             } else if (num >= 5) {
                 coloreable.className += " rojo";
             }  else {
-				coloreable.className += " azul_claro"
-			}
+                coloreable.className += " azul_claro"
+            }
         }
     });
     
@@ -42,9 +35,12 @@
       chart2.draw(data2,options2);
     
   </script>
+{% endblock %}
+
+{% block body %}
   
-   <table  style="text-align:left">
-	<tr>
+    <table  style="text-align:left">
+        <tr>
 		<td width="10%">
 			<h4>
 			<a href="/estadisticas/matriz">
