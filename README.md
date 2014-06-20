@@ -2,6 +2,10 @@ Sistema de Gestión de Camas
 ===========================
 Módulo de Gestión de Camas del sistema desarrollado como MiniProyecto de Desarollo de Software en la Universidad Simón Bolívar para el Centro Médico de Caracas.
 
+-----
+Última modificación: 20 de junio de 2014. Karen Troiano, Rebeca Machado, Ronier Rodríguez y Leonardo Ramos.
+-----
+
 Directorios
 ===========
 	- AM: Carpeta principal con el settings.py y la configuración del proyecto.
@@ -33,11 +37,9 @@ Directorios
 		
 	- templates: Archivos htmls del sistema.
 
-    
-Última modificación: 20 de junio de 2014. Karen Troiano, Rebeca Machado, Ronier Rodríguez y Leonardo Ramos.
-=================================
+
 Bibliografía/enlaces recomendados
+=================================
 	https://www.djangoproject.com/
 	http://www.djangobook.com/en/2.0/index.html
 	http://aiti.mit.edu/media/programs/mexico-summer-2013/materials/djangobook.pdf
-=================================
