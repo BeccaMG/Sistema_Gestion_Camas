@@ -4,7 +4,6 @@ Módulo de Gestión de Camas del sistema desarrollado como MiniProyecto de Desar
 
 -----
 Última modificación: 20 de junio de 2014. Karen Troiano, Rebeca Machado, Ronier Rodríguez y Leonardo Ramos.
------
 
 Directorios
 ===========
